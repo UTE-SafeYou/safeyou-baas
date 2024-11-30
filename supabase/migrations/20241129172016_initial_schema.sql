@@ -218,3 +218,4 @@ grant truncate on table "public"."user_roles" to "service_role";
 grant update on table "public"."user_roles" to "service_role";
 
 
+  
