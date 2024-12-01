@@ -115,19 +115,19 @@ grant truncate on table "public"."todos" to "service_role";
 
 grant update on table "public"."todos" to "service_role";
 
-grant delete on table "public"."user_roles" to "PUBLIC";
+grant delete on table "public"."user_roles" to "public";
 
-grant insert on table "public"."user_roles" to "PUBLIC";
+grant insert on table "public"."user_roles" to "public";
 
-grant references on table "public"."user_roles" to "PUBLIC";
+grant references on table "public"."user_roles" to "public";
 
-grant select on table "public"."user_roles" to "PUBLIC";
+grant select on table "public"."user_roles" to "public";
 
-grant trigger on table "public"."user_roles" to "PUBLIC";
+grant trigger on table "public"."user_roles" to "public";
 
-grant truncate on table "public"."user_roles" to "PUBLIC";
+grant truncate on table "public"."user_roles" to "public";
 
-grant update on table "public"."user_roles" to "PUBLIC";
+grant update on table "public"."user_roles" to "public";
 
 grant delete on table "public"."user_roles" to "supabase_auth_admin";
 
