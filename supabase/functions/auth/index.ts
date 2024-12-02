@@ -108,6 +108,7 @@ app.post('/auth/sign-up', async (req, res) => {
         citizen_id: citizen_id,
         address_id: address_data[0].address_id,
         user_id: user.id,
+        email: email // Add email to user_profiles
       }
     ])
     .select()

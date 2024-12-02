@@ -158,6 +158,12 @@ drop table "public"."todos";
 
 drop table "public"."userskills";
 
+create table "public"."geometries" (
+    "name" character varying,
+    "geom" postgis.geometry
+);
+
+
 create table "public"."issue_event" (
     "id" uuid not null default gen_random_uuid(),
     "created_at" timestamp with time zone not null default now(),
@@ -168,7 +174,13 @@ create table "public"."issue_event" (
 );
 
 
-alter table "public"."issue_event" enable row level security;
+create table "public"."notification_user" (
+    "notification_id" uuid not null,
+    "to_user_id" uuid not null
+);
+
+
+alter table "public"."notification_user" enable row level security;
 
 create table "public"."place" (
     "id" uuid not null default uuid_generate_v4(),
@@ -212,7 +224,11 @@ alter table "public"."notification" alter column "type" drop not null;
 
 alter table "public"."task" drop column "address_id";
 
+alter table "public"."user_profiles" add column "email" character varying not null;
+
 CREATE UNIQUE INDEX issue_event_pkey ON public.issue_event USING btree (id);
+
+CREATE UNIQUE INDEX notification_user_pkey ON public.notification_user USING btree (notification_id, to_user_id);
 
 CREATE UNIQUE INDEX places_pkey ON public.place USING btree (id);
 
@@ -220,7 +236,11 @@ CREATE UNIQUE INDEX report_pkey ON public.report USING btree (id);
 
 CREATE UNIQUE INDEX user_notification_pkey ON public.user_notification USING btree (id);
 
+CREATE UNIQUE INDEX user_profiles_email_key ON public.user_profiles USING btree (email);
+
 alter table "public"."issue_event" add constraint "issue_event_pkey" PRIMARY KEY using index "issue_event_pkey";
+
+alter table "public"."notification_user" add constraint "notification_user_pkey" PRIMARY KEY using index "notification_user_pkey";
 
 alter table "public"."place" add constraint "places_pkey" PRIMARY KEY using index "places_pkey";
 
@@ -232,6 +252,14 @@ alter table "public"."issue_event" add constraint "issue_event_place_id_fkey" FO
 
 alter table "public"."issue_event" validate constraint "issue_event_place_id_fkey";
 
+alter table "public"."notification_user" add constraint "notification_user_notification_id_fkey" FOREIGN KEY (notification_id) REFERENCES notification(id) ON DELETE CASCADE not valid;
+
+alter table "public"."notification_user" validate constraint "notification_user_notification_id_fkey";
+
+alter table "public"."notification_user" add constraint "notification_user_to_user_id_fkey" FOREIGN KEY (to_user_id) REFERENCES auth.users(id) ON DELETE CASCADE not valid;
+
+alter table "public"."notification_user" validate constraint "notification_user_to_user_id_fkey";
+
 alter table "public"."user_notification" add constraint "user_notification_notification_id_fkey" FOREIGN KEY (notification_id) REFERENCES notification(id) not valid;
 
 alter table "public"."user_notification" validate constraint "user_notification_notification_id_fkey";
@@ -239,6 +267,8 @@ alter table "public"."user_notification" validate constraint "user_notification_
 alter table "public"."user_notification" add constraint "user_notification_user_id_fkey" FOREIGN KEY (user_id) REFERENCES auth.users(id) ON UPDATE CASCADE ON DELETE CASCADE not valid;
 
 alter table "public"."user_notification" validate constraint "user_notification_user_id_fkey";
+
+alter table "public"."user_profiles" add constraint "user_profiles_email_key" UNIQUE using index "user_profiles_email_key";
 
 set check_function_bodies = off;
 
@@ -269,6 +299,48 @@ AS $function$declare
      return event;
   end;$function$
 ;
+
+grant delete on table "public"."geometries" to "anon";
+
+grant insert on table "public"."geometries" to "anon";
+
+grant references on table "public"."geometries" to "anon";
+
+grant select on table "public"."geometries" to "anon";
+
+grant trigger on table "public"."geometries" to "anon";
+
+grant truncate on table "public"."geometries" to "anon";
+
+grant update on table "public"."geometries" to "anon";
+
+grant delete on table "public"."geometries" to "authenticated";
+
+grant insert on table "public"."geometries" to "authenticated";
+
+grant references on table "public"."geometries" to "authenticated";
+
+grant select on table "public"."geometries" to "authenticated";
+
+grant trigger on table "public"."geometries" to "authenticated";
+
+grant truncate on table "public"."geometries" to "authenticated";
+
+grant update on table "public"."geometries" to "authenticated";
+
+grant delete on table "public"."geometries" to "service_role";
+
+grant insert on table "public"."geometries" to "service_role";
+
+grant references on table "public"."geometries" to "service_role";
+
+grant select on table "public"."geometries" to "service_role";
+
+grant trigger on table "public"."geometries" to "service_role";
+
+grant truncate on table "public"."geometries" to "service_role";
+
+grant update on table "public"."geometries" to "service_role";
 
 grant delete on table "public"."issue_event" to "anon";
 
@@ -311,6 +383,48 @@ grant trigger on table "public"."issue_event" to "service_role";
 grant truncate on table "public"."issue_event" to "service_role";
 
 grant update on table "public"."issue_event" to "service_role";
+
+grant delete on table "public"."notification_user" to "anon";
+
+grant insert on table "public"."notification_user" to "anon";
+
+grant references on table "public"."notification_user" to "anon";
+
+grant select on table "public"."notification_user" to "anon";
+
+grant trigger on table "public"."notification_user" to "anon";
+
+grant truncate on table "public"."notification_user" to "anon";
+
+grant update on table "public"."notification_user" to "anon";
+
+grant delete on table "public"."notification_user" to "authenticated";
+
+grant insert on table "public"."notification_user" to "authenticated";
+
+grant references on table "public"."notification_user" to "authenticated";
+
+grant select on table "public"."notification_user" to "authenticated";
+
+grant trigger on table "public"."notification_user" to "authenticated";
+
+grant truncate on table "public"."notification_user" to "authenticated";
+
+grant update on table "public"."notification_user" to "authenticated";
+
+grant delete on table "public"."notification_user" to "service_role";
+
+grant insert on table "public"."notification_user" to "service_role";
+
+grant references on table "public"."notification_user" to "service_role";
+
+grant select on table "public"."notification_user" to "service_role";
+
+grant trigger on table "public"."notification_user" to "service_role";
+
+grant truncate on table "public"."notification_user" to "service_role";
+
+grant update on table "public"."notification_user" to "service_role";
 
 grant delete on table "public"."place" to "anon";
 
