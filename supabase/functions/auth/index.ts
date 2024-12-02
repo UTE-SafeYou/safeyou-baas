@@ -55,6 +55,13 @@ app.post('/auth/sign-up', async (req, res) => {
     res.status(400).json({ error: 'Email and password are required' })
     return;
   }
+
+  if (!fullname) {
+    res.status(400).json({ error: 'Fullname is required' })
+    return;
+  }
+
+  
   let { data: { user }, error } = await supabase.auth.signUp({
     email: email,
     phone: phone,
