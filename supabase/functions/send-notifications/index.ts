@@ -1,11 +1,7 @@
-// Follow this setup guide to integrate the Deno language server with your editor:
-// https://deno.land/manual/getting_started/setup_your_environment
-// This enables autocomplete, go to definition, etc.
-
-// Setup type definitions for built-in Supabase Runtime APIs
-import "jsr:@supabase/functions-js/edge-runtime.d.ts"
-import { connect } from "https://deno.land/x/amqp@v0.23.1/mod.ts"
-import { createClient } from '@supabase/supabase-js'
+import express from 'npm:express@4.18.2'
+import { connect } from "npm:amqplib@0.10.3"
+import { createClient } from 'npm:@supabase/supabase-js@2.39.3'
+import { Buffer } from "https://deno.land/std@0.177.0/node/buffer.ts"
 
 interface NotificationMessage {
   email: string;
@@ -13,22 +9,21 @@ interface NotificationMessage {
   body: string;
 }
 
-enum SendType {
-  All = 'All',
-  User = 'User',
-  Admin = 'Admin',
-}
-
-enumm NotificationType {
+enum NotificationType {
   Emergency = 'Emergency',
   Normal = 'Normal',
 }
 
+interface User {
+  email: string;
+  user_id: string;
+}
+
 interface RequestBody {
-  from_user_id: string;
-  send_type: SendType;
+  notification_type?: NotificationType;
   title: string;
   body: string;
+  users: User[];
 }
 
 interface UserProfile {
@@ -38,87 +33,87 @@ interface UserProfile {
   };
 }
 
+// Add this function to convert string to Uint8Array
+function stringToUint8Array(str: string): Uint8Array {
+  return new TextEncoder().encode(str);
+}
+
+const app = express()
+app.use(express.json())
+const port = 3000
+
 // Initialize Supabase client
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-
-Deno.serve(async (req) => {
-  // Only allow POST method
-  if (req.method !== "POST") {
-    return new Response(JSON.stringify({ error: "Method not allowed" }), {
-      status: 405,
-      headers: { "Content-Type": "application/json" }
-    });
+const supabase = createClient(supabaseUrl, supabaseKey, {
+  'global': {
+    'headers': {
+      'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''}`
+    },
   }
+});
 
-  const reqBody: RequestBody = await req.json();
+app.post('/send-notifications', async (req, res) => {
+  const reqBody: RequestBody = req.body;
 
   // Validate required fields
-  if (!reqBody.from_user_id || !reqBody.send_type || !reqBody.title || !reqBody.body) {
-    return new Response(JSON.stringify({ error: "Request body must have from_user_id, send_type, title, and body" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" }
+  if (!reqBody.title || !reqBody.body) {
+    return res.status(400).json({
+      error: "Request body must have title, and body"
     });
   }
 
+  const connection = await connect({
+    hostname: Deno.env.get("RABBITMQ_HOST") || "localhost",
+    port: parseInt(Deno.env.get("RABBITMQ_PORT") || "5672"),
+    username: Deno.env.get("RABBITMQ_USER") || "guest",
+    password: Deno.env.get("RABBITMQ_PASS") || "guest",
+  });
+
+  const channel = await connection.createChannel();
+  const queueName = "notifications";
+
+  // try {
+  //   const destinations = reqBody.users;
+
+  //   if (destinations.length === 0) {
+  //     return res.status(404).json({ error: "No recipients found" });
+  //   }
+
+  //   await channel.assertQueue(queueName, { durable: true });
+
+  //   // Use Deno's Buffer implementation
+  //   const messageBuffer = Buffer.from(JSON.stringify(message));
+
+  //   await channel.sendToQueue(
+  //     queueName,
+  //     messageBuffer,
+  //     { persistent: true }
+  //   );
+
+  //   return res.status(200).json({ 
+  //     status: "Message sent successfully" 
+  //   });
+  // } catch (error) {
+  //   console.error('Error sending message:', error);
+  //   return res.status(500).json({ error: String(error) });
+  // } finally {
+  //   await channel.close();
+  //   await connection.close();
+  // }
+
   try {
-    const destinations = await selectUserProfiles(supabase, {
-      sendType: reqBody.send_type,
-      fromUserId: reqBody.from_user_id
-    });
+    const destinations = reqBody.users;
 
     if (destinations.length === 0) {
-      return new Response(
-        JSON.stringify({ error: "No recipients found" }),
-        {
-          status: 404,
-          headers: { "Content-Type": "application/json" }
-        }
-      );
+      return res.status(404).json({ error: "No recipients found" });
     }
 
-    // Continue with the rest of your code...
-
-  } catch (error) {
-    console.error('User selection error:', error);
-    return new Response(
-      JSON.stringify({ error: "Failed to fetch recipients" }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" }
-      }
-    );
-  }
-
-  const messages: NotificationMessage[] = destinations.map((dest) => ({
-    email: dest.email,
-    title: reqBody.title,
-    body: reqBody.body
-  }));
-
-  try {
-
-    // Validate array and required fields
-    if (!Array.isArray(messages) || messages.length === 0) {
-      return new Response(JSON.stringify({ error: "Request body must be an array of messages" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-
-    // Validate all messages have required fields
-    const invalidMessages = messages.filter(msg =>
-      !msg.email || !msg.title || !msg.body
-    );
-
-    if (invalidMessages.length > 0) {
-      return new Response(JSON.stringify({ error: "All messages must have email, title, and body" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
+    const messages: NotificationMessage[] = destinations.map((dest) => ({
+      email: dest.email,
+      title: reqBody.title,
+      body: reqBody.body
+    }));
 
     // Connect to RabbitMQ
     const connection = await connect({
@@ -128,104 +123,57 @@ Deno.serve(async (req) => {
       password: Deno.env.get("RABBITMQ_PASS") || "guest",
     });
 
-    const channel = await connection.openChannel();
+    const channel = await connection.createChannel();
     const queueName = "notifications";
+    const encoder = new TextEncoder();
 
     try {
-      await channel.declareQueue({ queue: queueName, durable: true });
+      await channel.assertQueue(queueName, { durable: true });
 
-      // Publish all messages to RabbitMQ and insert into Supabase
-      const encoder = new TextEncoder();
-      const publishPromises = messages.map(async (message) => {
-        // Publish to RabbitMQ
-        await channel.publish(
-          { exchange: "", routingKey: queueName },
-          {},
-          encoder.encode(JSON.stringify(message))
+      // Publish messages and insert into Supabase
+      const publishMessages = messages.map(async (message) => {
+        await channel.assertQueue(queueName, { durable: true });
+
+        // Use Deno's Buffer implementation
+        const messageBuffer = Buffer.from(JSON.stringify(message));
+
+        await channel.sendToQueue(
+          queueName,
+          messageBuffer,
+          { persistent: true }
         );
 
-        // Insert into Supabase
         try {
-          await insertNotifications(supabase, messages, reqBody.from_user_id);
+          await insertNotifications(supabase, messages, reqBody); // Pass reqBody to insertNotifications
         } catch (error) {
-          console.error('Failed to insert notifications:', error);
-          // Continue with RabbitMQ publish even if DB insert fails
+          console.log('Error inserting notifications:', error);
         }
       });
 
-      await Promise.all(publishPromises);
+      await Promise.all(publishMessages);
 
-      return new Response(JSON.stringify({
+      return res.status(200).json({
         status: "Messages sent and data added to Supabase successfully",
         count: messages.length
-      }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" }
       });
     } finally {
       await channel.close();
       await connection.close();
     }
   } catch (error) {
-    console.error("Error:", error);
-    return new Response(JSON.stringify({ error: "Internal server error" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-    });
+    return res.status(500).json({ error: error });
   }
 });
 
-const selectUserProfiles = async (
-  supabase: any,
-  options: {
-    sendType: SendType;
-    fromUserId: string;
-  }
-) => {
-  let query = supabase
-    .from('user_profiles')
-    .select(`
-      user_id,
-      user_roles (role),
-      auth_users:auth.users (email)
-    `).neq('user_id', options.fromUserId);
-
-  switch (options.sendType) {
-    case SendType.All:
-      query = query
-        .order('profile_id', { ascending: true });
-      break;
-    case SendType.User:
-      query = query.eq('user_roles.role', 'user');
-      break;
-    case SendType.Admin:
-      query = query.eq('user_roles.role', 'admin');
-      break;
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    throw new Error(`Failed to fetch users: ${error.message}`);
-  }
-
-  return data?.map(user => ({
-    email: user.auth_users?.email,
-    user_id: user.user_id
-  })) || [];
-};
-
-const insertNotifications = async (supabase: any, messages: NotificationMessage[], fromUserId: string) => {
+const insertNotifications = async (supabase: any, messages: NotificationMessage[], reqBody: RequestBody) => {
   try {
     // First insert the notification
     const { data: notification, error: notificationError } = await supabase
       .from('notification')
       .insert({
-        title: messages[0].title, // All messages have same title
-        content: messages[0].body, // All messages have same body
-        // type: NotificationType.Normal, // Default type
-        user_id: fromUserId,
-        sendtype: reqBody.send_type
+        title: messages[0].title,
+        content: messages[0].body,
+        type: reqBody.notification_type || NotificationType.Normal
       })
       .select('id')
       .single();
@@ -254,3 +202,7 @@ const insertNotifications = async (supabase: any, messages: NotificationMessage[
     throw error;
   }
 };
+
+app.listen(port, () => {
+  console.log(`Notification service listening on port ${port}`)
+})

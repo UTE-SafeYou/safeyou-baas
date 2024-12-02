@@ -57,7 +57,7 @@ app.post('/auth/sign-up', async (req, res) => {
   }
 
   if (!fullname) {
-    res.status(400).json({ error: 'Fullname is required' })
+    res.status(400).json({ error: 'fullname is required' })
     return;
   }
 
