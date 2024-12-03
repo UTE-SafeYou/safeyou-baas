@@ -17,6 +17,7 @@ enum NotificationType {
 interface User {
   email: string;
   user_id: string;
+  additional_info: { [key: string]: string };
 }
 
 interface RequestBody {
@@ -36,6 +37,11 @@ interface UserProfile {
 // Add this function to convert string to Uint8Array
 function stringToUint8Array(str: string): Uint8Array {
   return new TextEncoder().encode(str);
+}
+
+// Add helper function to replace placeholders
+function replacePlaceholders(text: string, additional_info: { [key: string]: string }): string {
+  return text.replace(/{(\w+)}/g, (match, key) => additional_info[key] || match);
 }
 
 const app = express()
@@ -73,35 +79,6 @@ app.post('/send-notifications', async (req, res) => {
   const channel = await connection.createChannel();
   const queueName = "notifications";
 
-  // try {
-  //   const destinations = reqBody.users;
-
-  //   if (destinations.length === 0) {
-  //     return res.status(404).json({ error: "No recipients found" });
-  //   }
-
-  //   await channel.assertQueue(queueName, { durable: true });
-
-  //   // Use Deno's Buffer implementation
-  //   const messageBuffer = Buffer.from(JSON.stringify(message));
-
-  //   await channel.sendToQueue(
-  //     queueName,
-  //     messageBuffer,
-  //     { persistent: true }
-  //   );
-
-  //   return res.status(200).json({ 
-  //     status: "Message sent successfully" 
-  //   });
-  // } catch (error) {
-  //   console.error('Error sending message:', error);
-  //   return res.status(500).json({ error: String(error) });
-  // } finally {
-  //   await channel.close();
-  //   await connection.close();
-  // }
-
   try {
     const destinations = reqBody.users;
 
@@ -112,7 +89,7 @@ app.post('/send-notifications', async (req, res) => {
     const messages: NotificationMessage[] = destinations.map((dest) => ({
       email: dest.email,
       title: reqBody.title,
-      body: reqBody.body
+      body: replacePlaceholders(reqBody.body, dest.additional_info)
     }));
 
     // Connect to RabbitMQ
