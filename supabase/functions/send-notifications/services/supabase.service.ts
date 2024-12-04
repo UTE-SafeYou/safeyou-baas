@@ -124,8 +124,8 @@ export class SupabaseService {
 
     return data.map(profile => ({
       user_id: profile.user_id,
-      email: profile.auth_users?.email,
-      phone: profile.auth_users?.phone
+      email: profile?.email,
+      phone: profile?.phone
     }));
   }
 }
