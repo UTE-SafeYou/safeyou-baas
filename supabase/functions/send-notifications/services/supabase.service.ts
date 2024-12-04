@@ -25,14 +25,15 @@ export class SupabaseService {
   }
 
   async validateUsers(userIds: string[]): Promise<void> {
-    const { data: users, error } = await this.client
-      .from('auth_users')
-      .select('id')
-      .in('id', userIds);
+    const { data: {users}, error } = await this.client.auth.admin.listUsers({
+      filter: `id.in.(${userIds.join(',')})`
+    });
 
     if (error) {
       throw new Error(`Failed to validate users: ${error.message}`);
     }
+
+    // console.log(users);
 
     const foundUserIds = new Set(users.map(user => user.id));
     const invalidUserIds = userIds.filter(id => !foundUserIds.has(id));
