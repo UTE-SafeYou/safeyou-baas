@@ -68,7 +68,7 @@ app.post('/auth/sign-up', async (req, res) => {
     password: password,
   })
 
-  console.log(user)
+  // console.log(user)
 
   if (error) {
     res.status(500).json({ error: error.message })
