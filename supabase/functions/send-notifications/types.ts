@@ -1,6 +1,6 @@
-
 export interface NotificationMessage {
   email: string;
+  phone?: string;  // Added phone field
   title: string;
   body: string;
   htmlBody: string;
@@ -13,7 +13,6 @@ export enum NotificationType {
 }
 
 export interface User {
-  email: string;
   user_id: string;
   additional_info: { [key: string]: string };
 }

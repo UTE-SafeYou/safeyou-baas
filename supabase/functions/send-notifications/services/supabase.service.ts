@@ -107,4 +107,25 @@ export class SupabaseService {
       throw error;
     }
   }
+
+  async getUserProfiles(userIds: string[]): Promise<Array<{user_id: string, email: string, phone?: string}>> {
+    const { data, error } = await this.client
+      .from('user_profiles')
+      .select(`
+        user_id,
+        email,
+        phone
+      `)
+      .in('user_id', userIds);
+
+    if (error) {
+      throw new Error(`Failed to fetch user profiles: ${error.message}`);
+    }
+
+    return data.map(profile => ({
+      user_id: profile.user_id,
+      email: profile.auth_users?.email,
+      phone: profile.auth_users?.phone
+    }));
+  }
 }
