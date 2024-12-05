@@ -22,8 +22,15 @@ export class SupabaseService {
     async insertReport(report: Report) {
         const { data, error } = await this.supabase
             .from('report')
-            .insert(report)
-            .select()
+            .insert({
+                title: report.title,
+                content: report.content,
+                report_type: report.report_type,
+                urgency: report.urgency,
+                meta_data: report.meta_data,
+                address_id: report.address_id
+            })
+            .select('id, title, content, report_type, urgency, meta_data, address_id')
             .single();
         
         if (error) throw error;
@@ -74,7 +81,10 @@ export class SupabaseService {
         if (!addressData?.address_id) {
             throw new Error('Failed to get address id');
         }
-        return await this.insertReport({ ...report, address_id: addressData.address_id });
+        return await this.insertReport({ 
+            ...report, 
+            address_id: addressData.address_id 
+        });
     }
 
     async insertTaskWithAddress(task: Task, address: Address, latitude: number, longitude: number) {

@@ -1,5 +1,5 @@
-export type Urgency = 'low' | 'medium' | 'high' | 'critical';
-export type TaskStatus = 'pending' | 'in_progress' | 'completed' | 'cancelled';
+export type Urgency = 'SLOW' | 'MEDIUM' | 'HIGH';
+export type TaskStatus = 'TODO' | 'DOING' | 'DONE' | 'FAILED';
 
 export interface Address {
     street_number: string;
@@ -10,12 +10,12 @@ export interface Address {
 }
 
 export interface Report {
-    urgency?: Urgency;
+    title: string;
+    content: string;
+    report_type: string;  // changed from ReportType
+    urgency: Urgency;
     meta_data?: Record<string, any>;
-    title?: string;
-    report_type?: string;
-    content?: string;
-    address_id: string;
+    address_id?: string;  // optional since it's added after address creation
 }
 
 export interface Task {
