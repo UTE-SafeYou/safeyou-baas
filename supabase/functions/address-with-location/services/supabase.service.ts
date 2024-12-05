@@ -41,8 +41,8 @@ export class SupabaseService {
       .single();
 
     if (error) {
-      console.error('Supabase insert error:', error);
-      throw new Error(error.message);
+      console.error('Lỗi khi chèn dữ liệu:', error);
+      throw new Error('Không thể lưu địa chỉ vào cơ sở dữ liệu');
     }
     return data;
   }
