@@ -68,7 +68,13 @@ INSERT INTO "auth"."audit_log_entries" ("instance_id", "id", "payload", "created
 	('00000000-0000-0000-0000-000000000000', 'fb430bba-9fa2-4bf9-a332-cbfd7e630c6d', '{"action":"user_signedup","actor_id":"d026dae4-ad41-4841-8982-51f4aab96b7b","actor_username":"abc1@gmail.com","actor_via_sso":false,"log_type":"team","traits":{"provider":"email"}}', '2024-12-02 10:55:28.814722+00', ''),
 	('00000000-0000-0000-0000-000000000000', '6671fcb5-fb6a-42e5-85df-fa58425b656a', '{"action":"login","actor_id":"d026dae4-ad41-4841-8982-51f4aab96b7b","actor_username":"abc1@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-02 10:55:28.818628+00', ''),
 	('00000000-0000-0000-0000-000000000000', 'f0facf96-20bc-4f2d-b890-5774a9061997', '{"action":"user_signedup","actor_id":"00904af9-8b6f-4ba2-a0fa-ec52917b24f1","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"team","traits":{"provider":"email"}}', '2024-12-02 11:34:31.84092+00', ''),
-	('00000000-0000-0000-0000-000000000000', 'dadf3d64-021c-4eb4-be89-e03beaeccf91', '{"action":"login","actor_id":"00904af9-8b6f-4ba2-a0fa-ec52917b24f1","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-02 11:34:31.845815+00', '');
+	('00000000-0000-0000-0000-000000000000', 'dadf3d64-021c-4eb4-be89-e03beaeccf91', '{"action":"login","actor_id":"00904af9-8b6f-4ba2-a0fa-ec52917b24f1","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-02 11:34:31.845815+00', ''),
+	('00000000-0000-0000-0000-000000000000', '36e0ca23-19b0-4091-aca5-07f4289b123b', '{"action":"user_signedup","actor_id":"cc42df65-e0f7-42ed-b1ed-b265e6f76251","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"team","traits":{"provider":"email"}}', '2024-12-04 07:56:07.907106+00', ''),
+	('00000000-0000-0000-0000-000000000000', '09e9ee0e-53c7-44b2-8f1a-4af03869b079', '{"action":"login","actor_id":"cc42df65-e0f7-42ed-b1ed-b265e6f76251","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-04 07:56:07.924778+00', ''),
+	('00000000-0000-0000-0000-000000000000', '39717118-6f5b-4be9-944d-afdb1ca35ffb', '{"action":"user_repeated_signup","actor_id":"cc42df65-e0f7-42ed-b1ed-b265e6f76251","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"user","traits":{"provider":"email"}}', '2024-12-04 08:36:46.298552+00', ''),
+	('00000000-0000-0000-0000-000000000000', 'dedfc714-9bcb-4e09-8948-3df6ea26c18b', '{"action":"user_repeated_signup","actor_id":"cc42df65-e0f7-42ed-b1ed-b265e6f76251","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"user","traits":{"provider":"email"}}', '2024-12-05 04:43:08.664921+00', ''),
+	('00000000-0000-0000-0000-000000000000', '97c61ae4-478d-439d-a2d1-66688256955f', '{"action":"login","actor_id":"cc42df65-e0f7-42ed-b1ed-b265e6f76251","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-05 04:49:12.594982+00', ''),
+	('00000000-0000-0000-0000-000000000000', '276b3d2f-4b6f-4591-9807-16413361dcef', '{"action":"login","actor_id":"cc42df65-e0f7-42ed-b1ed-b265e6f76251","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-05 04:49:33.843671+00', '');
 
 
 --
@@ -82,12 +88,7 @@ INSERT INTO "auth"."audit_log_entries" ("instance_id", "id", "payload", "created
 --
 
 INSERT INTO "auth"."users" ("instance_id", "id", "aud", "role", "email", "encrypted_password", "email_confirmed_at", "invited_at", "confirmation_token", "confirmation_sent_at", "recovery_token", "recovery_sent_at", "email_change_token_new", "email_change", "email_change_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change", "phone_change_token", "phone_change_sent_at", "email_change_token_current", "email_change_confirm_status", "banned_until", "reauthentication_token", "reauthentication_sent_at", "is_sso_user", "deleted_at", "is_anonymous") VALUES
-	('00000000-0000-0000-0000-000000000000', '2c870618-b675-4fa8-b778-2b2084ce638b', 'authenticated', 'authenticated', '22zzzzs110x248@student.hcmute.edu.vn', '$2a$10$AFUq6660SRghN0MIk5ykle0n29Fn6StAGwXQ.XcS62el/v2ewCHxy', '2024-12-01 15:57:03.348434+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-01 19:21:44.761065+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "2c870618-b675-4fa8-b778-2b2084ce638b", "email": "22zzzzs110x248@student.hcmute.edu.vn", "email_verified": false, "phone_verified": false}', NULL, '2024-12-01 15:57:03.325114+00', '2024-12-01 19:21:44.764144+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
-	('00000000-0000-0000-0000-000000000000', '00904af9-8b6f-4ba2-a0fa-ec52917b24f1', 'authenticated', 'authenticated', 'locn562836@gmail.com', '$2a$10$IR.UYY0QoaYgqPbVi/nufe5nArtRrfrU94zmUURUHZooAhd0NGCIy', '2024-12-02 11:34:31.843225+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-02 11:34:31.846303+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "00904af9-8b6f-4ba2-a0fa-ec52917b24f1", "email": "locn562836@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-02 11:34:31.832407+00', '2024-12-02 11:34:31.852666+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
-	('00000000-0000-0000-0000-000000000000', '71ae0ceb-d8f5-4c45-9d9c-031b2e8e43ef', 'authenticated', 'authenticated', 'sxzc@gmail.com', '$2a$10$tS9nYQffwMpeOliQXoW9v.3UnX9W.hHzYUtjzt4PuSmt.xY15P8Mm', '2024-12-01 07:13:11.356747+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-01 07:35:54.171311+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "71ae0ceb-d8f5-4c45-9d9c-031b2e8e43ef", "email": "sxzc@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-01 07:13:11.32451+00', '2024-12-01 07:35:54.175286+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
-	('00000000-0000-0000-0000-000000000000', '3c60f994-7a19-433c-ac8e-9fda8ff8d31a', 'authenticated', 'authenticated', 'abc@gmail.com', '$2a$10$PJopPqh2S7PzUrC9.hucw.baePnOAGbOrfh0lL7aDACHV.qWbk9Bi', '2024-12-02 10:47:17.585217+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-02 10:47:17.593361+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "3c60f994-7a19-433c-ac8e-9fda8ff8d31a", "email": "abc@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-02 10:47:17.534734+00', '2024-12-02 10:47:17.619585+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
-	('00000000-0000-0000-0000-000000000000', 'd026dae4-ad41-4841-8982-51f4aab96b7b', 'authenticated', 'authenticated', 'abc1@gmail.com', '$2a$10$2vhYD1sMDnaw42ceLyaoxe.g5pAFqOzpjvU4dj6C/zNWjRsnwEVzi', '2024-12-02 10:55:28.815185+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-02 10:55:28.819085+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "d026dae4-ad41-4841-8982-51f4aab96b7b", "email": "abc1@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-02 10:55:28.805673+00', '2024-12-02 10:55:28.825431+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
-	('00000000-0000-0000-0000-000000000000', '1c947692-2d9f-46b4-935e-dad1570df2e5', 'authenticated', 'authenticated', 'xxxsxzc@gmail.com', '$2a$10$Gd0tbZK5dKkJRosyd0ydSu6QnHqUGcCqr5IAeH/C9aaOdGFiEE8b2', '2024-12-01 14:15:36.132554+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-01 14:17:59.632969+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "1c947692-2d9f-46b4-935e-dad1570df2e5", "email": "xxxsxzc@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-01 14:15:36.120977+00', '2024-12-01 14:17:59.639871+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
+	('00000000-0000-0000-0000-000000000000', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251', 'authenticated', 'authenticated', 'locn562836@gmail.com', '$2a$10$FLx/owolB2cGmKV9x/ALLeG89f1l1beqd1tNu6y5/YJLRq48tZWxa', '2024-12-04 07:56:07.913755+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-05 04:49:33.844373+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "cc42df65-e0f7-42ed-b1ed-b265e6f76251", "email": "locn562836@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-04 07:56:07.869731+00', '2024-12-05 04:49:33.846669+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
 
 
 --
@@ -95,12 +96,7 @@ INSERT INTO "auth"."users" ("instance_id", "id", "aud", "role", "email", "encryp
 --
 
 INSERT INTO "auth"."identities" ("provider_id", "user_id", "identity_data", "provider", "last_sign_in_at", "created_at", "updated_at", "id") VALUES
-	('71ae0ceb-d8f5-4c45-9d9c-031b2e8e43ef', '71ae0ceb-d8f5-4c45-9d9c-031b2e8e43ef', '{"sub": "71ae0ceb-d8f5-4c45-9d9c-031b2e8e43ef", "email": "sxzc@gmail.com", "email_verified": false, "phone_verified": false}', 'email', '2024-12-01 07:13:11.341744+00', '2024-12-01 07:13:11.341797+00', '2024-12-01 07:13:11.341797+00', '86005533-3db9-486d-82ce-9dfe13338fd3'),
-	('1c947692-2d9f-46b4-935e-dad1570df2e5', '1c947692-2d9f-46b4-935e-dad1570df2e5', '{"sub": "1c947692-2d9f-46b4-935e-dad1570df2e5", "email": "xxxsxzc@gmail.com", "email_verified": false, "phone_verified": false}', 'email', '2024-12-01 14:15:36.127342+00', '2024-12-01 14:15:36.127393+00', '2024-12-01 14:15:36.127393+00', '5c4a6f13-0f1a-404e-92b3-a1c23a5e08e0'),
-	('2c870618-b675-4fa8-b778-2b2084ce638b', '2c870618-b675-4fa8-b778-2b2084ce638b', '{"sub": "2c870618-b675-4fa8-b778-2b2084ce638b", "email": "22zzzzs110x248@student.hcmute.edu.vn", "email_verified": false, "phone_verified": false}', 'email', '2024-12-01 15:57:03.341415+00', '2024-12-01 15:57:03.34147+00', '2024-12-01 15:57:03.34147+00', '00784b9f-2181-4da1-8e3a-1503bd6f3a1c'),
-	('3c60f994-7a19-433c-ac8e-9fda8ff8d31a', '3c60f994-7a19-433c-ac8e-9fda8ff8d31a', '{"sub": "3c60f994-7a19-433c-ac8e-9fda8ff8d31a", "email": "abc@gmail.com", "email_verified": false, "phone_verified": false}', 'email', '2024-12-02 10:47:17.57127+00', '2024-12-02 10:47:17.571347+00', '2024-12-02 10:47:17.571347+00', '61ddcb05-f3e9-4086-acc2-4bb2fd8d051b'),
-	('d026dae4-ad41-4841-8982-51f4aab96b7b', 'd026dae4-ad41-4841-8982-51f4aab96b7b', '{"sub": "d026dae4-ad41-4841-8982-51f4aab96b7b", "email": "abc1@gmail.com", "email_verified": false, "phone_verified": false}', 'email', '2024-12-02 10:55:28.810913+00', '2024-12-02 10:55:28.810962+00', '2024-12-02 10:55:28.810962+00', '0132a8d9-c8b8-480b-9bf2-eb08c7567377'),
-	('00904af9-8b6f-4ba2-a0fa-ec52917b24f1', '00904af9-8b6f-4ba2-a0fa-ec52917b24f1', '{"sub": "00904af9-8b6f-4ba2-a0fa-ec52917b24f1", "email": "locn562836@gmail.com", "email_verified": false, "phone_verified": false}', 'email', '2024-12-02 11:34:31.837876+00', '2024-12-02 11:34:31.837921+00', '2024-12-02 11:34:31.837921+00', '0d420fa9-76ac-4c6e-a8c7-2a74e27e9b7b');
+	('cc42df65-e0f7-42ed-b1ed-b265e6f76251', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251', '{"sub": "cc42df65-e0f7-42ed-b1ed-b265e6f76251", "email": "locn562836@gmail.com", "email_verified": false, "phone_verified": false}', 'email', '2024-12-04 07:56:07.901082+00', '2024-12-04 07:56:07.901693+00', '2024-12-04 07:56:07.901693+00', '415e8d0d-91cd-4019-b78d-2ce07665beea');
 
 
 --
@@ -114,39 +110,9 @@ INSERT INTO "auth"."identities" ("provider_id", "user_id", "identity_data", "pro
 --
 
 INSERT INTO "auth"."sessions" ("id", "user_id", "created_at", "updated_at", "factor_id", "aal", "not_after", "refreshed_at", "user_agent", "ip", "tag") VALUES
-	('19015e31-9a18-4905-b279-536ad3ad4f30', '71ae0ceb-d8f5-4c45-9d9c-031b2e8e43ef', '2024-12-01 07:13:11.361947+00', '2024-12-01 07:13:11.361947+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '13.125.248.59', NULL),
-	('119f4ff3-3bb0-484b-909f-abe7441b8e57', '71ae0ceb-d8f5-4c45-9d9c-031b2e8e43ef', '2024-12-01 07:29:26.70694+00', '2024-12-01 07:29:26.70694+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '52.193.171.28', NULL),
-	('9a508de9-aaf8-424f-9fde-0dc9791cc6fd', '71ae0ceb-d8f5-4c45-9d9c-031b2e8e43ef', '2024-12-01 07:35:54.171382+00', '2024-12-01 07:35:54.171382+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '18.183.16.230', NULL),
-	('9a1f3a22-4819-4265-98f2-94cf2810f015', '1c947692-2d9f-46b4-935e-dad1570df2e5', '2024-12-01 14:15:36.136451+00', '2024-12-01 14:15:36.136451+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '13.231.233.233', NULL),
-	('dec9c466-e21c-427f-a430-f07fb76dcf42', '1c947692-2d9f-46b4-935e-dad1570df2e5', '2024-12-01 14:15:49.798297+00', '2024-12-01 14:15:49.798297+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '13.212.68.86', NULL),
-	('0256c4ef-4048-4780-9ab7-2977b26ff2db', '1c947692-2d9f-46b4-935e-dad1570df2e5', '2024-12-01 14:17:59.633099+00', '2024-12-01 14:17:59.633099+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '47.128.234.93', NULL),
-	('7a1db4b9-ce97-4e71-8f3a-4fa0c7e13008', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 15:57:03.352979+00', '2024-12-01 15:57:03.352979+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '13.125.62.21', NULL),
-	('701feaa9-1475-4f06-babf-9a6eefb65b22', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:05:06.447307+00', '2024-12-01 16:05:06.447307+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '13.125.62.21', NULL),
-	('a659fbfc-1858-4124-bfe1-5d05c6b804a7', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:05:49.240763+00', '2024-12-01 16:05:49.240763+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '18.142.125.243', NULL),
-	('20dae527-2014-49b2-a040-1ef1908b32f9', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:06:16.879545+00', '2024-12-01 16:06:16.879545+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '15.164.250.9', NULL),
-	('3bf48854-8fe7-4db4-b0b6-fbf613c3e2c5', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:06:38.329234+00', '2024-12-01 16:06:38.329234+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '47.129.248.113', NULL),
-	('a5160029-bf5b-48b9-91f6-ae8de85d99fe', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:06:56.901755+00', '2024-12-01 16:06:56.901755+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '18.176.53.113', NULL),
-	('96de7ee6-cc47-4ed4-8c7d-6980177cc1a1', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:07:10.224545+00', '2024-12-01 16:07:10.224545+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '13.125.62.21', NULL),
-	('4495418c-54a6-4f8d-9148-d91420925116', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:22:32.954845+00', '2024-12-01 16:22:32.954845+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '13.125.62.21', NULL),
-	('590e0420-1bc7-4766-8504-1185ef204a6a', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:23:42.379786+00', '2024-12-01 16:23:42.379786+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '13.115.191.10', NULL),
-	('2f607bbb-a811-4617-8250-d2c49693bd8f', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:23:49.500395+00', '2024-12-01 16:23:49.500395+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '15.164.250.9', NULL),
-	('cd56eaac-4ad8-4169-a777-2caec37451ed', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:26:50.530801+00', '2024-12-01 16:26:50.530801+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '54.180.2.195', NULL),
-	('78783f6c-07eb-428d-b8e4-2c9a3c93dc36', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:27:56.617753+00', '2024-12-01 16:27:56.617753+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '47.129.154.15', NULL),
-	('f623bde0-b839-4ceb-ad7a-a38f4da1eaf3', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:28:21.620302+00', '2024-12-01 16:28:21.620302+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '54.64.97.55', NULL),
-	('44222ef7-8d0c-46f1-a008-babb5f1403d9', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:28:38.982008+00', '2024-12-01 16:28:38.982008+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '54.180.240.189', NULL),
-	('eff4f3b9-717b-4d8a-ad3f-dba2fdb5e5b2', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:39:42.326266+00', '2024-12-01 16:39:42.326266+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '3.36.92.155', NULL),
-	('d16b5359-2c2d-41df-b8c8-3a6f268abaf7', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:42:57.008875+00', '2024-12-01 16:42:57.008875+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '18.143.152.101', NULL),
-	('6d0874cd-238c-48c3-95b7-ae3f60c7d47c', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:46:01.281298+00', '2024-12-01 16:46:01.281298+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '54.255.218.24', NULL),
-	('45a88987-92be-4b13-96cb-319dbb8efc48', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:46:16.124713+00', '2024-12-01 16:46:16.124713+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '54.255.226.210', NULL),
-	('8d329909-c19c-484f-bd85-f592bd2b277a', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:46:23.846549+00', '2024-12-01 16:46:23.846549+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '54.64.97.55', NULL),
-	('a811d287-8a14-4887-88e7-baa3f2c32f82', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:46:41.188933+00', '2024-12-01 16:46:41.188933+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '54.180.240.189', NULL),
-	('64948398-9a0e-471d-959a-aede9ad8f2a0', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 16:47:14.615291+00', '2024-12-01 16:47:14.615291+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '15.164.170.135', NULL),
-	('a934366a-5233-466c-9c52-31d147248864', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 19:00:18.750513+00', '2024-12-01 19:00:18.750513+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '13.212.68.86', NULL),
-	('e5c07df0-e352-40f3-aaeb-7dfaba4cfa72', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 19:19:06.186942+00', '2024-12-01 19:19:06.186942+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '3.36.92.155', NULL),
-	('d56878d2-4d3b-4b35-87f4-8519317b66a2', '2c870618-b675-4fa8-b778-2b2084ce638b', '2024-12-01 19:21:44.761135+00', '2024-12-01 19:21:44.761135+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '13.124.164.209', NULL),
-	('c4d23e32-6d5b-4c96-9dd6-5938986d6689', '3c60f994-7a19-433c-ac8e-9fda8ff8d31a', '2024-12-02 10:47:17.593447+00', '2024-12-02 10:47:17.593447+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '47.129.114.222', NULL),
-	('f7b23098-2403-4957-adbc-0044087c75ba', 'd026dae4-ad41-4841-8982-51f4aab96b7b', '2024-12-02 10:55:28.81915+00', '2024-12-02 10:55:28.81915+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '18.143.185.88', NULL),
-	('dd95a856-368f-4252-8dd8-4611d29a11a7', '00904af9-8b6f-4ba2-a0fa-ec52917b24f1', '2024-12-02 11:34:31.846369+00', '2024-12-02 11:34:31.846369+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.3)', '15.164.221.167', NULL);
+	('bb9d9721-f5ac-46ec-b06b-9d9205431d9a', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251', '2024-12-04 07:56:07.927067+00', '2024-12-04 07:56:07.927067+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '15.164.103.17', NULL),
+	('9563b457-160c-4b14-8a9d-3215a6377d55', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251', '2024-12-05 04:49:12.596673+00', '2024-12-05 04:49:12.596673+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '13.212.230.7', NULL),
+	('55f3c8de-f1fe-4501-a6a5-5696956141fc', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251', '2024-12-05 04:49:33.844446+00', '2024-12-05 04:49:33.844446+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '47.128.14.146', NULL);
 
 
 --
@@ -154,39 +120,9 @@ INSERT INTO "auth"."sessions" ("id", "user_id", "created_at", "updated_at", "fac
 --
 
 INSERT INTO "auth"."mfa_amr_claims" ("session_id", "created_at", "updated_at", "authentication_method", "id") VALUES
-	('19015e31-9a18-4905-b279-536ad3ad4f30', '2024-12-01 07:13:11.384717+00', '2024-12-01 07:13:11.384717+00', 'password', '01575540-d180-487b-8959-a48da7a961b1'),
-	('119f4ff3-3bb0-484b-909f-abe7441b8e57', '2024-12-01 07:29:26.710111+00', '2024-12-01 07:29:26.710111+00', 'password', 'd9313f68-0c10-4465-8304-71aecbe7af04'),
-	('9a508de9-aaf8-424f-9fde-0dc9791cc6fd', '2024-12-01 07:35:54.176006+00', '2024-12-01 07:35:54.176006+00', 'password', 'd292a8e1-e0b0-44ac-9387-e4391f9d9d13'),
-	('9a1f3a22-4819-4265-98f2-94cf2810f015', '2024-12-01 14:15:36.153419+00', '2024-12-01 14:15:36.153419+00', 'password', 'f08dd415-cd11-402a-b942-b5f10253c63a'),
-	('dec9c466-e21c-427f-a430-f07fb76dcf42', '2024-12-01 14:15:49.802866+00', '2024-12-01 14:15:49.802866+00', 'password', 'ef145227-4528-4623-9716-1520bb6febb2'),
-	('0256c4ef-4048-4780-9ab7-2977b26ff2db', '2024-12-01 14:17:59.640471+00', '2024-12-01 14:17:59.640471+00', 'password', '79891d64-c289-4b01-a364-c7f50b73b8c3'),
-	('7a1db4b9-ce97-4e71-8f3a-4fa0c7e13008', '2024-12-01 15:57:03.356289+00', '2024-12-01 15:57:03.356289+00', 'password', '7025a5bc-93a4-4ed9-8ed8-bbb0c65f0687'),
-	('701feaa9-1475-4f06-babf-9a6eefb65b22', '2024-12-01 16:05:06.450985+00', '2024-12-01 16:05:06.450985+00', 'password', 'e14133a4-cf1f-4bb0-9216-4f58ce063a65'),
-	('a659fbfc-1858-4124-bfe1-5d05c6b804a7', '2024-12-01 16:05:49.243341+00', '2024-12-01 16:05:49.243341+00', 'password', 'e89b0922-537f-4321-b3e3-7acd3f6f82d0'),
-	('20dae527-2014-49b2-a040-1ef1908b32f9', '2024-12-01 16:06:16.881413+00', '2024-12-01 16:06:16.881413+00', 'password', '70c8aac3-33f5-4630-9b5c-b1b4e3605e7a'),
-	('3bf48854-8fe7-4db4-b0b6-fbf613c3e2c5', '2024-12-01 16:06:38.331161+00', '2024-12-01 16:06:38.331161+00', 'password', '081bb261-e18e-4d00-832c-2a43b157634f'),
-	('a5160029-bf5b-48b9-91f6-ae8de85d99fe', '2024-12-01 16:06:56.903829+00', '2024-12-01 16:06:56.903829+00', 'password', 'c7ffba5e-6df5-4203-ac5b-f2d807643de0'),
-	('96de7ee6-cc47-4ed4-8c7d-6980177cc1a1', '2024-12-01 16:07:10.226645+00', '2024-12-01 16:07:10.226645+00', 'password', '6d8f1575-c2bc-47eb-aa4e-ae00f3f8b027'),
-	('4495418c-54a6-4f8d-9148-d91420925116', '2024-12-01 16:22:32.95981+00', '2024-12-01 16:22:32.95981+00', 'password', '63aab411-b516-432f-a0d7-f02bf896fe48'),
-	('590e0420-1bc7-4766-8504-1185ef204a6a', '2024-12-01 16:23:42.38279+00', '2024-12-01 16:23:42.38279+00', 'password', 'a1094a6b-fb37-477d-8076-96e8b2ce6b75'),
-	('2f607bbb-a811-4617-8250-d2c49693bd8f', '2024-12-01 16:23:49.502313+00', '2024-12-01 16:23:49.502313+00', 'password', '95999c0a-0a35-4ece-9eb8-88f39959b8c7'),
-	('cd56eaac-4ad8-4169-a777-2caec37451ed', '2024-12-01 16:26:50.533806+00', '2024-12-01 16:26:50.533806+00', 'password', '2b5df54e-8d10-4668-a81d-e5f82401aa64'),
-	('78783f6c-07eb-428d-b8e4-2c9a3c93dc36', '2024-12-01 16:27:56.620837+00', '2024-12-01 16:27:56.620837+00', 'password', 'e5776337-785c-4db3-a92c-bc980f5e1745'),
-	('f623bde0-b839-4ceb-ad7a-a38f4da1eaf3', '2024-12-01 16:28:21.622339+00', '2024-12-01 16:28:21.622339+00', 'password', '23e4f82b-d66b-44b6-91b8-1c3d0d0e8744'),
-	('44222ef7-8d0c-46f1-a008-babb5f1403d9', '2024-12-01 16:28:38.9839+00', '2024-12-01 16:28:38.9839+00', 'password', '666d1746-550e-4ed2-994e-ced5036e3ed3'),
-	('eff4f3b9-717b-4d8a-ad3f-dba2fdb5e5b2', '2024-12-01 16:39:42.329446+00', '2024-12-01 16:39:42.329446+00', 'password', '10de2350-81af-40d1-af3f-7c7f420d6a5c'),
-	('d16b5359-2c2d-41df-b8c8-3a6f268abaf7', '2024-12-01 16:42:57.01271+00', '2024-12-01 16:42:57.01271+00', 'password', 'b87a5c54-cd9d-4092-abe2-7e2d004959f9'),
-	('6d0874cd-238c-48c3-95b7-ae3f60c7d47c', '2024-12-01 16:46:01.286846+00', '2024-12-01 16:46:01.286846+00', 'password', '45d6ac72-4270-461a-b3a6-6c594e29d39d'),
-	('45a88987-92be-4b13-96cb-319dbb8efc48', '2024-12-01 16:46:16.126549+00', '2024-12-01 16:46:16.126549+00', 'password', '4af51a79-53b5-4d0f-bd04-cc714c34edc8'),
-	('8d329909-c19c-484f-bd85-f592bd2b277a', '2024-12-01 16:46:23.849219+00', '2024-12-01 16:46:23.849219+00', 'password', '27230f9a-f552-4f0b-9b14-4be79a3311af'),
-	('a811d287-8a14-4887-88e7-baa3f2c32f82', '2024-12-01 16:46:41.191706+00', '2024-12-01 16:46:41.191706+00', 'password', 'c68da698-f487-4a9e-8255-0cfaa4db9213'),
-	('64948398-9a0e-471d-959a-aede9ad8f2a0', '2024-12-01 16:47:14.617205+00', '2024-12-01 16:47:14.617205+00', 'password', 'a7a21488-def9-4d3c-8954-327a4152685a'),
-	('a934366a-5233-466c-9c52-31d147248864', '2024-12-01 19:00:18.75517+00', '2024-12-01 19:00:18.75517+00', 'password', 'a03049f2-5d9d-478f-b679-a0f582a0a621'),
-	('e5c07df0-e352-40f3-aaeb-7dfaba4cfa72', '2024-12-01 19:19:06.191823+00', '2024-12-01 19:19:06.191823+00', 'password', 'a0e0a330-6893-484d-8940-343ae9708899'),
-	('d56878d2-4d3b-4b35-87f4-8519317b66a2', '2024-12-01 19:21:44.764664+00', '2024-12-01 19:21:44.764664+00', 'password', '81124d65-9a6c-4096-8feb-765f12594b35'),
-	('c4d23e32-6d5b-4c96-9dd6-5938986d6689', '2024-12-02 10:47:17.620155+00', '2024-12-02 10:47:17.620155+00', 'password', 'a6a6da16-8147-48b6-976b-1e898aaabce5'),
-	('f7b23098-2403-4957-adbc-0044087c75ba', '2024-12-02 10:55:28.825964+00', '2024-12-02 10:55:28.825964+00', 'password', '660e1685-868a-4030-a6c9-96b90b124207'),
-	('dd95a856-368f-4252-8dd8-4611d29a11a7', '2024-12-02 11:34:31.853121+00', '2024-12-02 11:34:31.853121+00', 'password', '943b3e99-c415-459f-a7ea-aa0e301eeef5');
+	('bb9d9721-f5ac-46ec-b06b-9d9205431d9a', '2024-12-04 07:56:07.942324+00', '2024-12-04 07:56:07.942324+00', 'password', 'f5fe0355-799e-41c8-8160-3ff1a2e3c022'),
+	('9563b457-160c-4b14-8a9d-3215a6377d55', '2024-12-05 04:49:12.61684+00', '2024-12-05 04:49:12.61684+00', 'password', '41e247bd-a398-43bd-a243-ea9a18444e52'),
+	('55f3c8de-f1fe-4501-a6a5-5696956141fc', '2024-12-05 04:49:33.846984+00', '2024-12-05 04:49:33.846984+00', 'password', '234f1197-35b0-4b61-a7e8-01233c9534b4');
 
 
 --
@@ -212,39 +148,9 @@ INSERT INTO "auth"."mfa_amr_claims" ("session_id", "created_at", "updated_at", "
 --
 
 INSERT INTO "auth"."refresh_tokens" ("instance_id", "id", "token", "user_id", "revoked", "created_at", "updated_at", "parent", "session_id") VALUES
-	('00000000-0000-0000-0000-000000000000', 1, '00VcwTDQ4AihbElaPP2jVg', '71ae0ceb-d8f5-4c45-9d9c-031b2e8e43ef', false, '2024-12-01 07:13:11.369746+00', '2024-12-01 07:13:11.369746+00', NULL, '19015e31-9a18-4905-b279-536ad3ad4f30'),
-	('00000000-0000-0000-0000-000000000000', 2, 'RfWcKaCptEQ9TvaHl5cX9Q', '71ae0ceb-d8f5-4c45-9d9c-031b2e8e43ef', false, '2024-12-01 07:29:26.708011+00', '2024-12-01 07:29:26.708011+00', NULL, '119f4ff3-3bb0-484b-909f-abe7441b8e57'),
-	('00000000-0000-0000-0000-000000000000', 3, 'FL8JgaW68KVISWbzPBq9vQ', '71ae0ceb-d8f5-4c45-9d9c-031b2e8e43ef', false, '2024-12-01 07:35:54.173276+00', '2024-12-01 07:35:54.173276+00', NULL, '9a508de9-aaf8-424f-9fde-0dc9791cc6fd'),
-	('00000000-0000-0000-0000-000000000000', 4, 'iguQp2xpCPqq48VXL9vWpg', '1c947692-2d9f-46b4-935e-dad1570df2e5', false, '2024-12-01 14:15:36.142213+00', '2024-12-01 14:15:36.142213+00', NULL, '9a1f3a22-4819-4265-98f2-94cf2810f015'),
-	('00000000-0000-0000-0000-000000000000', 5, 'I_1DDc2xJHiZNF-A9fYf7A', '1c947692-2d9f-46b4-935e-dad1570df2e5', false, '2024-12-01 14:15:49.800221+00', '2024-12-01 14:15:49.800221+00', NULL, 'dec9c466-e21c-427f-a430-f07fb76dcf42'),
-	('00000000-0000-0000-0000-000000000000', 6, 'NAoJSpS7WYsNvW0WjC0nCg', '1c947692-2d9f-46b4-935e-dad1570df2e5', false, '2024-12-01 14:17:59.636226+00', '2024-12-01 14:17:59.636226+00', NULL, '0256c4ef-4048-4780-9ab7-2977b26ff2db'),
-	('00000000-0000-0000-0000-000000000000', 7, 'Mv92emjA_OhWSugrf_g8SA', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 15:57:03.353957+00', '2024-12-01 15:57:03.353957+00', NULL, '7a1db4b9-ce97-4e71-8f3a-4fa0c7e13008'),
-	('00000000-0000-0000-0000-000000000000', 8, 'k7MRZH32SCgcUhts8A1k4Q', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:05:06.448397+00', '2024-12-01 16:05:06.448397+00', NULL, '701feaa9-1475-4f06-babf-9a6eefb65b22'),
-	('00000000-0000-0000-0000-000000000000', 9, 'H3nXrcsz4AcoSheO5-kzvw', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:05:49.241491+00', '2024-12-01 16:05:49.241491+00', NULL, 'a659fbfc-1858-4124-bfe1-5d05c6b804a7'),
-	('00000000-0000-0000-0000-000000000000', 10, '-uN7C8qDU8a-O6272m5dOw', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:06:16.880231+00', '2024-12-01 16:06:16.880231+00', NULL, '20dae527-2014-49b2-a040-1ef1908b32f9'),
-	('00000000-0000-0000-0000-000000000000', 11, 'au8RDIeVjoIDqfURVVkNOA', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:06:38.32994+00', '2024-12-01 16:06:38.32994+00', NULL, '3bf48854-8fe7-4db4-b0b6-fbf613c3e2c5'),
-	('00000000-0000-0000-0000-000000000000', 12, 'WMeOaSeNy07lSQew_QkYuQ', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:06:56.902534+00', '2024-12-01 16:06:56.902534+00', NULL, 'a5160029-bf5b-48b9-91f6-ae8de85d99fe'),
-	('00000000-0000-0000-0000-000000000000', 13, '5GVkFV7ps_uYxkODew7HFw', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:07:10.225378+00', '2024-12-01 16:07:10.225378+00', NULL, '96de7ee6-cc47-4ed4-8c7d-6980177cc1a1'),
-	('00000000-0000-0000-0000-000000000000', 14, 'fbVaIoXIkrPvkIgQyOqh1w', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:22:32.956652+00', '2024-12-01 16:22:32.956652+00', NULL, '4495418c-54a6-4f8d-9148-d91420925116'),
-	('00000000-0000-0000-0000-000000000000', 15, 'EyRlqorceFsnxgCqMQiWEw', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:23:42.380844+00', '2024-12-01 16:23:42.380844+00', NULL, '590e0420-1bc7-4766-8504-1185ef204a6a'),
-	('00000000-0000-0000-0000-000000000000', 16, 'ONk7TLtG0RQd47lNtDYhLA', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:23:49.501121+00', '2024-12-01 16:23:49.501121+00', NULL, '2f607bbb-a811-4617-8250-d2c49693bd8f'),
-	('00000000-0000-0000-0000-000000000000', 17, 'SufgItabYLWizkZoYlEGug', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:26:50.531834+00', '2024-12-01 16:26:50.531834+00', NULL, 'cd56eaac-4ad8-4169-a777-2caec37451ed'),
-	('00000000-0000-0000-0000-000000000000', 18, 'ToGX1UfFC9UIMl6N2q0-BQ', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:27:56.6189+00', '2024-12-01 16:27:56.6189+00', NULL, '78783f6c-07eb-428d-b8e4-2c9a3c93dc36'),
-	('00000000-0000-0000-0000-000000000000', 19, 'Z2fI_LtBpgeP9mWS0swvaA', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:28:21.621077+00', '2024-12-01 16:28:21.621077+00', NULL, 'f623bde0-b839-4ceb-ad7a-a38f4da1eaf3'),
-	('00000000-0000-0000-0000-000000000000', 20, 'zzFtOHqKJwV03qWeR5gAjw', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:28:38.982735+00', '2024-12-01 16:28:38.982735+00', NULL, '44222ef7-8d0c-46f1-a008-babb5f1403d9'),
-	('00000000-0000-0000-0000-000000000000', 21, 'DySl6AV4KETwtE3NxeaNUA', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:39:42.327406+00', '2024-12-01 16:39:42.327406+00', NULL, 'eff4f3b9-717b-4d8a-ad3f-dba2fdb5e5b2'),
-	('00000000-0000-0000-0000-000000000000', 22, 'V4vD1mZhlx4UwhDTfrp9tA', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:42:57.009928+00', '2024-12-01 16:42:57.009928+00', NULL, 'd16b5359-2c2d-41df-b8c8-3a6f268abaf7'),
-	('00000000-0000-0000-0000-000000000000', 23, 'DggiUGTqiS7rGJGCUntZfQ', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:46:01.283994+00', '2024-12-01 16:46:01.283994+00', NULL, '6d0874cd-238c-48c3-95b7-ae3f60c7d47c'),
-	('00000000-0000-0000-0000-000000000000', 24, 'giV6zCOArhSWylMACIWXTA', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:46:16.125387+00', '2024-12-01 16:46:16.125387+00', NULL, '45a88987-92be-4b13-96cb-319dbb8efc48'),
-	('00000000-0000-0000-0000-000000000000', 25, 'BMRN3CW58TsJuxR6JHweQg', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:46:23.847267+00', '2024-12-01 16:46:23.847267+00', NULL, '8d329909-c19c-484f-bd85-f592bd2b277a'),
-	('00000000-0000-0000-0000-000000000000', 26, 'ENFMic683CZHmMyvW3l_zQ', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:46:41.189916+00', '2024-12-01 16:46:41.189916+00', NULL, 'a811d287-8a14-4887-88e7-baa3f2c32f82'),
-	('00000000-0000-0000-0000-000000000000', 27, '0yFHHnT4ymmu-H-d0CRDkA', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 16:47:14.616014+00', '2024-12-01 16:47:14.616014+00', NULL, '64948398-9a0e-471d-959a-aede9ad8f2a0'),
-	('00000000-0000-0000-0000-000000000000', 28, 'ed4XpC_IHCCaInT-cWM_Hw', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 19:00:18.7524+00', '2024-12-01 19:00:18.7524+00', NULL, 'a934366a-5233-466c-9c52-31d147248864'),
-	('00000000-0000-0000-0000-000000000000', 29, 'ov5tJbbHvDkf0WzOuDijLA', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 19:19:06.189295+00', '2024-12-01 19:19:06.189295+00', NULL, 'e5c07df0-e352-40f3-aaeb-7dfaba4cfa72'),
-	('00000000-0000-0000-0000-000000000000', 30, '08CUpUfTwGD-lvDavDgjfA', '2c870618-b675-4fa8-b778-2b2084ce638b', false, '2024-12-01 19:21:44.76291+00', '2024-12-01 19:21:44.76291+00', NULL, 'd56878d2-4d3b-4b35-87f4-8519317b66a2'),
-	('00000000-0000-0000-0000-000000000000', 31, '9HcW2IZY-dV1eVkS5Zx6mw', '3c60f994-7a19-433c-ac8e-9fda8ff8d31a', false, '2024-12-02 10:47:17.599536+00', '2024-12-02 10:47:17.599536+00', NULL, 'c4d23e32-6d5b-4c96-9dd6-5938986d6689'),
-	('00000000-0000-0000-0000-000000000000', 32, 'EHR3l0pnMMHvG-o8GCZzKQ', 'd026dae4-ad41-4841-8982-51f4aab96b7b', false, '2024-12-02 10:55:28.821812+00', '2024-12-02 10:55:28.821812+00', NULL, 'f7b23098-2403-4957-adbc-0044087c75ba'),
-	('00000000-0000-0000-0000-000000000000', 33, 'QTUv_QgssbtQwa4qM6imLA', '00904af9-8b6f-4ba2-a0fa-ec52917b24f1', false, '2024-12-02 11:34:31.848607+00', '2024-12-02 11:34:31.848607+00', NULL, 'dd95a856-368f-4252-8dd8-4611d29a11a7');
+	('00000000-0000-0000-0000-000000000000', 34, 'iynp32Wv5MHsXQzBhiC7GQ', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251', false, '2024-12-04 07:56:07.934082+00', '2024-12-04 07:56:07.934082+00', NULL, 'bb9d9721-f5ac-46ec-b06b-9d9205431d9a'),
+	('00000000-0000-0000-0000-000000000000', 35, 'fomHlMB7-d_v9uTrtWwkYw', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251', false, '2024-12-05 04:49:12.603743+00', '2024-12-05 04:49:12.603743+00', NULL, '9563b457-160c-4b14-8a9d-3215a6377d55'),
+	('00000000-0000-0000-0000-000000000000', 36, 'Upi37Rkb5BdpHpc5BKIc1A', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251', false, '2024-12-05 04:49:33.845153+00', '2024-12-05 04:49:33.845153+00', NULL, '55f3c8de-f1fe-4501-a6a5-5696956141fc');
 
 
 --
@@ -287,13 +193,14 @@ INSERT INTO "auth"."refresh_tokens" ("instance_id", "id", "token", "user_id", "r
 -- Data for Name: address; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."address" ("address_id", "street_number", "street", "district", "city", "location", "created_at", "ward") VALUES
-	('943691b1-a64c-4841-a67e-c6486e55ad6b', NULL, NULL, NULL, NULL, NULL, '2024-12-01 07:13:11.806107', NULL),
-	('ea38e229-90be-4455-82c2-95894b4c6edc', NULL, NULL, NULL, NULL, NULL, '2024-12-01 14:15:36.607485', NULL),
-	('d1a7ea0c-2653-442a-8a99-a32b30c5f587', NULL, NULL, NULL, NULL, NULL, '2024-12-01 15:57:03.741008', NULL),
-	('5bfa25e7-c1ab-407e-a2ab-324ee3395a87', NULL, NULL, NULL, NULL, NULL, '2024-12-02 10:47:17.794125', NULL),
-	('855f32ef-28a7-4ed4-8dbb-affae5fc45e9', NULL, NULL, NULL, NULL, NULL, '2024-12-02 10:55:28.96222', NULL),
-	('014491ab-e6ab-43a6-a83a-7cc87e993c86', NULL, NULL, NULL, NULL, NULL, '2024-12-02 11:34:32.318366', NULL);
+INSERT INTO "public"."address" ("address_id", "street_number", "street", "district", "city", "location", "created_at", "ward", "latitude", "longitude") VALUES
+	('943691b1-a64c-4841-a67e-c6486e55ad6b', NULL, NULL, NULL, NULL, NULL, '2024-12-01 07:13:11.806107', NULL, NULL, NULL),
+	('ea38e229-90be-4455-82c2-95894b4c6edc', NULL, NULL, NULL, NULL, NULL, '2024-12-01 14:15:36.607485', NULL, NULL, NULL),
+	('d1a7ea0c-2653-442a-8a99-a32b30c5f587', NULL, NULL, NULL, NULL, NULL, '2024-12-01 15:57:03.741008', NULL, NULL, NULL),
+	('5bfa25e7-c1ab-407e-a2ab-324ee3395a87', NULL, NULL, NULL, NULL, NULL, '2024-12-02 10:47:17.794125', NULL, NULL, NULL),
+	('855f32ef-28a7-4ed4-8dbb-affae5fc45e9', NULL, NULL, NULL, NULL, NULL, '2024-12-02 10:55:28.96222', NULL, NULL, NULL),
+	('014491ab-e6ab-43a6-a83a-7cc87e993c86', NULL, NULL, NULL, NULL, NULL, '2024-12-02 11:34:32.318366', NULL, NULL, NULL),
+	('66c88780-1b42-4a1d-8a49-b68b18e2c408', NULL, NULL, NULL, NULL, NULL, '2024-12-04 07:56:08.417762', NULL, NULL, NULL);
 
 
 --
@@ -306,10 +213,18 @@ INSERT INTO "public"."address" ("address_id", "street_number", "street", "distri
 -- Data for Name: volunteerprofiles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO "public"."volunteerprofiles" ("id", "user_id", "assignedtask", "skills") VALUES
+	('9f760921-4297-48e4-aa2f-08b377df37cf', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251', NULL, 'bưng bê, thể lực tốt');
 
 
 --
 -- Data for Name: assignment; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: donation; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
@@ -330,28 +245,26 @@ INSERT INTO "public"."geometries" ("name", "geom") VALUES
 -- Data for Name: place; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."place" ("id", "created_at", "place_type", "additional_info", "location", "radius") VALUES
-	('550e8400-e29b-41d4-a716-446655440000', '2024-12-02 10:00:00+00', 'restaurant', NULL, '0101000020E61000001FF64201DB7B52C0B610E4A0845D4440', 5),
-	('550e8400-e29b-41d4-a716-446655440001', '2024-12-02 10:30:00+00', 'cafe', NULL, '0101000020E6100000AAF1D24D628052C05E4BC8073D5B4440', 3),
-	('550e8400-e29b-41d4-a716-446655440002', '2024-12-02 11:00:00+00', 'park', NULL, '0101000020E6100000448B6CE7FB7D52C0780B24287E644440', 10),
-	('550e8400-e29b-41d4-a716-446655440003', '2024-12-02 11:30:00+00', 'museum', NULL, '0101000020E610000003780B24287E52C04F401361C3634440', 2),
-	('550e8400-e29b-41d4-a716-446655440004', '2024-12-02 12:00:00+00', 'hotel', NULL, '0101000020E61000002D211FF46C7E52C039B4C876BE5F4440', 50),
-	('550e8400-e29b-41d4-a716-446655440005', '2024-12-02 12:30:00+00', 'store', NULL, '0101000020E61000002FDD2406817D52C042CF66D5E75A4440', 5),
-	('550e8400-e29b-41d4-a716-446655440006', '2024-12-02 13:00:00+00', 'gym', NULL, '0101000020E610000005A3923A018152C02E90A0F8315E4440', 3.5),
-	('550e8400-e29b-41d4-a716-446655440007', '2024-12-02 13:30:00+00', 'restaurant', NULL, '0101000020E610000007CE1951DA7B52C01B2FDD2406614440', 7),
-	('550e8400-e29b-41d4-a716-446655440008', '2024-12-02 14:00:00+00', 'cafe', NULL, '0101000020E610000012A5BDC1177E52C07A36AB3E57634440', 2.5),
-	('550e8400-e29b-41d4-a716-446655440009', '2024-12-02 14:30:00+00', 'library', NULL, '0101000020E61000009D8026C2867F52C095D40968225C4440', 1.5),
-	('550e8400-e29b-41d4-a716-446655440010', '2024-12-02 15:00:00+00', 'movie_theater', NULL, '0101000020E6100000AC8BDB68007F52C0B6F3FDD478614440', 3),
-	('550e8400-e29b-41d4-a716-446655440011', '2024-12-02 15:30:00+00', 'restaurant', NULL, '0101000020E6100000D8F0F44A597E52C0D3BCE3141D614440', 6),
-	('550e8400-e29b-41d4-a716-446655440012', '2024-12-02 16:00:00+00', 'mall', NULL, '0101000020E610000024B9FC87F47F52C082E2C798BB5E4440', 20),
-	('550e8400-e29b-41d4-a716-446655440013', '2024-12-02 16:30:00+00', 'hotel', NULL, '0101000020E6100000462575029A8052C011363CBD525E4440', 30),
-	('550e8400-e29b-41d4-a716-446655440014', '2024-12-02 17:00:00+00', 'store', NULL, '0101000020E6100000933A014D847D52C0FE43FAEDEB604440', 2),
-	('550e8400-e29b-41d4-a716-446655440015', '2024-12-02 17:30:00+00', 'gym', NULL, '0101000020E61000005BB1BFEC9E7C52C012A5BDC1175E4440', 4),
-	('550e8400-e29b-41d4-a716-446655440016', '2024-12-02 18:00:00+00', 'restaurant', NULL, '0101000020E6100000C8073D9B557F52C068226C787A5D4440', 5),
-	('550e8400-e29b-41d4-a716-446655440017', '2024-12-02 18:30:00+00', 'park', NULL, '0101000020E61000001FF46C567D7E52C00DE02D90A0604440', 15),
-	('550e8400-e29b-41d4-a716-446655440018', '2024-12-02 19:00:00+00', 'museum', NULL, '0101000020E6100000F931E6AE257C52C097FF907EFB5A4440', 2.5),
-	('550e8400-e29b-41d4-a716-446655440019', '2024-12-02 19:30:00+00', 'cafe', NULL, '0101000020E61000006C09F9A0677F52C0D7A3703D0A5F4440', 4),
-	('550e8400-e29b-41d4-a716-446655440020', '2024-12-02 20:00:00+00', 'restaurant', NULL, '0101000020E61000006688635DDC7E52C046B6F3FDD4604440', 8);
+INSERT INTO "public"."place" ("id", "created_at", "place_type", "additional_info", "location", "radius", "lattitude", "longitude") VALUES
+	('00b587dc-d46c-4519-9f25-d05510bad85d', '2024-12-04 06:57:20.842873+00', 'thiên tai', '{"Ghi chú":"Vùng ngập lụt Lâm Đồng"}', '0101000020E61000000000000000205B400000000000002740', 950, 11.5, 108.5),
+	('39664ae7-de11-4295-b858-8c41e1522d6d', '2024-12-04 06:57:20.842873+00', 'an toàn', '{"note": "Khu tránh bão Phú Quốc"}', '0101000020E6100000E5D022DBF9FE59408638D6C56D942440', 500, 10.2899, 103.984),
+	('1051aa07-ac50-46cf-a68c-12bcffb091d7', '2024-12-04 06:57:20.842873+00', 'cứu trợ', '{"note": "Trung tâm cứu trợ Cà Mau"}', '0101000020E6100000F4FDD478E92E5A404850FC1873F72140', 300, 8.9833, 104.733),
+	('6b1e4ef9-7113-4f30-b7ef-3b0441bae2c4', '2024-12-04 06:57:20.842873+00', 'thiên tai', '{"note": "Vùng ngập lụt Bến Tre"}', '0101000020E6100000736891ED7C975A4008AC1C5A647B2440', 1000, 10.241, 106.367),
+	('8f4b5b34-a55c-4551-ac36-c23708850594', '2024-12-04 06:57:20.842873+00', 'an toàn', '{"note": "Khu sơ tán Vĩnh Long"}', '0101000020E610000083C0CAA1457E5A40A8C64B3789812440', 400, 10.253, 105.973),
+	('f57abf03-9a40-48f2-a477-9e3e11073f60', '2024-12-04 06:57:20.842873+00', 'cứu trợ', '{"note": "Trạm y tế khẩn cấp Hậu Giang"}', '0101000020E61000000000000000605A409A99999999992340', 250, 9.8, 105.5),
+	('d5a1055a-0204-4534-8424-6d1a6a0c727e', '2024-12-04 06:57:20.842873+00', 'thiên tai', '{"note": "Vùng sạt lở An Giang"}', '0101000020E61000006666666666465A400000000000002540', 800, 10.5, 105.1),
+	('688a4b16-4994-474c-b238-ac29c2df5b76', '2024-12-04 06:57:20.842873+00', 'an toàn', '{"note": "Khu tránh bão Kiên Giang"}', '0101000020E61000000000000000205A409A99999999992440', 600, 10.3, 104.5),
+	('b9f49e78-338c-487d-8395-ecd8568ead89', '2024-12-04 06:57:20.842873+00', 'cứu trợ', '{"note": "Trung tâm cứu hộ Sóc Trăng"}', '0101000020E6100000CDCCCCCCCC7C5A403333333333332340', 350, 9.6, 105.95),
+	('92838f3d-f93f-439c-9ef8-e87f9c943c17', '2024-12-04 06:57:20.842873+00', 'thiên tai', '{"note": "Vùng ngập úng Long An"}', '0101000020E61000003333333333935A400000000000002540', 1200, 10.5, 106.3),
+	('7487cfd0-d50a-40a3-938e-f8e8d5e44e27', '2024-12-04 06:57:20.842873+00', 'an toàn', '{"note": "Khu sơ tán Đồng Tháp"}', '0101000020E61000006666666666665A409A99999999992440', 550, 10.3, 105.6),
+	('942bcd8e-295c-4a33-9a59-2a498d536631', '2024-12-04 06:57:20.842873+00', 'cứu trợ', '{"note": "Trạm cấp cứu Bạc Liêu"}', '0101000020E61000000000000000705A406666666666662240', 400, 9.2, 105.75),
+	('0a1aa258-64ba-4e06-ad13-07caf36297d5', '2024-12-04 06:57:20.842873+00', 'thiên tai', '{"note": "Vùng lũ quét Trà Vinh"}', '0101000020E61000006666666666965A40CDCCCCCCCCCC2340', 900, 9.9, 106.35),
+	('a6868283-f1eb-49f7-93c1-471afb2b8f18', '2024-12-04 06:57:20.842873+00', 'an toàn', '{"note": "Khu tránh thiên tai Bình Dương"}', '0101000020E61000003333333333B35A400000000000002640', 700, 11, 106.8),
+	('688d4b6c-c7cd-4212-878a-9c283b1edd83', '2024-12-04 06:57:20.842873+00', 'cứu trợ', '{"note": "Điểm tiếp viện Tây Ninh"}', '0101000020E61000006666666666865A409A99999999992640', 300, 11.3, 106.1),
+	('4f9c8418-b554-4ac6-b1b5-c5a53e5f27c7', '2024-12-04 06:57:20.842873+00', 'thiên tai', '{"note": "Vùng sạt lở Bình Phước"}', '0101000020E61000000000000000A05A400000000000002740', 1300, 11.5, 106.5),
+	('f673d9df-bd8b-42b8-8934-f787c6e0fc7f', '2024-12-04 06:57:20.842873+00', 'an toàn', '{"note": "Khu sơ tán Đắk Lắk"}', '0101000020E61000000000000000205B400000000000002840', 400, 12, 108.5),
+	('dba7e78e-3105-4205-b114-facf50b5efde', '2024-12-04 06:57:20.842873+00', 'cứu trợ', '{"note": "Trung tâm ứng phó khẩn cấp Đắk Nông"}', '0101000020E61000000000000000E05A400000000000002940', 250, 12.5, 107.5),
+	('2d06c879-0d86-4da4-ba0f-cb380a4d4ce2', '2024-12-04 06:57:20.842873+00', 'an toàn', '{"note": "Khu tránh bão Ninh Thuận"}', '0101000020E61000003333333333335B403333333333332740', NULL, 11.6, 108);
 
 
 --
@@ -378,14 +291,24 @@ INSERT INTO "public"."issue_event" ("id", "created_at", "place_id", "title", "de
 -- Data for Name: notification; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."notification" ("id", "title", "content", "type", "sendtype") VALUES
-	('cb27dbd7-bdc2-4dc9-b938-bc3b22e86230', 'Toan lon', 'Loan ton', 'Emergency', 'All');
+INSERT INTO "public"."notification" ("id", "title", "content", "type", "sendtype", "created_at") VALUES
+	('35a52e14-dbe0-4340-80e9-39ab274411f5', 'title', 'body Huu Loc', 'Emergency', NULL, '2024-12-04 07:16:58.12161+00'),
+	('b8483c73-1635-4a0c-801e-305d11ab1946', 'title', 'body Huu Loc', 'Emergency', NULL, '2024-12-04 07:17:47.902495+00'),
+	('74d9f2c4-ee64-4b60-a80e-56bdf3e0de90', 'title', 'body {name}', 'Emergency', NULL, '2024-12-04 08:38:07.545061+00'),
+	('59659e55-8ae0-4177-af22-b9dbb28eb9db', 'title', 'body {name}', 'Emergency', NULL, '2024-12-04 09:18:42.620184+00'),
+	('fe6d7fbc-0d4f-45f0-922c-b7e86157754e', 'title', 'body {name}', 'Emergency', NULL, '2024-12-04 09:49:33.384469+00'),
+	('5f824bfd-42aa-4deb-bded-9fd914ac7323', 'title', 'Con chó {name}', 'Emergency', NULL, '2024-12-04 09:52:29.52696+00');
 
 
 --
 -- Data for Name: notification_user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO "public"."notification_user" ("notification_id", "to_user_id") VALUES
+	('74d9f2c4-ee64-4b60-a80e-56bdf3e0de90', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251'),
+	('59659e55-8ae0-4177-af22-b9dbb28eb9db', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251'),
+	('fe6d7fbc-0d4f-45f0-922c-b7e86157754e', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251'),
+	('5f824bfd-42aa-4deb-bded-9fd914ac7323', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251');
 
 
 --
@@ -404,9 +327,8 @@ INSERT INTO "public"."notification" ("id", "title", "content", "type", "sendtype
 -- Data for Name: user_profiles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."user_profiles" ("profile_id", "user_id", "fullname", "address_id", "created_at", "citizen_id", "email") VALUES
-	('45dbfc85-c9c0-4f6e-9cb9-345a24c7f7e4', 'd026dae4-ad41-4841-8982-51f4aab96b7b', 'Nguyen Huu Loc', '855f32ef-28a7-4ed4-8dbb-affae5fc45e9', '2024-12-02 10:55:29.045894', NULL, 'abc1@gmail.com'),
-	('db4801a4-2b54-4870-a396-9db869f3171e', '00904af9-8b6f-4ba2-a0fa-ec52917b24f1', 'Nguyen Huu Loc', '014491ab-e6ab-43a6-a83a-7cc87e993c86', '2024-12-02 11:34:32.676926', NULL, 'locn562836@gmail.com');
+INSERT INTO "public"."user_profiles" ("profile_id", "user_id", "fullname", "address_id", "created_at", "citizen_id", "email", "phone") VALUES
+	('178b50eb-a81f-408e-9916-5bae3ac8a05f', 'cc42df65-e0f7-42ed-b1ed-b265e6f76251', 'Nguyen Huu Loc', '66c88780-1b42-4a1d-8a49-b68b18e2c408', '2024-12-04 07:56:08.767844', NULL, 'locn562836@gmail.com', '0565564250');
 
 
 --
@@ -414,12 +336,7 @@ INSERT INTO "public"."user_profiles" ("profile_id", "user_id", "fullname", "addr
 --
 
 INSERT INTO "public"."user_roles" ("user_id", "role") VALUES
-	('1c947692-2d9f-46b4-935e-dad1570df2e5', 'user'),
-	('71ae0ceb-d8f5-4c45-9d9c-031b2e8e43ef', 'admin'),
-	('2c870618-b675-4fa8-b778-2b2084ce638b', 'admin'),
-	('3c60f994-7a19-433c-ac8e-9fda8ff8d31a', 'user'),
-	('d026dae4-ad41-4841-8982-51f4aab96b7b', 'user'),
-	('00904af9-8b6f-4ba2-a0fa-ec52917b24f1', 'user');
+	('cc42df65-e0f7-42ed-b1ed-b265e6f76251', 'user');
 
 
 --
@@ -458,7 +375,7 @@ INSERT INTO "storage"."buckets" ("id", "name", "owner", "created_at", "updated_a
 -- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
 --
 
-SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 33, true);
+SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 36, true);
 
 
 --

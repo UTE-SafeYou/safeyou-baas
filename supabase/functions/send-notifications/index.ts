@@ -24,19 +24,29 @@ app.post('/send-notifications', async (req, res) => {
       return res.status(404).json({ error: "No recipients found" });
     }
 
-    const messages: NotificationMessage[] = destinations.map((dest) => ({
-      email: dest.email,
-      user_id: dest.user_id,
-      title: reqBody.title,
-      body: replacePlaceholders(reqBody.body, dest.additional_info),
-      htmlBody: createEmailTemplate(
-        reqBody.title,
-        replacePlaceholders(reqBody.body, dest.additional_info)
-      )
-    }));
+    const supabaseService = SupabaseService.getInstance();
+    const userProfiles = await supabaseService.getUserProfiles(destinations.map(d => d.user_id));
+    
+    const messages: NotificationMessage[] = destinations.map((dest) => {
+      const userProfile = userProfiles.find(p => p.user_id === dest.user_id);
+      if (!userProfile?.email) {
+        throw new Error(`No email found for user: ${dest.user_id}`);
+      }
+      
+      return {
+        email: userProfile.email,
+        phone: userProfile.phone,
+        user_id: dest.user_id,
+        title: reqBody.title,
+        body: replacePlaceholders(reqBody.body, dest.additional_info),
+        htmlBody: createEmailTemplate(
+          reqBody.title,
+          replacePlaceholders(reqBody.body, dest.additional_info)
+        )
+      };
+    });
 
     const rabbitMQService = RabbitMQService.getInstance();
-    const supabaseService = SupabaseService.getInstance();
 
     try {
       // Insert into database first
