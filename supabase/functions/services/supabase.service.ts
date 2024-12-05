@@ -32,7 +32,7 @@ export class SupabaseService {
             })
             .select('id, title, content, report_type, urgency, meta_data, address_id')
             .single();
-        
+
         if (error) throw error;
         return data;
     }
@@ -52,7 +52,7 @@ export class SupabaseService {
             })
             .select('id, title, description, required_skills, urgency, start_date, end_date, task_status, address_id')
             .single();
-        
+
         if (error) throw error;
         return data;
     }
@@ -67,7 +67,8 @@ export class SupabaseService {
                 district: address.district,
                 city: address.city,
                 latitude,
-                longitude
+                longitude,
+                location: `SRID=4326;POINT(${longitude} ${latitude})`
             })
             .select('address_id, street_number, street, ward, district, city')  // Select id instead of address_id
             .single();
@@ -81,9 +82,9 @@ export class SupabaseService {
         if (!addressData?.address_id) {
             throw new Error('Failed to get address id');
         }
-        return await this.insertReport({ 
-            ...report, 
-            address_id: addressData.address_id 
+        return await this.insertReport({
+            ...report,
+            address_id: addressData.address_id
         });
     }
 
@@ -92,8 +93,8 @@ export class SupabaseService {
         if (!addressData?.address_id) {
             throw new Error('Failed to get address id');
         }
-        return await this.insertTask({ 
-            ...task, 
+        return await this.insertTask({
+            ...task,
             address_id: addressData.address_id
         });
     }
