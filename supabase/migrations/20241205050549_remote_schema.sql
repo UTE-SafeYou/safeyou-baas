@@ -10,9 +10,9 @@ alter table "public"."task" drop column "taskstatus";
 
 alter table "public"."task" add column "address_id" uuid not null;
 
-alter table "public"."task" add column "end_date" timestamp without time zone not null;
+alter table "public"."task" add column "end_date" timestamp without time zone ;
 
-alter table "public"."task" add column "start_date" timestamp without time zone not null;
+alter table "public"."task" add column "start_date" timestamp without time zone;
 
 alter table "public"."task" add column "task_status" taskstatus not null;
 

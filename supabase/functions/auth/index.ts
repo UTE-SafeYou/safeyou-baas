@@ -61,7 +61,7 @@ app.post('/auth/sign-up', async (req, res) => {
     return;
   }
 
-  
+
   let { data: { user }, error } = await supabase.auth.signUp({
     email: email,
     phone: phone,
