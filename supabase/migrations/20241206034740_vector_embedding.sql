@@ -1,6 +1,10 @@
-create type "public"."visibility_enum" as enum ('public', 'private', 'protected');
+do $$ begin
+    create type "public"."visibility_enum" as enum ('public', 'private', 'protected');
+exception
+    when duplicate_object then null;
+end $$;
 
-create table "public"."documents" (
+create table if not exists "public"."documents" (
     "id" uuid not null default gen_random_uuid(),
     "visibility" visibility_enum not null,
     "category" text,
@@ -11,12 +15,11 @@ create table "public"."documents" (
     "updated_at" timestamp without time zone default CURRENT_TIMESTAMP
 );
 
+CREATE INDEX if not exists documents_embedding_index ON public.documents USING ivfflat (embedding vector_cosine_ops);
 
-CREATE INDEX documents_embedding_index ON public.documents USING ivfflat (embedding vector_cosine_ops);
+CREATE UNIQUE INDEX if not exists documents_pkey ON public.documents USING btree (id);
 
-CREATE UNIQUE INDEX documents_pkey ON public.documents USING btree (id);
-
-alter table "public"."documents" add constraint "documents_pkey" PRIMARY KEY using index "documents_pkey";
+alter table if exists "public"."documents" add constraint "documents_pkey" PRIMARY KEY using index "documents_pkey";
 
 set check_function_bodies = off;
 
