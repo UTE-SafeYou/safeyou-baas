@@ -50,7 +50,7 @@ async function signUpUser(req, res, role) {
   } = req.body
 
   if (!email || !password) {
-    res.status(400).json({ error: 'E2mail and password are required' })
+    res.status(400).json({ error: 'Email and password are required' })
     return;
   }
   if (!fullname) {
