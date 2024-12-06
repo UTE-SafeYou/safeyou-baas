@@ -27,7 +27,7 @@ app.post('/vector/embedding', async (req, res) => {
 )
 
 app.listen(port, () => {
-  console.log(`I'm healthy now 🌱 ${Deno.env.get('GEMINI_API_KEY')}`);
+  console.log(`I'm healthy now 🌱`);
 
   (async () => {
     const text = "Hello, world!";
