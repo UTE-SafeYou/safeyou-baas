@@ -51,7 +51,12 @@ INSERT INTO "auth"."audit_log_entries" ("instance_id", "id", "payload", "created
 	('00000000-0000-0000-0000-000000000000', '07097d82-8e3a-4ae1-b8b1-fb81f75b2ef9', '{"action":"login","actor_id":"3ffd668d-8871-47ff-aefa-2b55afad5f26","actor_username":"watanabilinlin@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 01:27:51.240303+00', ''),
 	('00000000-0000-0000-0000-000000000000', '8509713b-af0f-4bbc-8fc5-2cba706de301', '{"action":"login","actor_id":"3ffd668d-8871-47ff-aefa-2b55afad5f26","actor_username":"watanabilinlin@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 03:27:27.67038+00', ''),
 	('00000000-0000-0000-0000-000000000000', '4d170e0f-a447-48ec-81ba-06f393fe80f1', '{"action":"user_repeated_signup","actor_id":"668f130c-e8bf-41d7-b9a6-239c9e0cf4a1","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"user","traits":{"provider":"email"}}', '2024-12-07 03:29:30.347679+00', ''),
-	('00000000-0000-0000-0000-000000000000', 'ed423ec8-8215-4fe5-8cf7-76d9f7ba68a2', '{"action":"login","actor_id":"668f130c-e8bf-41d7-b9a6-239c9e0cf4a1","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 03:29:41.697423+00', '');
+	('00000000-0000-0000-0000-000000000000', 'ed423ec8-8215-4fe5-8cf7-76d9f7ba68a2', '{"action":"login","actor_id":"668f130c-e8bf-41d7-b9a6-239c9e0cf4a1","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 03:29:41.697423+00', ''),
+	('00000000-0000-0000-0000-000000000000', 'dcf336c1-074a-4286-b09d-5868f78783ba', '{"action":"login","actor_id":"668f130c-e8bf-41d7-b9a6-239c9e0cf4a1","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 03:46:15.862908+00', ''),
+	('00000000-0000-0000-0000-000000000000', '97b54b2c-7ba8-49c3-90d0-cf200fdf3441', '{"action":"login","actor_id":"3ffd668d-8871-47ff-aefa-2b55afad5f26","actor_username":"watanabilinlin@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 04:03:24.472063+00', ''),
+	('00000000-0000-0000-0000-000000000000', 'a1b1a5c2-9392-47ff-99da-a009eae5fb63', '{"action":"login","actor_id":"3ffd668d-8871-47ff-aefa-2b55afad5f26","actor_username":"watanabilinlin@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 06:05:04.460878+00', ''),
+	('00000000-0000-0000-0000-000000000000', 'f8e1efed-9769-4c2f-9f80-d44605e33b8f', '{"action":"login","actor_id":"3ffd668d-8871-47ff-aefa-2b55afad5f26","actor_username":"watanabilinlin@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 06:08:05.288939+00', ''),
+	('00000000-0000-0000-0000-000000000000', 'c13e20cf-97f1-4b2a-993f-860e15afc27a', '{"action":"login","actor_id":"3ffd668d-8871-47ff-aefa-2b55afad5f26","actor_username":"watanabilinlin@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 06:09:26.249709+00', '');
 
 
 --
@@ -66,8 +71,8 @@ INSERT INTO "auth"."audit_log_entries" ("instance_id", "id", "payload", "created
 
 INSERT INTO "auth"."users" ("instance_id", "id", "aud", "role", "email", "encrypted_password", "email_confirmed_at", "invited_at", "confirmation_token", "confirmation_sent_at", "recovery_token", "recovery_sent_at", "email_change_token_new", "email_change", "email_change_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change", "phone_change_token", "phone_change_sent_at", "email_change_token_current", "email_change_confirm_status", "banned_until", "reauthentication_token", "reauthentication_sent_at", "is_sso_user", "deleted_at", "is_anonymous") VALUES
 	('00000000-0000-0000-0000-000000000000', '6ca30b44-a094-4919-81a1-c17d4310a637', 'authenticated', 'authenticated', 'safeyou@gmail.com', '$2a$10$lOYHQoRr0AFAvEMG9mtXu.x5AwlQ4fvO6A2LeSH5i6o7o5mpBxksy', '2024-12-06 05:42:52.332564+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-06 07:47:35.132368+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "6ca30b44-a094-4919-81a1-c17d4310a637", "email": "safeyou@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-06 05:42:52.31865+00', '2024-12-06 07:47:35.137073+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
-	('00000000-0000-0000-0000-000000000000', '3ffd668d-8871-47ff-aefa-2b55afad5f26', 'authenticated', 'authenticated', 'watanabilinlin@gmail.com', '$2a$10$nv2t/jWKsgXBzIXxK1ZsEOS5gzpD/L7RXQeeWuuKB4pPi2dwNeP2G', '2024-12-06 03:14:00.114766+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-07 03:27:27.680603+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "3ffd668d-8871-47ff-aefa-2b55afad5f26", "email": "watanabilinlin@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-06 03:14:00.056985+00', '2024-12-07 03:27:27.69674+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
-	('00000000-0000-0000-0000-000000000000', '668f130c-e8bf-41d7-b9a6-239c9e0cf4a1', 'authenticated', 'authenticated', 'locn562836@gmail.com', '$2a$10$vQ24O6gS7BQ/001yicJiXexrEjtWFLmDCuXTDVhm48AmuYbs/IFLq', '2024-12-06 03:17:43.852119+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-07 03:29:41.698707+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "668f130c-e8bf-41d7-b9a6-239c9e0cf4a1", "email": "locn562836@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-06 03:17:43.839156+00', '2024-12-07 03:29:41.704106+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
+	('00000000-0000-0000-0000-000000000000', '3ffd668d-8871-47ff-aefa-2b55afad5f26', 'authenticated', 'authenticated', 'watanabilinlin@gmail.com', '$2a$10$nv2t/jWKsgXBzIXxK1ZsEOS5gzpD/L7RXQeeWuuKB4pPi2dwNeP2G', '2024-12-06 03:14:00.114766+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-07 06:09:26.25067+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "3ffd668d-8871-47ff-aefa-2b55afad5f26", "email": "watanabilinlin@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-06 03:14:00.056985+00', '2024-12-07 06:09:26.255236+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+	('00000000-0000-0000-0000-000000000000', '668f130c-e8bf-41d7-b9a6-239c9e0cf4a1', 'authenticated', 'authenticated', 'locn562836@gmail.com', '$2a$10$vQ24O6gS7BQ/001yicJiXexrEjtWFLmDCuXTDVhm48AmuYbs/IFLq', '2024-12-06 03:17:43.852119+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-07 03:46:15.863953+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "668f130c-e8bf-41d7-b9a6-239c9e0cf4a1", "email": "locn562836@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-06 03:17:43.839156+00', '2024-12-07 03:46:15.866614+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
 
 
 --
@@ -106,7 +111,12 @@ INSERT INTO "auth"."sessions" ("id", "user_id", "created_at", "updated_at", "fac
 	('6301362b-7efb-4779-8356-480b1bdebacd', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-06 13:35:46.464392+00', '2024-12-06 13:35:46.464392+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '13.212.174.76', NULL),
 	('7531033f-7c6e-4272-808c-7fcba85517c5', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-07 01:27:51.256384+00', '2024-12-07 01:27:51.256384+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '52.221.228.207', NULL),
 	('28245ea4-f89c-4e62-86cb-9c74083eb00b', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-07 03:27:27.681223+00', '2024-12-07 03:27:27.681223+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '47.129.173.206', NULL),
-	('aaa0a761-2685-4e89-b127-204386ef44eb', '668f130c-e8bf-41d7-b9a6-239c9e0cf4a1', '2024-12-07 03:29:41.698781+00', '2024-12-07 03:29:41.698781+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '47.129.174.33', NULL);
+	('aaa0a761-2685-4e89-b127-204386ef44eb', '668f130c-e8bf-41d7-b9a6-239c9e0cf4a1', '2024-12-07 03:29:41.698781+00', '2024-12-07 03:29:41.698781+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '47.129.174.33', NULL),
+	('d76bcd91-204a-4b53-abca-72ec7d03d457', '668f130c-e8bf-41d7-b9a6-239c9e0cf4a1', '2024-12-07 03:46:15.864028+00', '2024-12-07 03:46:15.864028+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '54.238.155.8', NULL),
+	('3a907947-c109-4af1-aab7-8c8bd0d62995', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-07 04:03:24.473122+00', '2024-12-07 04:03:24.473122+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '47.129.174.33', NULL),
+	('19c54121-5bb5-44a8-bcfd-f000669f9fc2', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-07 06:05:04.472407+00', '2024-12-07 06:05:04.472407+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '47.128.248.198', NULL),
+	('5b2792b1-d603-4645-98b5-abbc8763d26b', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-07 06:08:05.291625+00', '2024-12-07 06:08:05.291625+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '54.255.248.211', NULL),
+	('624143d9-b602-44ea-8491-7976e1d7ebd8', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-07 06:09:26.251461+00', '2024-12-07 06:09:26.251461+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '47.129.195.221', NULL);
 
 
 --
@@ -129,7 +139,12 @@ INSERT INTO "auth"."mfa_amr_claims" ("session_id", "created_at", "updated_at", "
 	('6301362b-7efb-4779-8356-480b1bdebacd', '2024-12-06 13:35:46.476299+00', '2024-12-06 13:35:46.476299+00', 'password', '73ceb5a7-7411-4aec-bf31-c4f0559db211'),
 	('7531033f-7c6e-4272-808c-7fcba85517c5', '2024-12-07 01:27:51.284992+00', '2024-12-07 01:27:51.284992+00', 'password', 'f449b17d-115f-47b0-ad8b-4d073c0343b2'),
 	('28245ea4-f89c-4e62-86cb-9c74083eb00b', '2024-12-07 03:27:27.697515+00', '2024-12-07 03:27:27.697515+00', 'password', 'e4433c69-363b-470f-b5f1-7272c675a2a7'),
-	('aaa0a761-2685-4e89-b127-204386ef44eb', '2024-12-07 03:29:41.704815+00', '2024-12-07 03:29:41.704815+00', 'password', '54a90651-19d8-4a6e-81d2-b19bfc52fcc8');
+	('aaa0a761-2685-4e89-b127-204386ef44eb', '2024-12-07 03:29:41.704815+00', '2024-12-07 03:29:41.704815+00', 'password', '54a90651-19d8-4a6e-81d2-b19bfc52fcc8'),
+	('d76bcd91-204a-4b53-abca-72ec7d03d457', '2024-12-07 03:46:15.867844+00', '2024-12-07 03:46:15.867844+00', 'password', '24fff49c-77b0-4b98-ae8c-a979ffedf4ea'),
+	('3a907947-c109-4af1-aab7-8c8bd0d62995', '2024-12-07 04:03:24.476106+00', '2024-12-07 04:03:24.476106+00', 'password', '9cec0bea-69c2-405b-aead-8054d6e6ef99'),
+	('19c54121-5bb5-44a8-bcfd-f000669f9fc2', '2024-12-07 06:05:04.489509+00', '2024-12-07 06:05:04.489509+00', 'password', 'f6d72469-8a6c-44d1-93e1-bf5c62f284eb'),
+	('5b2792b1-d603-4645-98b5-abbc8763d26b', '2024-12-07 06:08:05.300023+00', '2024-12-07 06:08:05.300023+00', 'password', '2a40afe1-b70d-42bc-97cb-098d49aedc05'),
+	('624143d9-b602-44ea-8491-7976e1d7ebd8', '2024-12-07 06:09:26.255915+00', '2024-12-07 06:09:26.255915+00', 'password', '9a38cd44-2e83-46f0-8e2e-c75006d5d41c');
 
 
 --
@@ -170,7 +185,12 @@ INSERT INTO "auth"."refresh_tokens" ("instance_id", "id", "token", "user_id", "r
 	('00000000-0000-0000-0000-000000000000', 14, 'VkMJY-C2sDVIiWtX7n4nDw', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-06 13:35:46.467578+00', '2024-12-06 13:35:46.467578+00', NULL, '6301362b-7efb-4779-8356-480b1bdebacd'),
 	('00000000-0000-0000-0000-000000000000', 15, '2BueyQKgaHh-wvYz3e93gA', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-07 01:27:51.267291+00', '2024-12-07 01:27:51.267291+00', NULL, '7531033f-7c6e-4272-808c-7fcba85517c5'),
 	('00000000-0000-0000-0000-000000000000', 16, 'Z4kFomP7PhkZryN_T-3cXQ', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-07 03:27:27.685723+00', '2024-12-07 03:27:27.685723+00', NULL, '28245ea4-f89c-4e62-86cb-9c74083eb00b'),
-	('00000000-0000-0000-0000-000000000000', 17, 'FQLOciMtsBMKv9KhG9u9fg', '668f130c-e8bf-41d7-b9a6-239c9e0cf4a1', false, '2024-12-07 03:29:41.700503+00', '2024-12-07 03:29:41.700503+00', NULL, 'aaa0a761-2685-4e89-b127-204386ef44eb');
+	('00000000-0000-0000-0000-000000000000', 17, 'FQLOciMtsBMKv9KhG9u9fg', '668f130c-e8bf-41d7-b9a6-239c9e0cf4a1', false, '2024-12-07 03:29:41.700503+00', '2024-12-07 03:29:41.700503+00', NULL, 'aaa0a761-2685-4e89-b127-204386ef44eb'),
+	('00000000-0000-0000-0000-000000000000', 18, '5IRxWqDSEMbtl21EeuPxeA', '668f130c-e8bf-41d7-b9a6-239c9e0cf4a1', false, '2024-12-07 03:46:15.8652+00', '2024-12-07 03:46:15.8652+00', NULL, 'd76bcd91-204a-4b53-abca-72ec7d03d457'),
+	('00000000-0000-0000-0000-000000000000', 19, 'kk-zBMLJhIeIvS60yR-DrQ', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-07 04:03:24.474219+00', '2024-12-07 04:03:24.474219+00', NULL, '3a907947-c109-4af1-aab7-8c8bd0d62995'),
+	('00000000-0000-0000-0000-000000000000', 20, 'R3LTHrQwaESUXomE-Xcm6A', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-07 06:05:04.479065+00', '2024-12-07 06:05:04.479065+00', NULL, '19c54121-5bb5-44a8-bcfd-f000669f9fc2'),
+	('00000000-0000-0000-0000-000000000000', 21, 'V4fDGr8GGrBfcr1krBy7sA', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-07 06:08:05.295656+00', '2024-12-07 06:08:05.295656+00', NULL, '5b2792b1-d603-4645-98b5-abbc8763d26b'),
+	('00000000-0000-0000-0000-000000000000', 22, 'fsq35Jt4BQdYlu6Eajlgcg', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-07 06:09:26.252685+00', '2024-12-07 06:09:26.252685+00', NULL, '624143d9-b602-44ea-8491-7976e1d7ebd8');
 
 
 --
@@ -228,7 +248,9 @@ INSERT INTO "public"."address" ("address_id", "street_number", "street", "distri
 	('b4a79ee0-bfcf-4e29-b16f-ed83440caa98', '', '', '', '', NULL, '2024-12-06 05:42:52.420483', NULL, NULL, NULL),
 	('7748267b-9d5b-4556-83e4-4673608629ae', 'Đường Cây Sộp', 'Mỹ An', 'Tiền Giang', 'Mỹ Tho', '0101000020E6100000000000000000F87F0F4AF3226EBD2440', '2024-12-07 02:40:36.541899', 'Mỹ phong', 10.369981, NULL),
 	('79a56b5e-aa48-4421-ac81-be512e95902f', 'Đường Cây Sộp', 'Mỹ An', 'Tiền Giang', 'Mỹ Tho', '0101000020E61000007DCA31595C975A400F4AF3226EBD2440', '2024-12-07 02:42:48.74411', 'Mỹ phong', 10.369981, 106.36501),
-	('68a57702-8b83-4aaf-a48b-606eff8f086a', '93D', 'Nguyễn Tri Phương', 'Tiền Giang', 'Mỹ Tho', '0101000020E6100000DED6CC107D975A404B3CA06CCAB92440', '2024-12-07 03:11:38.080892', '1', 10.362872, 106.36701);
+	('68a57702-8b83-4aaf-a48b-606eff8f086a', '93D', 'Nguyễn Tri Phương', 'Tiền Giang', 'Mỹ Tho', '0101000020E6100000DED6CC107D975A404B3CA06CCAB92440', '2024-12-07 03:11:38.080892', '1', 10.362872, 106.36701),
+	('4c384653-7642-4f34-96a6-3753923ed9d4', '1', 'Võ Văn Ngân', 'Thủ Đức', 'Hồ Chí Minh', '0101000020E6100000C641CF7A59B05A40D6469610CFB32540', '2024-12-07 04:05:44.450185', 'Linh Chiểu', 10.85119, 106.75546),
+	('ded96203-ce31-4616-ab4a-803bfbf44fe2', '01', 'Võ Văn Ngân', 'Thủ Đức', 'Hồ Chí Minh', '0101000020E6100000C641CF7A59B05A40D6469610CFB32540', '2024-12-07 04:07:02.459857', 'Linh Chiểu', 10.85119, 106.75546);
 
 
 --
@@ -252,13 +274,16 @@ INSERT INTO "public"."task" ("id", "title", "description", "required_skills", "u
 --
 
 INSERT INTO "public"."volunteerprofiles" ("id", "user_id", "assignedtask", "skills") VALUES
-	('63faefc9-1b1c-4afd-a3a7-031ed6134a75', '3ffd668d-8871-47ff-aefa-2b55afad5f26', NULL, 'văn nghệ, tháo vát');
+	('63faefc9-1b1c-4afd-a3a7-031ed6134a75', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '{3493905e-3dbb-4b13-84cb-354dbe02d7c8,6ec01bf0-12df-4169-8048-04e873fa9649,3ef415fc-8dec-47fc-b6ac-cb713d17e128,bac9e734-a2b9-493d-b847-3e4442568a36,c246a82d-548c-4624-a54c-2ed069b9eccc,c097d916-f4f7-4a2a-8aa6-714a781a5a98,d48d6f5c-9447-475f-b8aa-2043f1668f20}', 'văn nghệ, tháo vát');
 
 
 --
 -- Data for Name: assignment; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO "public"."assignment" ("id", "status", "completiondate", "assigneddate", "feedback", "task_id", "volunteer_profile_id") VALUES
+	('c097d916-f4f7-4a2a-8aa6-714a781a5a98', 'TODO', NULL, '2024-12-07 07:53:02.46771', NULL, '98c43daf-0f0a-4d27-94d0-afae113b9adc', '63faefc9-1b1c-4afd-a3a7-031ed6134a75'),
+	('d48d6f5c-9447-475f-b8aa-2043f1668f20', 'TODO', NULL, '2024-12-07 07:53:21.570593', NULL, '98c43daf-0f0a-4d27-94d0-afae113b9adc', '63faefc9-1b1c-4afd-a3a7-031ed6134a75');
 
 
 --
@@ -292,6 +317,17 @@ INSERT INTO "public"."documents" ("id", "visibility", "category", "title", "cont
 -- Data for Name: donation; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO "public"."donation" ("id", "role", "fullname", "email", "phonenumber", "cango", "mask", "rice", "noodle", "vegetable", "meat", "address_id") VALUES
+	('f0a940f4-5626-489c-9a9c-382c2ea9beb2', 'RECEIVER', 'Nguyễn Văn A', 'nguyenvana@example.com', '0901234567', true, 5.5, 10, 3, 2, 4, '3d3692ba-7d9e-457a-a582-7a76a7e4de26'),
+	('25db64e9-1d69-48d5-b345-60ba186485b1', 'GIVER', 'Trần Thị B', 'tranthib@example.com', '0912345678', true, 2, 8, 4.5, 3, 5, '3d3692ba-7d9e-457a-a582-7a76a7e4de26'),
+	('e2f31ebe-2d89-48c3-ba8c-a88693af6385', 'RECEIVER', 'Lê Minh C', 'leminhc@example.com', '0923456789', false, 3.5, 7, 2, 1, 2.5, '3d3692ba-7d9e-457a-a582-7a76a7e4de26'),
+	('3a409bb3-86bf-4468-9d5e-f98ba50c6163', 'GIVER', 'Phan Hữu D', 'phanhuud@example.com', '0934567890', true, 1, 6, 3.5, 4, 6, '3d3692ba-7d9e-457a-a582-7a76a7e4de26'),
+	('1126d45c-8c06-4d35-8c3e-a8b01f789fb1', 'RECEIVER', 'Hoàng Thị E', 'hoangthie@example.com', '0945678901', true, 4, 5.5, 3.5, 1.5, 4.5, '3d3692ba-7d9e-457a-a582-7a76a7e4de26'),
+	('158c5e66-053f-4ae1-93a0-3411c81e942c', 'GIVER', 'Vũ Minh F', 'vuminhf@example.com', '0956789012', true, 6, 9.5, 4, 2.5, 3, '3d3692ba-7d9e-457a-a582-7a76a7e4de26'),
+	('558d9f41-b17c-4be6-be7e-d5c7359ae95e', 'RECEIVER', 'Bùi Thị G', 'buihig@example.com', '0967890123', false, 2.5, 4, 3, 2, 1.5, '3d3692ba-7d9e-457a-a582-7a76a7e4de26'),
+	('f5d85c68-f6fa-49dd-90bb-cc7de0f1c47b', 'GIVER', 'Ngô Văn H', 'ngovanh@example.com', '0978901234', true, 3, 7.5, 5, 1, 2, '3d3692ba-7d9e-457a-a582-7a76a7e4de26'),
+	('96ee42f7-66a4-4732-b517-9ad912086271', 'RECEIVER', 'Đỗ Minh I', 'dominhi@example.com', '0989012345', true, 4.5, 6, 2.5, 3.5, 2, '3d3692ba-7d9e-457a-a582-7a76a7e4de26'),
+	('e61e3a11-db39-4a4d-88d6-5197676e0ed2', 'GIVER', 'Phạm Thị J', 'phamthij@example.com', '0990123456', true, 3.5, 8, 4.5, 2.5, 5.5, '3d3692ba-7d9e-457a-a582-7a76a7e4de26');
 
 
 --
@@ -337,7 +373,9 @@ INSERT INTO "public"."notification_user" ("notification_id", "to_user_id") VALUE
 
 INSERT INTO "public"."report" ("id", "created_at", "urgency", "meta_data", "title", "report_type", "content", "address_id") VALUES
 	('982c0f1f-87a3-47de-a605-def8542690e5', '2024-12-06 03:23:32.198532+00', 'HIGH', NULL, 'a', 'Dịch bệnh', 'a', 'a57edc13-e84c-4d1a-ba3b-2a17aaec8d53'),
-	('6ecb3788-0ab4-44f2-80e6-652cdb7d2988', '2024-12-06 03:24:59.964059+00', 'HIGH', NULL, 'a', 'Dịch bệnh', 'a', '33c77d21-9ea1-4058-96ab-7aebbd8dbca2');
+	('6ecb3788-0ab4-44f2-80e6-652cdb7d2988', '2024-12-06 03:24:59.964059+00', 'HIGH', NULL, 'a', 'Dịch bệnh', 'a', '33c77d21-9ea1-4058-96ab-7aebbd8dbca2'),
+	('abffb99d-508b-4018-b6d4-d1a6f0ad0b2d', '2024-12-07 04:05:44.526584+00', 'HIGH', NULL, 'sadfaf', 'Dịch bệnh', 'waef', '4c384653-7642-4f34-96a6-3753923ed9d4'),
+	('a5fb8817-b6ee-4ce8-9e81-5c559515a5cb', '2024-12-07 04:07:02.53297+00', 'HIGH', NULL, 'sdf', 'Dịch bệnh', 'wef', 'ded96203-ce31-4616-ab4a-803bfbf44fe2');
 
 
 --
@@ -380,13 +418,16 @@ text:"showCreateDocshowCreateDocshowCreateDoc"');
 --
 
 INSERT INTO "storage"."buckets" ("id", "name", "owner", "created_at", "updated_at", "public", "avif_autodetection", "file_size_limit", "allowed_mime_types", "owner_id") VALUES
-	('places', 'places', NULL, '2024-12-02 10:15:56.043835+00', '2024-12-02 10:15:56.043835+00', false, false, NULL, NULL, NULL);
+	('places', 'places', NULL, '2024-12-02 10:15:56.043835+00', '2024-12-02 10:15:56.043835+00', false, false, NULL, NULL, NULL),
+	('posts', 'posts', NULL, '2024-12-07 05:53:09.21322+00', '2024-12-07 05:53:09.21322+00', false, false, NULL, NULL, NULL);
 
 
 --
 -- Data for Name: objects; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
 --
 
+INSERT INTO "storage"."objects" ("id", "bucket_id", "name", "owner", "created_at", "updated_at", "last_accessed_at", "metadata", "version", "owner_id", "user_metadata") VALUES
+	('82c85c13-6e7f-4c1a-a5e2-fced8daf2a90', 'posts', 'strapi/.emptyFolderPlaceholder', NULL, '2024-12-07 05:57:20.987725+00', '2024-12-07 05:57:20.987725+00', '2024-12-07 05:57:20.987725+00', '{"eTag": "\"d41d8cd98f00b204e9800998ecf8427e\"", "size": 0, "mimetype": "application/octet-stream", "cacheControl": "max-age=3600", "lastModified": "2024-12-07T05:57:21.000Z", "contentLength": 0, "httpStatusCode": 200}', '9a21c2ac-9679-43a7-b019-2cd61e7a7812', NULL, '{}');
 
 
 --
@@ -411,7 +452,7 @@ INSERT INTO "storage"."buckets" ("id", "name", "owner", "created_at", "updated_a
 -- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
 --
 
-SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 17, true);
+SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 22, true);
 
 
 --
