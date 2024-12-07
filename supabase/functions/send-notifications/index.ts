@@ -1,14 +1,16 @@
 import express from 'npm:express@4.18.2'
-import { RequestBody, NotificationMessage } from './types.ts'
 import { RabbitMQService } from './services/rabbitmq.service.ts'
 import { SupabaseService } from './services/supabase.service.ts'
-import { replacePlaceholders, createEmailTemplate } from './utils.ts'
+import { NotificationMessage, RequestBody } from './types.ts'
+import { createEmailTemplate, replacePlaceholders } from './utils.ts'
 
 const app = express()
 app.use(express.json())
 const port = 3000
 
 app.post('/send-notifications', async (req, res) => {
+  const auth = await requireAdmin(req);
+  if (auth instanceof Response) return auth;
   const reqBody: RequestBody = req.body;
   let notificationId: number | null = null;
 

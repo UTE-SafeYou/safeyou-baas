@@ -1,20 +1,21 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { Report } from '../shared/types.ts'
-import { SupabaseService } from '../services/supabase.service.ts'
 import { AddressValidationService } from '../services/address-validation.service.ts'
+import { authenticateRequest } from '../services/auth.middleware.ts'
 import { GeocodeService } from '../services/geocode.service.ts'
+import { createErrorResponse, createResponse } from '../services/http.util.ts'
 import { ReportValidationService } from '../services/report-validation.service.ts'
+import { SupabaseService } from '../services/supabase.service.ts'
 
 serve(async (req) => {
   try {
     if (req.method !== 'POST') {
-      return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-        status: 405,
-        headers: { 'Content-Type': 'application/json' }
-      })
+      return createErrorResponse('Method not allowed', 405);
     }
 
-    const { address, report } = await req.json()
+    const auth = await authenticateRequest(req);
+    if (auth instanceof Response) return auth;
+
+    const { address, report } = await req.json();
     
     const addressValidation = AddressValidationService.validateAddress(address)
     if (!addressValidation.isValid) {
@@ -42,20 +43,16 @@ serve(async (req) => {
     const { latitude, longitude } = await geocodeService.getCoordinates(address)
 
     const supabaseService = SupabaseService.getInstance()
-    const data = await supabaseService.insertReportWithAddress(report, address, latitude, longitude)
+    const data = await supabaseService.insertReportWithAddress(
+      { ...report, reported_by: auth.user.id },
+      address,
+      latitude,
+      longitude
+    );
 
-    return new Response(JSON.stringify({ success: true, data }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    })
+    return createResponse(data);
   } catch (error) {
-    console.error('Error:', error)
-    return new Response(JSON.stringify({ 
-      success: false, 
-      error: error.message 
-    }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    })
+    console.error('Error:', error);
+    return createErrorResponse(error.message, 500);
   }
 })

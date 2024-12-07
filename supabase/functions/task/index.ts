@@ -1,18 +1,19 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { Task } from '../shared/types.ts'
-import { SupabaseService } from '../services/supabase.service.ts'
 import { AddressValidationService } from '../services/address-validation.service.ts'
+import { requireAdmin } from '../services/auth.middleware.ts'
 import { GeocodeService } from '../services/geocode.service.ts'
+import { createErrorResponse, createResponse } from '../services/http.util.ts'
+import { SupabaseService } from '../services/supabase.service.ts'
 import { TaskValidationService } from '../services/task-validation.service.ts'
 
 serve(async (req) => {
   try {
     if (req.method !== 'POST') {
-      return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-        status: 405,
-        headers: { 'Content-Type': 'application/json' }
-      })
+      return createErrorResponse('Method not allowed', 405);
     }
+
+    const auth = await requireAdmin(req);
+    if (auth instanceof Response) return auth;
 
     const { address, task } = await req.json()
     
@@ -42,20 +43,16 @@ serve(async (req) => {
     const { latitude, longitude } = await geocodeService.getCoordinates(address)
 
     const supabaseService = SupabaseService.getInstance()
-    const data = await supabaseService.insertTaskWithAddress(task, address, latitude, longitude)
+    const data = await supabaseService.insertTaskWithAddress(
+      { ...task, created_by: auth.user.id },  // Add user ID to task
+      address,
+      latitude,
+      longitude
+    )
 
-    return new Response(JSON.stringify({ success: true, data }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    })
+    return createResponse(data);
   } catch (error) {
-    console.error('Error:', error)
-    return new Response(JSON.stringify({ 
-      success: false, 
-      error: error.message 
-    }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    })
+    console.error('Error:', error);
+    return createErrorResponse(error.message, 500);
   }
 })

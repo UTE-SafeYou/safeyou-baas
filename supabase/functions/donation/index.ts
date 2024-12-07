@@ -41,7 +41,12 @@ serve(async (req) => {
     const { latitude, longitude } = await geocodeService.getCoordinates(address)
 
     const supabaseService = SupabaseService.getInstance()
-    const data = await supabaseService.insertDonationWithAddress(donation, address, latitude, longitude)
+    const data = await supabaseService.insertDonationWithAddress(
+      { ...donation, donated_by: user.id },  // Add user ID to donation
+      address,
+      latitude,
+      longitude
+    )
 
     return new Response(JSON.stringify({ success: true, data }), {
       status: 200,

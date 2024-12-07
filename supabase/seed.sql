@@ -48,7 +48,10 @@ INSERT INTO "auth"."audit_log_entries" ("instance_id", "id", "payload", "created
 	('00000000-0000-0000-0000-000000000000', 'b8bc37ec-a89a-4dcf-b1c9-45ae39fcb2fd', '{"action":"login","actor_id":"3ffd668d-8871-47ff-aefa-2b55afad5f26","actor_username":"watanabilinlin@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-06 12:06:49.069892+00', ''),
 	('00000000-0000-0000-0000-000000000000', 'ddc8dc7a-42d8-4c92-8692-ef9b81b64e7d', '{"action":"login","actor_id":"3ffd668d-8871-47ff-aefa-2b55afad5f26","actor_username":"watanabilinlin@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-06 13:01:16.560777+00', ''),
 	('00000000-0000-0000-0000-000000000000', '1ad2b858-a270-43e4-b577-c93336ed382b', '{"action":"login","actor_id":"3ffd668d-8871-47ff-aefa-2b55afad5f26","actor_username":"watanabilinlin@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-06 13:35:46.456366+00', ''),
-	('00000000-0000-0000-0000-000000000000', '07097d82-8e3a-4ae1-b8b1-fb81f75b2ef9', '{"action":"login","actor_id":"3ffd668d-8871-47ff-aefa-2b55afad5f26","actor_username":"watanabilinlin@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 01:27:51.240303+00', '');
+	('00000000-0000-0000-0000-000000000000', '07097d82-8e3a-4ae1-b8b1-fb81f75b2ef9', '{"action":"login","actor_id":"3ffd668d-8871-47ff-aefa-2b55afad5f26","actor_username":"watanabilinlin@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 01:27:51.240303+00', ''),
+	('00000000-0000-0000-0000-000000000000', '8509713b-af0f-4bbc-8fc5-2cba706de301', '{"action":"login","actor_id":"3ffd668d-8871-47ff-aefa-2b55afad5f26","actor_username":"watanabilinlin@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 03:27:27.67038+00', ''),
+	('00000000-0000-0000-0000-000000000000', '4d170e0f-a447-48ec-81ba-06f393fe80f1', '{"action":"user_repeated_signup","actor_id":"668f130c-e8bf-41d7-b9a6-239c9e0cf4a1","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"user","traits":{"provider":"email"}}', '2024-12-07 03:29:30.347679+00', ''),
+	('00000000-0000-0000-0000-000000000000', 'ed423ec8-8215-4fe5-8cf7-76d9f7ba68a2', '{"action":"login","actor_id":"668f130c-e8bf-41d7-b9a6-239c9e0cf4a1","actor_username":"locn562836@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}', '2024-12-07 03:29:41.697423+00', '');
 
 
 --
@@ -63,8 +66,8 @@ INSERT INTO "auth"."audit_log_entries" ("instance_id", "id", "payload", "created
 
 INSERT INTO "auth"."users" ("instance_id", "id", "aud", "role", "email", "encrypted_password", "email_confirmed_at", "invited_at", "confirmation_token", "confirmation_sent_at", "recovery_token", "recovery_sent_at", "email_change_token_new", "email_change", "email_change_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change", "phone_change_token", "phone_change_sent_at", "email_change_token_current", "email_change_confirm_status", "banned_until", "reauthentication_token", "reauthentication_sent_at", "is_sso_user", "deleted_at", "is_anonymous") VALUES
 	('00000000-0000-0000-0000-000000000000', '6ca30b44-a094-4919-81a1-c17d4310a637', 'authenticated', 'authenticated', 'safeyou@gmail.com', '$2a$10$lOYHQoRr0AFAvEMG9mtXu.x5AwlQ4fvO6A2LeSH5i6o7o5mpBxksy', '2024-12-06 05:42:52.332564+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-06 07:47:35.132368+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "6ca30b44-a094-4919-81a1-c17d4310a637", "email": "safeyou@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-06 05:42:52.31865+00', '2024-12-06 07:47:35.137073+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
-	('00000000-0000-0000-0000-000000000000', '668f130c-e8bf-41d7-b9a6-239c9e0cf4a1', 'authenticated', 'authenticated', 'locn562836@gmail.com', '$2a$10$vQ24O6gS7BQ/001yicJiXexrEjtWFLmDCuXTDVhm48AmuYbs/IFLq', '2024-12-06 03:17:43.852119+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-06 03:17:43.855151+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "668f130c-e8bf-41d7-b9a6-239c9e0cf4a1", "email": "locn562836@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-06 03:17:43.839156+00', '2024-12-06 03:17:43.860299+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
-	('00000000-0000-0000-0000-000000000000', '3ffd668d-8871-47ff-aefa-2b55afad5f26', 'authenticated', 'authenticated', 'watanabilinlin@gmail.com', '$2a$10$nv2t/jWKsgXBzIXxK1ZsEOS5gzpD/L7RXQeeWuuKB4pPi2dwNeP2G', '2024-12-06 03:14:00.114766+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-07 01:27:51.256303+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "3ffd668d-8871-47ff-aefa-2b55afad5f26", "email": "watanabilinlin@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-06 03:14:00.056985+00', '2024-12-07 01:27:51.281744+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
+	('00000000-0000-0000-0000-000000000000', '3ffd668d-8871-47ff-aefa-2b55afad5f26', 'authenticated', 'authenticated', 'watanabilinlin@gmail.com', '$2a$10$nv2t/jWKsgXBzIXxK1ZsEOS5gzpD/L7RXQeeWuuKB4pPi2dwNeP2G', '2024-12-06 03:14:00.114766+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-07 03:27:27.680603+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "3ffd668d-8871-47ff-aefa-2b55afad5f26", "email": "watanabilinlin@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-06 03:14:00.056985+00', '2024-12-07 03:27:27.69674+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+	('00000000-0000-0000-0000-000000000000', '668f130c-e8bf-41d7-b9a6-239c9e0cf4a1', 'authenticated', 'authenticated', 'locn562836@gmail.com', '$2a$10$vQ24O6gS7BQ/001yicJiXexrEjtWFLmDCuXTDVhm48AmuYbs/IFLq', '2024-12-06 03:17:43.852119+00', NULL, '', NULL, '', NULL, '', '', NULL, '2024-12-07 03:29:41.698707+00', '{"provider": "email", "providers": ["email"]}', '{"sub": "668f130c-e8bf-41d7-b9a6-239c9e0cf4a1", "email": "locn562836@gmail.com", "email_verified": false, "phone_verified": false}', NULL, '2024-12-06 03:17:43.839156+00', '2024-12-07 03:29:41.704106+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
 
 
 --
@@ -101,7 +104,9 @@ INSERT INTO "auth"."sessions" ("id", "user_id", "created_at", "updated_at", "fac
 	('36b28bec-e721-4a22-9d7b-d976b4be9afc', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-06 12:06:49.085778+00', '2024-12-06 12:06:49.085778+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '18.141.167.26', NULL),
 	('7500e014-77e9-4a1e-9d89-2cc1c8b0a668', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-06 13:01:16.568343+00', '2024-12-06 13:01:16.568343+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '47.129.184.86', NULL),
 	('6301362b-7efb-4779-8356-480b1bdebacd', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-06 13:35:46.464392+00', '2024-12-06 13:35:46.464392+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '13.212.174.76', NULL),
-	('7531033f-7c6e-4272-808c-7fcba85517c5', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-07 01:27:51.256384+00', '2024-12-07 01:27:51.256384+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '52.221.228.207', NULL);
+	('7531033f-7c6e-4272-808c-7fcba85517c5', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-07 01:27:51.256384+00', '2024-12-07 01:27:51.256384+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '52.221.228.207', NULL),
+	('28245ea4-f89c-4e62-86cb-9c74083eb00b', '3ffd668d-8871-47ff-aefa-2b55afad5f26', '2024-12-07 03:27:27.681223+00', '2024-12-07 03:27:27.681223+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '47.129.173.206', NULL),
+	('aaa0a761-2685-4e89-b127-204386ef44eb', '668f130c-e8bf-41d7-b9a6-239c9e0cf4a1', '2024-12-07 03:29:41.698781+00', '2024-12-07 03:29:41.698781+00', NULL, 'aal1', NULL, NULL, 'Deno/1.45.2 (variant; SupabaseEdgeRuntime/1.65.4)', '47.129.174.33', NULL);
 
 
 --
@@ -122,7 +127,9 @@ INSERT INTO "auth"."mfa_amr_claims" ("session_id", "created_at", "updated_at", "
 	('36b28bec-e721-4a22-9d7b-d976b4be9afc', '2024-12-06 12:06:49.09554+00', '2024-12-06 12:06:49.09554+00', 'password', '50734c4e-6520-4b83-8e65-bb253315eec5'),
 	('7500e014-77e9-4a1e-9d89-2cc1c8b0a668', '2024-12-06 13:01:16.577562+00', '2024-12-06 13:01:16.577562+00', 'password', 'b98a3dfd-8825-4ca0-baf3-80cdfe829a9a'),
 	('6301362b-7efb-4779-8356-480b1bdebacd', '2024-12-06 13:35:46.476299+00', '2024-12-06 13:35:46.476299+00', 'password', '73ceb5a7-7411-4aec-bf31-c4f0559db211'),
-	('7531033f-7c6e-4272-808c-7fcba85517c5', '2024-12-07 01:27:51.284992+00', '2024-12-07 01:27:51.284992+00', 'password', 'f449b17d-115f-47b0-ad8b-4d073c0343b2');
+	('7531033f-7c6e-4272-808c-7fcba85517c5', '2024-12-07 01:27:51.284992+00', '2024-12-07 01:27:51.284992+00', 'password', 'f449b17d-115f-47b0-ad8b-4d073c0343b2'),
+	('28245ea4-f89c-4e62-86cb-9c74083eb00b', '2024-12-07 03:27:27.697515+00', '2024-12-07 03:27:27.697515+00', 'password', 'e4433c69-363b-470f-b5f1-7272c675a2a7'),
+	('aaa0a761-2685-4e89-b127-204386ef44eb', '2024-12-07 03:29:41.704815+00', '2024-12-07 03:29:41.704815+00', 'password', '54a90651-19d8-4a6e-81d2-b19bfc52fcc8');
 
 
 --
@@ -161,7 +168,9 @@ INSERT INTO "auth"."refresh_tokens" ("instance_id", "id", "token", "user_id", "r
 	('00000000-0000-0000-0000-000000000000', 12, '-2GN94OuifqRh3AWuAoI9w', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-06 12:06:49.089307+00', '2024-12-06 12:06:49.089307+00', NULL, '36b28bec-e721-4a22-9d7b-d976b4be9afc'),
 	('00000000-0000-0000-0000-000000000000', 13, 'Se4zrVAYisUqOmxQiVLLhg', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-06 13:01:16.572418+00', '2024-12-06 13:01:16.572418+00', NULL, '7500e014-77e9-4a1e-9d89-2cc1c8b0a668'),
 	('00000000-0000-0000-0000-000000000000', 14, 'VkMJY-C2sDVIiWtX7n4nDw', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-06 13:35:46.467578+00', '2024-12-06 13:35:46.467578+00', NULL, '6301362b-7efb-4779-8356-480b1bdebacd'),
-	('00000000-0000-0000-0000-000000000000', 15, '2BueyQKgaHh-wvYz3e93gA', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-07 01:27:51.267291+00', '2024-12-07 01:27:51.267291+00', NULL, '7531033f-7c6e-4272-808c-7fcba85517c5');
+	('00000000-0000-0000-0000-000000000000', 15, '2BueyQKgaHh-wvYz3e93gA', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-07 01:27:51.267291+00', '2024-12-07 01:27:51.267291+00', NULL, '7531033f-7c6e-4272-808c-7fcba85517c5'),
+	('00000000-0000-0000-0000-000000000000', 16, 'Z4kFomP7PhkZryN_T-3cXQ', '3ffd668d-8871-47ff-aefa-2b55afad5f26', false, '2024-12-07 03:27:27.685723+00', '2024-12-07 03:27:27.685723+00', NULL, '28245ea4-f89c-4e62-86cb-9c74083eb00b'),
+	('00000000-0000-0000-0000-000000000000', 17, 'FQLOciMtsBMKv9KhG9u9fg', '668f130c-e8bf-41d7-b9a6-239c9e0cf4a1', false, '2024-12-07 03:29:41.700503+00', '2024-12-07 03:29:41.700503+00', NULL, 'aaa0a761-2685-4e89-b127-204386ef44eb');
 
 
 --
@@ -218,7 +227,8 @@ INSERT INTO "public"."address" ("address_id", "street_number", "street", "distri
 	('5a4d1270-db58-4c7f-9a70-1ec2a573ad65', '346', 'Võ Văn Ngân', 'Thủ Đức', 'Thủ Đức', NULL, '2024-12-06 05:25:00.237607', 'Linh Chiêu', 10.8495655, 106.77129),
 	('b4a79ee0-bfcf-4e29-b16f-ed83440caa98', '', '', '', '', NULL, '2024-12-06 05:42:52.420483', NULL, NULL, NULL),
 	('7748267b-9d5b-4556-83e4-4673608629ae', 'Đường Cây Sộp', 'Mỹ An', 'Tiền Giang', 'Mỹ Tho', '0101000020E6100000000000000000F87F0F4AF3226EBD2440', '2024-12-07 02:40:36.541899', 'Mỹ phong', 10.369981, NULL),
-	('79a56b5e-aa48-4421-ac81-be512e95902f', 'Đường Cây Sộp', 'Mỹ An', 'Tiền Giang', 'Mỹ Tho', '0101000020E61000007DCA31595C975A400F4AF3226EBD2440', '2024-12-07 02:42:48.74411', 'Mỹ phong', 10.369981, 106.36501);
+	('79a56b5e-aa48-4421-ac81-be512e95902f', 'Đường Cây Sộp', 'Mỹ An', 'Tiền Giang', 'Mỹ Tho', '0101000020E61000007DCA31595C975A400F4AF3226EBD2440', '2024-12-07 02:42:48.74411', 'Mỹ phong', 10.369981, 106.36501),
+	('68a57702-8b83-4aaf-a48b-606eff8f086a', '93D', 'Nguyễn Tri Phương', 'Tiền Giang', 'Mỹ Tho', '0101000020E6100000DED6CC107D975A404B3CA06CCAB92440', '2024-12-07 03:11:38.080892', '1', 10.362872, 106.36701);
 
 
 --
@@ -233,7 +243,8 @@ INSERT INTO "public"."task" ("id", "title", "description", "required_skills", "u
 	('06313408-c2e1-475f-9199-bf8e4ccdba21', 'bc', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'a', 'HIGH', 'af443b64-ce48-4b83-a004-daa600e307f3', '2024-11-26 12:51:08.056', '2024-11-26 12:51:08.056', 'TODO'),
 	('ca9872f8-1048-4844-bf88-3bfeae438f1f', 'd', 'a', 'a', 'HIGH', '5a4d1270-db58-4c7f-9a70-1ec2a573ad65', '2024-11-26 12:51:08.056', '2024-11-26 12:51:08.056', 'TODO'),
 	('f23fdfee-fa8c-4f10-aa75-83dabeb414b8', 'Clean up the park', 'Weekly park cleanup and maintenance', 'Basic cleaning knowledge', 'MEDIUM', '7748267b-9d5b-4556-83e4-4673608629ae', '2024-02-21 00:00:00', '2024-02-20 00:00:00', 'TODO'),
-	('b0a1d58d-3220-4c14-be3d-6981c3fa8438', 'Clean up the park', 'Weekly park cleanup and maintenance', 'Basic cleaning knowledge', 'MEDIUM', '79a56b5e-aa48-4421-ac81-be512e95902f', '2024-02-21 00:00:00', '2024-02-20 00:00:00', 'TODO');
+	('b0a1d58d-3220-4c14-be3d-6981c3fa8438', 'Clean up the park', 'Weekly park cleanup and maintenance', 'Basic cleaning knowledge', 'MEDIUM', '79a56b5e-aa48-4421-ac81-be512e95902f', '2024-02-21 00:00:00', '2024-02-20 00:00:00', 'TODO'),
+	('4e52dac4-df76-41f9-bcaf-c4df8020b444', 'CHO CHÓ TOẢN ĂN', 'CHÓ', 'BIẾT CHO ĂN', 'HIGH', '68a57702-8b83-4aaf-a48b-606eff8f086a', '2024-11-26 12:51:08.056', '2024-11-26 12:51:08.056', 'TODO');
 
 
 --
@@ -400,7 +411,7 @@ INSERT INTO "storage"."buckets" ("id", "name", "owner", "created_at", "updated_a
 -- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
 --
 
-SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 15, true);
+SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 17, true);
 
 
 --
