@@ -15,7 +15,7 @@ export interface Report {
     report_type: string;  // changed from ReportType
     urgency: Urgency;
     meta_data?: Record<string, any>;
-    address_id?: string;  // optional since it's added after address creation
+    address_id: string;  // optional since it's added after address creation
 }
 
 export interface Task {
@@ -26,7 +26,21 @@ export interface Task {
     start_date: string;  // changed from startdate
     end_date: string;    // changed from enddate
     task_status: TaskStatus;  // changed from taskstatus
-    address_id?: string;  // made optional since it's added after address creation
+    address_id: string;  // made optional since it's added after address creation
+}
+
+export interface Donation {
+    role: string;
+    fullname: string;
+    email: string;
+    phonenumber: string;
+    cango: string;
+    mask: string;
+    rice: string;
+    noodle: string;
+    vegetable: string;
+    meat: string;
+    address_id?: string;
 }
 
 export interface ValidationError {

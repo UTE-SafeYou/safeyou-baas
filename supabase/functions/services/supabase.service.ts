@@ -1,5 +1,5 @@
-import { createClient } from 'npm:@supabase/supabase-js'
-import { Report, Task, Address } from '../shared/types.ts'
+import { createClient } from 'npm:@supabase/supabase-js';
+import { Address, Report, Task } from '../shared/types.ts';
 
 export class SupabaseService {
     private static instance: SupabaseService;
@@ -95,6 +95,40 @@ export class SupabaseService {
         }
         return await this.insertTask({
             ...task,
+            address_id: addressData.address_id
+        });
+    }
+
+    async insertDonation(donation: Donation) {
+        const { data, error } = await this.supabase
+            .from('donation')
+            .insert({
+                role: donation.role,
+                fullname: donation.fullname,
+                email: donation.email,
+                phonenumber: donation.phonenumber,
+                cango: donation.cango,
+                mask: donation.mask,
+                rice: donation.rice,
+                noodle: donation.noodle,
+                vegetable: donation.vegetable,
+                meat: donation.meat,
+                address_id: donation.address_id
+            })
+            .select('id, role, fullname, email, phonenumber, cango, mask, rice, noodle, vegetable, meat, address_id')
+            .single();
+
+        if (error) throw error;
+        return data;
+    }
+
+    async insertDonationWithAddress(donation: Donation, address: Address, latitude: number, longitude: number) {
+        const addressData = await this.insertAddressWithLocation(address, latitude, longitude);
+        if (!addressData?.address_id) {
+            throw new Error('Failed to get address id');
+        }
+        return await this.insertDonation({
+            ...donation,
             address_id: addressData.address_id
         });
     }
