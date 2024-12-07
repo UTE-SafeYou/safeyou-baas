@@ -1,5 +1,5 @@
-import axios from 'npm:axios@1.7.9'
-import { Address } from '../shared/types.ts'
+import axios from 'npm:axios@1.7.9';
+import { Address } from '../shared/types.ts';
 
 export interface GeoLocation {
     latitude: number;
@@ -22,22 +22,28 @@ export class GeocodeService {
     }
 
     private formatAddress(address: Address): string {
-        return `${address.street_number} ${address.street}, ${address.ward}, ${address.district}, ${address.city}`;
+        return `${address.street_number} ${address.street}, ${address.ward}, ${address.city}, ${address.district}`;
     }
 
     async getCoordinates(address: Address): Promise<GeoLocation> {
         const formattedAddress = this.formatAddress(address);
         const response = await axios.get(
-            `https://geocode.maps.co/search?q=${encodeURIComponent(formattedAddress)}&api_key=${this.apiKey}`
+            // `https://geocode.maps.co/search?q=${encodeURIComponent(formattedAddress)}&api_key=${this.apiKey}`
+            `https://rsapi.goong.io/geocode?address=${encodeURIComponent(formattedAddress)}&api_key=${this.apiKey}`
         );
 
-        if (!response.data.length) {
+        // console.log(`https://rsapi.goong.io/geocode?address=${encodeURIComponent(formattedAddress)}&api_key=${this.apiKey}`)
+
+        // console.log(response.data);
+        
+
+        if (!response.data.results.length) {
             throw new Error('Location not found');
         }
 
         return {
-            latitude: parseFloat(response.data[0].lat),
-            longitude: parseFloat(response.data[0].lon)
+            latitude: parseFloat(response.data.results[0].geometry.location.lat),
+            longitude: parseFloat(response.data.results[0].geometry.location.lng)
         };
     }
 }
