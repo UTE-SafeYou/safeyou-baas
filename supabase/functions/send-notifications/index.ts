@@ -1,29 +1,39 @@
-import express from 'npm:express@4.18.2'
-import { RabbitMQService } from './services/rabbitmq.service.ts'
-import { SupabaseService } from './services/supabase.service.ts'
-import { NotificationMessage, RequestBody } from './types.ts'
-import { createEmailTemplate, replacePlaceholders } from './utils.ts'
+import { serve } from "https://deno.land/std/http/server.ts";
+import { requireAdmin } from '../services/auth.middleware.ts';
+import { RabbitMQService } from './services/rabbitmq.service.ts';
+import { SupabaseService } from './services/supabase.service.ts';
+import { NotificationMessage, RequestBody } from './types.ts';
+import { createEmailTemplate, replacePlaceholders } from './utils.ts';
 
-const app = express()
-app.use(express.json())
-const port = 3000
-
-app.post('/send-notifications', async (req, res) => {
-  // const auth = await requireAdmin(req);
-  // if (auth instanceof Response) return auth;
-  const reqBody: RequestBody = req.body;
-  let notificationId: number | null = null;
-
-  if (!reqBody.title || !reqBody.body) {
-    return res.status(400).json({
-      error: "Request body must have title, and body"
+const handler = async (req: Request): Promise<Response> => {
+  if (req.method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 
+  // Add admin authentication
+  const authResult = await requireAdmin(req);
+  if (authResult instanceof Response) {
+    return authResult;
+  }
+
   try {
+    const reqBody: RequestBody = await req.json();
+
+    if (!reqBody.title || !reqBody.body) {
+      return new Response(JSON.stringify({
+        error: "Request body must have title, and body"
+      }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+    }
+
+    let notificationId: number | null = null;
     const destinations = reqBody.users;
+
     if (destinations.length === 0) {
-      return res.status(404).json({ error: "No recipients found" });
+      return new Response(JSON.stringify({ error: "No recipients found" }), 
+        { status: 404, headers: { 'Content-Type': 'application/json' } });
     }
 
     const supabaseService = SupabaseService.getInstance();
@@ -67,22 +77,22 @@ app.post('/send-notifications', async (req, res) => {
 
     } catch (error) {
       if (error.message.includes('Invalid user IDs')) {
-        return res.status(400).json({ error: error.message });
+        return new Response(JSON.stringify({ error: error.message }), { status: 400, headers: { 'Content-Type': 'application/json' } });
       }
       throw error;
     }
 
-    return res.status(200).json({
+    return new Response(JSON.stringify({
       status: "Messages sent and data added to Supabase successfully",
       count: messages.length,
       notification_id: notificationId
-    });
+    }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+
   } catch (error) {
     console.error('Error processing request:', error);
-    return res.status(500).json({ error: error.message });
+    return new Response(JSON.stringify({ error: error.message }), 
+      { status: 500, headers: { 'Content-Type': 'application/json' } });
   }
-});
+};
 
-app.listen(port, () => {
-  console.log(`Notification service listening on port ${port}`)
-})
+serve(handler, { port: 3000 });

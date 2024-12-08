@@ -1,5 +1,5 @@
-import { createClient } from 'npm:@supabase/supabase-js@2.39.3'
-import { NotificationMessage, NotificationType, RequestBody } from '../types.ts'
+import { createClient } from 'npm:@supabase/supabase-js@2.39.3';
+import { NotificationMessage, NotificationType, RequestBody } from '../types.ts';
 
 export class SupabaseService {
   private static instance: SupabaseService;

@@ -1,7 +1,7 @@
 
-import { connect } from "npm:amqplib@0.10.3"
-import { Buffer } from "https://deno.land/std@0.177.0/node/buffer.ts"
-import { NotificationMessage } from "../types.ts"
+import { Buffer } from "https://deno.land/std@0.177.0/node/buffer.ts";
+import { connect } from "npm:amqplib@0.10.3";
+import { NotificationMessage } from "../types.ts";
 
 export class RabbitMQService {
   private static instance: RabbitMQService;
