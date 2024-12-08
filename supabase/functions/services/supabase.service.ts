@@ -132,4 +132,36 @@ export class SupabaseService {
             address_id: addressData.address_id
         });
     }
+
+    async getProvinces() {
+        const { data, error } = await this.supabase
+            .from('province')
+            .select('idprovince, name')
+            .order('name');
+        
+        if (error) throw error;
+        return data;
+    }
+
+    async getDistrictsByProvince(provinceId: string) {
+        const { data, error } = await this.supabase
+            .from('district')
+            .select('iddistrict, name')
+            .eq('idprovince', provinceId)
+            .order('name');
+        
+        if (error) throw error;
+        return data;
+    }
+
+    async getCommunesByDistrict(districtId: string) {
+        const { data, error } = await this.supabase
+            .from('commune')
+            .select('idcommune, name')
+            .eq('iddistrict', districtId)
+            .order('name');
+        
+        if (error) throw error;
+        return data;
+    }
 }
