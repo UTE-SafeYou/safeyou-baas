@@ -1,11 +1,10 @@
 
-import { Address, ValidationResult, ValidationError } from '../shared/types.ts';
+import { ValidationError, ValidationResult } from '../shared/types.ts';
 
 export class AddressValidationService {
     public static validateAddress(address: any): ValidationResult {
         const errors: ValidationError[] = [];
         const requiredFields = [
-            { key: 'street_number', label: 'Số nhà' },
             { key: 'street', label: 'Đường' },
             { key: 'ward', label: 'Phường' },
             { key: 'district', label: 'Quận' },

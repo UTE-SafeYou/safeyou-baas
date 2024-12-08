@@ -61,7 +61,7 @@ export class SupabaseService {
         const { data: addressData, error: addressError } = await this.supabase
             .from('address')
             .insert({
-                street_number: address.street_number,
+                // street_number: address.street_number,
                 street: address.street,
                 ward: address.ward,
                 district: address.district,
