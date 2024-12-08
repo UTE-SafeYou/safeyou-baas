@@ -39,6 +39,38 @@ async function handleRequest(req: Request) {
           { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
 
+      case "/getUsersByProvince":
+      case "getUsersByProvince":
+        if (req.method !== 'POST') {
+          return new Response(
+            JSON.stringify({ error: 'Method not allowed' }),
+            { status: 405, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        const provinceData = await req.json();
+        const provinceResult = await supabaseService.getUsersByProvince(provinceData.province);
+        return new Response(
+          JSON.stringify(provinceResult),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+
+      case "/findUsersByAddress":
+      case "findUsersByAddress":
+        if (req.method !== 'POST') {
+          return new Response(
+            JSON.stringify({ error: 'Method not allowed' }),
+            { status: 405, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        const searchData = await req.json();
+        const searchResult = await supabaseService.findUsersByAddress(searchData.search);
+        return new Response(
+          JSON.stringify(searchResult),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+
       default:
         return new Response(
           JSON.stringify({ error: 'Not found' }),

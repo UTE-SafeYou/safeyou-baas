@@ -175,4 +175,22 @@ export class SupabaseService {
         if (error) throw error;
         return users;
     }
+
+    async getUsersByProvince(province: string) {
+        const { data, error } = await this.supabase.rpc('get_users_by_province', {
+            p_province: province
+        });
+
+        if (error) throw error;
+        return data;
+    }
+
+    async findUsersByAddress(searchTerm: string) {
+        const { data, error } = await this.supabase.rpc('find_users_by_address', {
+            search_term: searchTerm
+        });
+
+        if (error) throw error;
+        return data;
+    }
 }

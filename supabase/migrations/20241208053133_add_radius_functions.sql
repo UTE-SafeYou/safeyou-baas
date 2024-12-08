@@ -66,3 +66,55 @@ BEGIN
     ORDER BY distance;
 END;
 $$;
+
+CREATE OR REPLACE FUNCTION get_users_by_province(p_province text)
+RETURNS TABLE (
+    user_id uuid,
+    fullname text,
+    email varchar,
+    phone varchar,
+    city text,
+    district text
+) LANGUAGE plpgsql AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        up.user_id,
+        up.fullname,
+        up.email,
+        up.phone,
+        a.city,
+        a.district
+    FROM user_profiles up
+    JOIN address a ON up.address_id = a.address_id
+    WHERE a.city = p_province;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION find_users_by_address(search_term text)
+RETURNS TABLE (
+    user_id uuid,
+    fullname text,
+    email varchar,
+    phone varchar,
+    city text,
+    district text
+) LANGUAGE plpgsql AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        up.user_id,
+        up.fullname,
+        up.email,
+        up.phone,
+        a.city,
+        a.district
+    FROM user_profiles up
+    JOIN address a ON up.address_id = a.address_id
+    WHERE 
+        LOWER(a.city) LIKE LOWER('%' || search_term || '%') OR
+        LOWER(a.district) LIKE LOWER('%' || search_term || '%') OR
+        LOWER(a.ward) LIKE LOWER('%' || search_term || '%') OR
+        LOWER(a.street) LIKE LOWER('%' || search_term || '%');
+END;
+$$;
