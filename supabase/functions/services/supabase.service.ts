@@ -164,4 +164,15 @@ export class SupabaseService {
         if (error) throw error;
         return data;
     }
+
+    async getAllUserWithinRadius(data: LocationRequest) {
+        const { data: users, error } = await this.supabase.rpc('get_users_within_radius', {
+            p_latitude: data.latitude,
+            p_longitude: data.longitude,
+            p_radius: data.radius
+        });
+
+        if (error) throw error;
+        return users;
+    }
 }
