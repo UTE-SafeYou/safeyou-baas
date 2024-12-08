@@ -3,3 +3,5 @@ export interface LocationRequest {
     longitude: number;
     radius: number; // in meters
 }
+
+export type LocationRequestArray = LocationRequest[];

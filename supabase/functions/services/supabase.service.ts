@@ -164,7 +164,47 @@ export class SupabaseService {
         return data;
     }
 
-    async getAllUserWithinRadius(data: LocationRequest) {
+    async getAllUserWithinRadius(data: LocationRequest | LocationRequest[]) {
+        if (Array.isArray(data)) {
+            // Handle array of requests
+            const promises = data.map(location => 
+                this.supabase.rpc('get_users_within_radius', {
+                    p_latitude: location.latitude,
+                    p_longitude: location.longitude,
+                    p_radius: location.radius
+                })
+            );
+
+            const results = await Promise.all(promises);
+            const errors = results.filter(r => r.error).map(r => r.error);
+            if (errors.length > 0) throw errors[0];
+
+            // Create a map to track users and their minimum distances
+            const userDistances = new Map<string, { distance: number, index: number }>();
+
+            // First pass: Find minimum distances for each user
+            results.forEach((result, index) => {
+                if (!result.data) return;
+                
+                result.data.forEach(user => {
+                    const current = userDistances.get(user.user_id);
+                    if (!current || user.distance < current.distance) {
+                        userDistances.set(user.user_id, { distance: user.distance, index });
+                    }
+                });
+            });
+
+            // Second pass: Filter results to keep users only in their closest location
+            return results.map((result, index) => {
+                if (!result.data) return [];
+                
+                return result.data.filter(user => 
+                    userDistances.get(user.user_id)?.index === index
+                );
+            });
+        }
+
+        // Handle single request
         const { data: users, error } = await this.supabase.rpc('get_users_within_radius', {
             p_latitude: data.latitude,
             p_longitude: data.longitude,

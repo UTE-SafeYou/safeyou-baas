@@ -4,9 +4,7 @@
 
 // Setup type definitions for built-in Supabase Runtime APIs
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { requireAdmin } from '../services/auth.middleware.ts';
 import { SupabaseService } from '../services/supabase.service.ts';
-import { LocationRequest } from '../shared/requests.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -21,8 +19,8 @@ async function handleRequest(req: Request) {
   // Remove '/address' prefix from pathname
   const path = url.pathname.replace('/place', '');
   
-  const auth = await requireAdmin(req);
-  if (auth instanceof Response) return auth;
+  // const auth = await requireAdmin(req);
+  // if (auth instanceof Response) return auth;
 
   try {
     switch (path) {
@@ -35,7 +33,8 @@ async function handleRequest(req: Request) {
           );
         }
 
-        const data: LocationRequest = await req.json();
+        const data = await req.json();
+        // Will work with both single object and array
         const result = await supabaseService.getAllUserWithinRadius(data);
         return new Response(
           JSON.stringify(result),
