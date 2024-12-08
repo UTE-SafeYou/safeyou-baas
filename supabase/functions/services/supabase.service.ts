@@ -61,7 +61,6 @@ export class SupabaseService {
         const { data: addressData, error: addressError } = await this.supabase
             .from('address')
             .insert({
-                // street_number: address.street_number,
                 street: address.street,
                 ward: address.ward,
                 district: address.district,
@@ -70,7 +69,7 @@ export class SupabaseService {
                 longitude,
                 location: `SRID=4326;POINT(${longitude} ${latitude})`
             })
-            .select('address_id, street_number, street, ward, district, city')  // Select id instead of address_id
+            .select('address_id, street, ward, district, city')
             .single();
 
         if (addressError) throw addressError;

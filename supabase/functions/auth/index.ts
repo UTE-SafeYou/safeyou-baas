@@ -1,12 +1,11 @@
-import express from 'npm:express@4.18.2'
-import { createClient, SupabaseClient } from 'jsr:@supabase/supabase-js@2'
-import opencage from 'npm:opencage-api-client@1.0.7'
-import { parseJwt } from './utils.ts'
-
-const app = express()
-app.use(express.json())
-
-const port = 3000
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'npm:@supabase/supabase-js';
+import { AddressValidationService } from '../services/address-validation.service.ts';
+import { requireAdmin } from '../services/auth.middleware.ts';
+import { GeocodeService } from '../services/geocode.service.ts';
+import { createErrorResponse, createResponse } from '../services/http.util.ts';
+import { SupabaseService } from '../services/supabase.service.ts';
+import { parseJwt } from './utils.ts';
 
 const supabase = createClient(
   Deno.env.get('SUPABASE_URL') ?? '',
@@ -20,147 +19,121 @@ const supabase = createClient(
   },
 )
 
-
-app.post('/auth/sign-in', async (req, res) => {
-
-  let { email, password } = req.body
-
-  if (!email || !password) {
-    res.status(400).json({ error: 'Email and password are required' })
-    return
-  }
-
-  let { data, error } = await supabase.auth.signInWithPassword({
-    email: email,
-    password: password
-  })
-
-  if (error) {
-    res.status(500).json({ error: error.message })
-  } else {
-    res.json({ data })
-  }
-}
-)
-
-async function signUpUser(req, res, role) {
-  let {
+async function signUpUser(data: any, role: string) {
+  const {
     email, password, phone,
-    fullname, street_number, ward, street, district, city, location, citizen_id
-  } = req.body
+    fullname, ward, street, district, city, citizen_id
+  } = data;
 
   if (!email || !password) {
-    res.status(400).json({ error: 'Email and password are required' })
-    return;
+    throw new Error('Email and password are required');
   }
   if (!fullname) {
-    res.status(400).json({ error: 'fullname is required' })
-    return;
+    throw new Error('fullname is required');
   }
 
-  let { data: { user }, error } = await supabase.auth.signUp({
-    email: email,
-    phone: phone,
-    password: password,
-  })
-
-  if (error) {
-    res.status(500).json({ error: error.message })
-    return;
+  const address = { street, ward, district, city };
+  const addressValidation = AddressValidationService.validateAddress(address);
+  if (!addressValidation.isValid) {
+    throw new Error(addressValidation.errors.map(e => e.message).join(', '));
   }
 
-  const { data: user_role, error: user_role_error } = await supabase
+  const { data: { user }, error } = await supabase.auth.signUp({
+    email,
+    phone,
+    password,
+  });
+
+  if (error) throw error;
+
+  const { error: user_role_error } = await supabase
     .from('user_roles')
-    .insert([
-      {
-        role: role,
-        user_id: user.id
-      }
-    ])
+    .insert([{ role, user_id: user.id }]);
 
-  if (user_role_error) {
-    res.status(500).json({ error: user_role_error.message })
-    return;
-  }
+  if (user_role_error) throw user_role_error;
 
-  const { data: address_data, error: address_error } = await supabase
-    .from('address')
-    .insert([
-      {
-        street_number: street_number,
-        street: street,
-        district: district,
-        city: city,
-        ward: ward,
-        location: location || null,
-      },
-    ])
-    .select()
-  if (address_error) {
-    res.status(500).json({ error: address_error.message })
-    return;
-  }
+  const geocodeService = GeocodeService.getInstance();
+  const { latitude, longitude } = await geocodeService.getCoordinates(address);
+
+  const supabaseService = SupabaseService.getInstance();
+  const address_data = await supabaseService.insertAddressWithLocation(
+    address,
+    latitude,
+    longitude
+  );
 
   const { data: user_profile, error: user_profile_error } = await supabase
     .from('user_profiles')
-    .insert([
-      {
-        fullname: fullname,
-        citizen_id: citizen_id,
-        address_id: address_data[0].address_id,
-        user_id: user.id,
-        email: email,
-        phone: phone
-      }
-    ])
-    .select()
+    .insert([{
+      fullname,
+      citizen_id,
+      address_id: address_data.address_id,
+      user_id: user.id,
+      email,
+      phone
+    }])
+    .select();
 
-  if (user_profile_error) {
-    res.status(500).json({ error: user_profile_error.message })
-    return;
-  }
-
-  res.status(200).json({
-    user_profile: user_profile,
-  })
+  if (user_profile_error) throw user_profile_error;
+  return user_profile;
 }
 
-app.post('/auth/sign-up', (req, res) => signUpUser(req, res, 'user'))
-
-app.post('/auth/admin/sign-up', (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    res.status(401).json({ error: 'Authorization header is required' });
-    return;
-  }
-
-  const token = authHeader.split(' ')[1];
+serve(async (req) => {
+  const url = new URL(req.url);
+  
   try {
-    const decoded = parseJwt(token);
-    console.log(decoded);
-    if (decoded.role !== 'service_role' && decoded.user_role !== 'admin') {
-      res.status(403).json({ error: 'Forbidden: Invalid JWT role' });
-      return;
+    // Sign In Route
+    if (url.pathname === '/auth/sign-in' && req.method === 'POST') {
+      const { email, password } = await req.json();
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+      if (error) throw error;
+      return createResponse(data);
     }
-    next();
+
+    // Regular Sign Up Route
+    if (url.pathname === '/auth/sign-up' && req.method === 'POST') {
+      const data = await req.json();
+      const result = await signUpUser(data, 'user');
+      return createResponse(result);
+    }
+
+    // Admin Sign Up Route
+    if (url.pathname === '/auth/admin/sign-up' && req.method === 'POST') {
+      const auth = await requireAdmin(req);
+      if (auth instanceof Response) return auth;
+
+      const authHeader = req.headers.get('authorization');
+      if (!authHeader) {
+        return createErrorResponse('Authorization header is required', 401);
+      }
+
+      const token = authHeader.split(' ')[1];
+      const decoded = parseJwt(token);
+      if (decoded.role !== 'service_role' && decoded.user_role !== 'admin') {
+        return createErrorResponse('Forbidden: Invalid JWT role', 403);
+      }
+
+      const data = await req.json();
+      const result = await signUpUser(data, 'admin');
+      return createResponse(result);
+    }
+
+    // Verify Route
+    if (url.pathname.startsWith('/auth/verify/') && req.method === 'POST') {
+      const token = url.pathname.split('/').pop();
+      const { data, error } = await supabase.auth.verifyOtp({ 
+        token_hash: token, 
+        type: 'email' 
+      });
+      if (error) throw error;
+      return createResponse(data);
+    }
+
+    return createErrorResponse('Not Found', 404);
   } catch (error) {
-    res.status(403).json({ error: error.message });
+    return createErrorResponse(error.message, 500);
   }
-}, (req, res) => signUpUser(req, res, 'admin'));
-
-// Verify route with verify-token is param 
-app.post('/auth/verify/:token', async (req, res) => {
-  let { token } = req.params
-
-  let { data, error } = await supabase.auth.verifyOtp({ token_hash: token, type: 'email' })
-
-  if (error) {
-    res.status(500).json({ error: error.message })
-  } else {
-    res.json({ data })
-  }
-})
-
-app.listen(port, () => {
-  console.log(`I'm healthy now 🌱 ${port}`)
-})
+});

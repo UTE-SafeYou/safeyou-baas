@@ -22,7 +22,7 @@ export class GeocodeService {
     }
 
     private formatAddress(address: Address): string {
-        return `${address.street_number} ${address.street}, ${address.ward}, ${address.city}, ${address.district}`;
+        return `${address.street}, ${address.ward}, ${address.city}, ${address.district}`;
     }
 
     async getCoordinates(address: Address): Promise<GeoLocation> {
