@@ -1,11 +1,9 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'npm:@supabase/supabase-js';
 import { AddressValidationService } from '../services/address-validation.service.ts';
-import { requireAdmin } from '../services/auth.middleware.ts';
 import { GeocodeService } from '../services/geocode.service.ts';
 import { createErrorResponse, createResponse } from '../services/http.util.ts';
 import { SupabaseService } from '../services/supabase.service.ts';
-import { parseJwt } from './utils.ts';
 
 const supabase = createClient(
   Deno.env.get('SUPABASE_URL') ?? '',
@@ -102,19 +100,19 @@ serve(async (req) => {
 
     // Admin Sign Up Route
     if (url.pathname === '/auth/admin/sign-up' && req.method === 'POST') {
-      const auth = await requireAdmin(req);
-      if (auth instanceof Response) return auth;
+      // const auth = await requireAdmin(req);
+      // if (auth instanceof Response) return auth;
 
-      const authHeader = req.headers.get('authorization');
-      if (!authHeader) {
-        return createErrorResponse('Authorization header is required', 401);
-      }
+      // const authHeader = req.headers.get('authorization');
+      // if (!authHeader) {
+      //   return createErrorResponse('Authorization header is required', 401);
+      // }
 
-      const token = authHeader.split(' ')[1];
-      const decoded = parseJwt(token);
-      if (decoded.role !== 'service_role' && decoded.user_role !== 'admin') {
-        return createErrorResponse('Forbidden: Invalid JWT role', 403);
-      }
+      // const token = authHeader.split(' ')[1];
+      // const decoded = parseJwt(token);
+      // if (decoded.role !== 'service_role' && decoded.user_role !== 'admin') {
+      //   return createErrorResponse('Forbidden: Invalid JWT role', 403);
+      // }
 
       const data = await req.json();
       const result = await signUpUser(data, 'admin');

@@ -1,7 +1,6 @@
 
-import { AuthService } from './auth.service.ts';
+import { parseJwt } from '../auth/utils.ts';
 import { createErrorResponse } from './middleware.util.ts';
-
 export const authenticateRequest = async (req: Request): Promise<{ user: any } | Response> => {
     const authHeader = req.headers.get('authorization');
     if (!authHeader?.startsWith('Bearer ')) {
@@ -10,8 +9,7 @@ export const authenticateRequest = async (req: Request): Promise<{ user: any } |
 
     try {
         const token = authHeader.split(' ')[1];
-        const authService = AuthService.getInstance();
-        const user = await authService.verifyToken(token);
+        const user = parseJwt(token);
         return { user };
     } catch (error) {
         return createErrorResponse('Invalid token', 401);
