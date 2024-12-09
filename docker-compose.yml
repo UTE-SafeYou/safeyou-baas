@@ -26,13 +26,6 @@ services:
       - N8N_PROTOCOL=http
       - N8N_USER_MANAGEMENT_DISABLED=true
       - WEBHOOK_URL=http://localhost:5678/
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - RABBITMQ_PORT=${RABBITMQ_PORT}
-      - RABBITMQ_USER=${RABBITMQ_USER}
-      - RABBITMQ_PASS=${RABBITMQ_PASS}
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
-      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
     volumes:
       - n8n_data:/home/node/.n8n
     networks:
