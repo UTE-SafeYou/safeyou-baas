@@ -1,0 +1,280 @@
+{
+  "name": "RabbitMQ Send Notifcation",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.validEmail }}",
+              "value2": "={{ true }}"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        -80,
+        380
+      ],
+      "typeVersion": 1,
+      "id": "bef2f92a-3faf-4a7d-b8dc-37e2ac351216"
+    },
+    {
+      "parameters": {
+        "queue": "notifications",
+        "options": {
+          "jsonParseBody": true,
+          "onlyContent": true
+        }
+      },
+      "name": "RabbitMQ",
+      "type": "n8n-nodes-base.rabbitmqTrigger",
+      "position": [
+        -640,
+        620
+      ],
+      "typeVersion": 1,
+      "id": "3ff3c228-ab9b-4feb-b37f-229586a042ea",
+      "credentials": {
+        "rabbitmq": {
+          "id": "0V5wPCiwThxINFof",
+          "name": "RabbitMQ account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $json.data.email }}",
+        "toEmail": "={{ $json.data.email }}",
+        "subject": "={{ $json.data.title }}",
+        "html": "={{ $json.data.htmlBody || $json.data.body }}",
+        "options": {}
+      },
+      "id": "cb740a5f-d825-4daf-a96c-33f3a32f88ba",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        180,
+        220
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "uZgVqEwsXrYg7jMi",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Message Structure:\n{\n  \"email\": \"email\",\n\"phone\": \"phone\"\n  \"title\": \"Title\",\n  \"body\": \"Hello World!\",\n  \"htmlBody\": \"<HTML />\"\n}",
+        "height": 186.92893257997252,
+        "width": 337
+      },
+      "id": "8b2cb6be-9189-4030-bcff-1134cf6383ab",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        280
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "from": "+17754296557",
+        "to": "={{ $json.data.phone[0] == \"0\" ? (\"+84\" + $json.data.phone?.slice(1)) : $json.data.phone }}",
+        "message": "={{ \"[\" + $json.data.title + \"] - \" + $json.data.body }}",
+        "options": {}
+      },
+      "id": "22744313-ace0-4b21-8f30-6faa098517bb",
+      "name": "Twilio",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [
+        600,
+        660
+      ],
+      "credentials": {
+        "twilioApi": {
+          "id": "PcGUgsenc4Sdoimd",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "33955034-3260-4988-89d4-d9bd46046560",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        180,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "function isVietnamesePhoneNumber(number) {\n    return /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\\b/.test(number);\n}\n\nconst isValidEmail = (email) => {\n    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/;\n    return emailRegex.test(email);\n};\n\nreturn { validPhone: isVietnamesePhoneNumber($json.phone),\n        data: $json,\n        validEmail: isValidEmail($json.email)\n       };"
+      },
+      "id": "d8f4edf1-82eb-44c9-885d-22cfd72d3946",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -360,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ea04c71f-d2d1-4ea4-bdba-7b55053f3eec",
+              "leftValue": "={{ $json.validPhone }}",
+              "rightValue": "={{ true }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "60ba39fb-e729-40e6-bea1-2982b1e3f6de",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -60,
+        760
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "b438a5f9-2f85-407f-ab96-15699ca05623",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        200,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "function htmlToPlainText(html) {\n  if (!html || typeof html !== 'string') {\n    return '';\n  }\n\n  // Replace anchor tags with link text and URL\n  let plainText = html.replace(/<a href=\"([^\"]+)\">([^<]+)<\\/a>/g, '$2: $1');\n\n  // Remove other HTML tags\n  plainText = plainText.replace(/<[^>]*>/g, '');\n\n  // Decode HTML entities\n  plainText = plainText\n    .replace(/&amp;/g, '&')     \n    .replace(/&lt;/g, '<')      \n    .replace(/&gt;/g, '>')      \n    .replace(/&quot;/g, '\"')    \n    .replace(/&#039;/g, \"'\")    \n    .replace(/&nbsp;/g, ' ')    \n    .replace(/&ndash;/g, '-')   \n    .replace(/&mdash;/g, '—')   \n    .replace(/&rsquo;/g, \"'\")   \n    .replace(/&lsquo;/g, \"'\")   \n    .replace(/&rdquo;/g, '\"')   \n    .replace(/&ldquo;/g, '\"');  \n\n  // Trim excess whitespace\n  return plainText.trim().replace(/\\s+/g, ' ');\n}\n\n$json.data.body = htmlToPlainText($json.data.body);\nreturn $json;\n"
+      },
+      "id": "c612bed7-4f5d-480e-bdbc-c31cacb9229c",
+      "name": "convert html to text",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        200,
+        620
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RabbitMQ": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "convert html to text",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "convert html to text": {
+      "main": [
+        [
+          {
+            "node": "Twilio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "189d6c3f-1d22-4fa6-a9e4-4ad3116aa8d8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5098eaf73d48bca2f6d8429ab95233cda885817f5463bb649e7924345dbfde81"
+  },
+  "id": "Ooc66cEqorb133lK",
+  "tags": []
+}
