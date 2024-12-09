@@ -26,7 +26,9 @@
 
 Safe You BaaS là hệ thống backend mã nguồn mở hỗ trợ nền tảng Safe You, cung cấp hạ tầng mạnh mẽ với các công nghệ hiện đại như RabbitMQ, n8n, Supabase và Edge Functions. Dự án mang đến các tính năng chính bao gồm hệ thống cảnh báo khẩn cấp qua SMS, email và thông báo theo GPS, quản lý tình nguyện viên, chợ tình thương, cập nhật thông tin an toàn và đóng góp thông tin theo khu vực. Safe You BaaS tuân theo kiến trúc microservices và sử dụng Docker để dễ dàng triển khai và mở rộng. Dự án thân thiện với lập trình viên, có tài liệu chi tiết và quá trình cài đặt đơn giản.
 
-Bạn có thể xem hướng dẫn cách cài đặt tại đây: [Hướng dẫn cài đăt](https://ute-safeyou.github.io/safeyou-docs/H%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-c%C3%A0i-%C4%91%E1%BA%B7t/Baas/install/)
+Các plugins đội phát triển dựa trên supabase nằm trong thư mục: `supabase/functions`
+
+Bạn có thể xem hướng dẫn cách cài đặt, cách sử dụng plugin tại đây: [Hướng dẫn cài đăt](https://ute-safeyou.github.io/safeyou-docs/H%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-c%C3%A0i-%C4%91%E1%BA%B7t/Baas/install/)
 
 ## Hướng dẫn cài đặt backend
 
