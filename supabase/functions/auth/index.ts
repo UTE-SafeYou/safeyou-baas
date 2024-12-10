@@ -118,16 +118,16 @@ serve(async (req) => {
       // const auth = await requireAdmin(req);
       // if (auth instanceof Response) return auth;
 
-      // const authHeader = req.headers.get('authorization');
-      // if (!authHeader) {
-      //   return createErrorResponse('Authorization header is required', 401);
-      // }
+      const authHeader = req.headers.get('authorization');
+      if (!authHeader) {
+        return createErrorResponse('Authorization header is required', 401);
+      }
 
-      // const token = authHeader.split(' ')[1];
-      // const decoded = parseJwt(token);
-      // if (decoded.role !== 'service_role' && decoded.user_role !== 'admin') {
-      //   return createErrorResponse('Forbidden: Invalid JWT role', 403);
-      // }
+      const token = authHeader.split(' ')[1];
+      const decoded = parseJwt(token);
+      if (decoded.role !== 'service_role' && decoded.user_role !== 'admin') {
+        return createErrorResponse('Forbidden: Invalid JWT role', 403);
+      }
 
       const data = await req.json();
       const result = await signUpUser(data, 'admin');

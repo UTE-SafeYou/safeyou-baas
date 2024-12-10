@@ -19,6 +19,7 @@ import { Address } from '../shared/types.ts';
 export interface GeoLocation {
     latitude: number;
     longitude: number;
+    boundary?: string;
 }
 
 export class GeocodeService {
@@ -43,22 +44,18 @@ export class GeocodeService {
     async getCoordinates(address: Address): Promise<GeoLocation> {
         const formattedAddress = this.formatAddress(address);
         const response = await axios.get(
-            // `https://geocode.maps.co/search?q=${encodeURIComponent(formattedAddress)}&api_key=${this.apiKey}`
             `https://rsapi.goong.io/geocode?address=${encodeURIComponent(formattedAddress)}&api_key=${this.apiKey}`
         );
-
-        // console.log(`https://rsapi.goong.io/geocode?address=${encodeURIComponent(formattedAddress)}&api_key=${this.apiKey}`)
-
-        // console.log(response.data);
-        
 
         if (!response.data.results.length) {
             throw new Error('Location not found');
         }
 
+        const result = response.data.results[0];
         return {
-            latitude: parseFloat(response.data.results[0].geometry.location.lat),
-            longitude: parseFloat(response.data.results[0].geometry.location.lng)
+            latitude: parseFloat(result.geometry.location.lat),
+            longitude: parseFloat(result.geometry.location.lng),
+            boundary: result.geometry.boundary
         };
     }
 }

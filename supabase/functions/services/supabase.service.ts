@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { createClient } from 'npm:@supabase/supabase-js';
 import { Address, Report, Task } from '../shared/types.ts';
+import { GeocodeService } from './geocode.service.ts';
 
 export class SupabaseService {
     private static instance: SupabaseService;
@@ -240,11 +241,28 @@ export class SupabaseService {
     }
 
     async findUsersByAddress(searchTerm: string) {
-        const { data, error } = await this.supabase.rpc('find_users_by_address', {
-            search_term: searchTerm
+        // First get geocode data
+        const geocodeService = GeocodeService.getInstance();
+        const location = await geocodeService.getCoordinates({ 
+            street: '', 
+            ward: '', 
+            district: '', 
+            city: searchTerm 
         });
 
-        if (error) throw error;
-        return data;
+        if (location.boundary) {
+            const { data, error } = await this.supabase.rpc('find_users_by_boundary', {
+                boundary_points: location.boundary
+            });
+            if (error) throw error;
+            return data;
+        } else {
+            // Fallback to text search if no boundary available
+            const { data, error } = await this.supabase.rpc('find_users_by_address', {
+                search_term: searchTerm
+            });
+            if (error) throw error;
+            return data;
+        }
     }
 }
