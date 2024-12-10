@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import { createClient } from 'npm:@supabase/supabase-js';
 import { Address, Report, Task } from '../shared/types.ts';
+import { BoundaryDecoderService } from './boundary-decoder.service.ts';
 import { GeocodeService } from './geocode.service.ts';
 
 export class SupabaseService {
@@ -241,18 +242,29 @@ export class SupabaseService {
     }
 
     async findUsersByAddress(searchTerm: string) {
-        // First get geocode data
         const geocodeService = GeocodeService.getInstance();
-        const location = await geocodeService.getCoordinates({ 
-            street: '', 
-            ward: '', 
-            district: '', 
-            city: searchTerm 
-        });
+        const location = await geocodeService.getBestBoundaryResult(searchTerm);
 
         if (location.boundary) {
+            const boundaryDecoder = BoundaryDecoderService.getInstance();
+            const coordinates = boundaryDecoder.decodeBoundary(location.boundary);
+            
+            // Ensure polygon is properly closed by repeating first point at end if needed
+            if (coordinates[0][0] !== coordinates[coordinates.length-1][0] || 
+                coordinates[0][1] !== coordinates[coordinates.length-1][1]) {
+                coordinates.push([...coordinates[0]]);
+            }
+            
+            // Format coordinates for PostGIS with space between coordinates and commas between coordinate pairs
+            const polygonPoints = coordinates
+                .map(([lat, lng]) => `${lng} ${lat}`)
+                .join(', ');
+
+            console.log('Polygon:', polygonPoints);
+
+            // Search users within boundary
             const { data, error } = await this.supabase.rpc('find_users_by_boundary', {
-                boundary_points: location.boundary
+                boundary_points: polygonPoints
             });
             if (error) throw error;
             return data;

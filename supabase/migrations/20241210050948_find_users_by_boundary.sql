@@ -10,16 +10,9 @@ RETURNS TABLE (
 DECLARE
     boundary_polygon postgis.geography;
 BEGIN
-    -- Convert the boundary points string to a polygon
+    -- First point is automatically repeated by PostGIS when using ST_GeographyFromText
     boundary_polygon := postgis.ST_GeographyFromText(
-        'SRID=4326;POLYGON((' || 
-        regexp_replace(
-            boundary_points, 
-            '([0-9.-]+)\s*,\s*([0-9.-]+)', 
-            '\2 \1',
-            'g'
-        ) || 
-        '))'
+        'SRID=4326;POLYGON((' || boundary_points || '))'
     );
 
     RETURN QUERY

@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import axios from 'npm:axios@1.7.9';
 import { Address } from '../shared/types.ts';
+import { BoundaryDecoderService } from './boundary-decoder.service.ts';
 
 export interface GeoLocation {
     latitude: number;
@@ -38,7 +39,7 @@ export class GeocodeService {
     }
 
     private formatAddress(address: Address): string {
-        return `${address.street}, ${address.ward}, ${address.city}, ${address.district}`;
+        return `${address.street} ${address.ward} ${address.city} ${address.district}`;
     }
 
     async getCoordinates(address: Address): Promise<GeoLocation> {
@@ -57,5 +58,40 @@ export class GeocodeService {
             longitude: parseFloat(result.geometry.location.lng),
             boundary: result.geometry.boundary
         };
+    }
+
+    async getBestBoundaryResult(address: string): Promise<GeoLocation> {
+        const response = await axios.get(
+            `https://rsapi.goong.io/geocode?address=${encodeURIComponent(address)}&api_key=${this.apiKey}`
+        );
+
+        if (!response.data.results.length) {
+            throw new Error('Location not found');
+        }
+
+        // Find first result with boundary
+        const boundaryResult = response.data.results.find(r => r.geometry.boundary);
+        if (!boundaryResult) {
+            // If no boundary found, return first result
+            const result = response.data.results[0];
+            return {
+                latitude: parseFloat(result.geometry.location.lat),
+                longitude: parseFloat(result.geometry.location.lng)
+            };
+        }
+
+        return {
+            latitude: parseFloat(boundaryResult.geometry.location.lat),
+            longitude: parseFloat(boundaryResult.geometry.location.lng),
+            boundary: boundaryResult.geometry.boundary
+        };
+    }
+
+    async isCoordinateInArea(lat: number, lng: number, address: Address): Promise<boolean> {
+        const location = await this.getCoordinates(address);
+        if (!location.boundary) return false;
+
+        const boundaryDecoder = BoundaryDecoderService.getInstance();
+        return boundaryDecoder.isWithinBoundary(lat, lng, location.boundary);
     }
 }
