@@ -30,6 +30,15 @@ Các plugins đội phát triển dựa trên supabase nằm trong thư mục: `
 
 Bạn có thể xem hướng dẫn cách cài đặt, cách sử dụng plugin tại đây: [Hướng dẫn cài đăt](https://ute-safeyou.github.io/safeyou-docs/H%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-c%C3%A0i-%C4%91%E1%BA%B7t/Baas/install/)
 
+## Tài khoản mặc định
+
+- User:
+    - Email: `user@gmail.com`
+    - Password: `123465`
+- Admin:
+    - Email: `admin@gmail.com`
+    - Password: `123465`
+
 ## Hướng dẫn cài đặt backend
 
 ### Yêu cầu hệ thống
