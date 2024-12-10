@@ -11,6 +11,10 @@ INSERT INTO public.user_profiles (profile_id,user_id,fullname,address_id,created
 	 ('23bc238c-2fd0-4ab1-8bd7-fa275c222962','12dbf51c-ca8c-4afe-b393-031763a3b15b','Nguyễn Văn A','a2aed5a0-c34f-47f2-b031-33fb638b6da0','2024-12-10 01:32:56.718361',NULL,'admin@gmail.com','0123456798',NULL,NULL,NULL),
 	 ('76869705-4a80-4250-be7f-6e2ca23187f5','5a61ca1a-3c12-48b6-95b1-af10450ee38f','Nguyễn Văn A','885a3bef-c4f4-4f6c-858f-a08263fed870','2024-12-10 01:33:03.411241',NULL,'user@gmail.com','0123456798',NULL,NULL,NULL);
 
+INSERT INTO "public"."user_roles" ("user_id", "role") VALUES
+	('5a61ca1a-3c12-48b6-95b1-af10450ee38f', 'user'),
+	('12dbf51c-ca8c-4afe-b393-031763a3b15b', 'admin');
+
 INSERT INTO "public"."place" ("id", "created_at", "place_type", "additional_info", "location", "radius", "lattitude", "longitude") VALUES
 	('32a63e2a-f108-4abe-87ee-6480253ab05a', '2023-11-05 12:00:00+00', 'dịch bệnh', '{"description": "Dịch cúm tại Hà Nội"}', '0101000020E6100000910F7A36AB765A409EEFA7C64B073540', 50, 21.0285, 105.8542),
 	('56fadc6a-884e-4dae-a47a-4b6e25099bc9', '2023-11-06 12:00:00+00', 'dịch bệnh', '{"description": "Dịch sốt xuất huyết tại Hồ Chí Minh"}', '0101000020E6100000545227A089AC5A40DAACFA5C6DA52540', 55, 10.8231, 106.6959),
