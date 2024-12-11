@@ -26,10 +26,10 @@ console.log("Hello from Functions!")
 async function handleRequest(req: Request) {
   const url = new URL(req.url);
   const supabaseService = SupabaseService.getInstance();
-  
+
   // Remove '/address' prefix from pathname
   const path = url.pathname.replace('/place', '');
-  
+
   // const auth = await requireAdmin(req);
   // if (auth instanceof Response) return auth;
 
@@ -81,6 +81,22 @@ async function handleRequest(req: Request) {
         const searchResult = await supabaseService.findUsersByAddress(searchData.search);
         return new Response(
           JSON.stringify(searchResult),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+
+      case "/findUsersByAddresses":
+      case "findUsersByAddresses":
+        if (req.method !== 'POST') {
+          return new Response(
+            JSON.stringify({ error: 'Method not allowed' }),
+            { status: 405, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        const searchAddressesData = await req.json();
+        const searchAddressesResult = await supabaseService.findUsersByAddresses(searchAddressesData.search);
+        return new Response(
+          JSON.stringify(searchAddressesResult),
           { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
 

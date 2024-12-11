@@ -67,3 +67,33 @@ export type ValidationResult = {
     isValid: boolean;
     errors: ValidationError[];
 }
+
+export interface PlaceSearchRequest {
+    place: string[];
+    id?: string;
+    link?: string;
+    title?: string;
+    pdf_link?: string;
+    metadata?: string;
+    description?: string;
+    crawl_id?: string;
+    summary?: string;
+}
+
+export interface PlaceDetails {
+    place: string;
+    lat: number;
+    lon: number;
+    link?: string;
+    title?: string;
+    pdf_link?: string;
+    metadata?: string;
+    description?: string;
+    crawl_id?: string;
+    summary?: string;
+}
+
+export interface MultiPlaceSearchResponse {
+    users: any[];
+    places: PlaceDetails[];
+}

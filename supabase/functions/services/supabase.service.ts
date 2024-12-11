@@ -154,7 +154,7 @@ export class SupabaseService {
             .from('province')
             .select('idprovince, name')
             .order('name');
-        
+
         if (error) throw error;
         return data;
     }
@@ -165,7 +165,7 @@ export class SupabaseService {
             .select('iddistrict, name')
             .eq('idprovince', provinceId)
             .order('name');
-        
+
         if (error) throw error;
         return data;
     }
@@ -176,7 +176,7 @@ export class SupabaseService {
             .select('idcommune, name')
             .eq('iddistrict', districtId)
             .order('name');
-        
+
         if (error) throw error;
         return data;
     }
@@ -184,7 +184,7 @@ export class SupabaseService {
     async getAllUserWithinRadius(data: LocationRequest | LocationRequest[]) {
         if (Array.isArray(data)) {
             // Handle array of requests
-            const promises = data.map(location => 
+            const promises = data.map(location =>
                 this.supabase.rpc('get_users_within_radius', {
                     p_latitude: location.latitude,
                     p_longitude: location.longitude,
@@ -202,7 +202,7 @@ export class SupabaseService {
             // First pass: Find minimum distances for each user
             results.forEach((result, index) => {
                 if (!result.data) return;
-                
+
                 result.data.forEach(user => {
                     const current = userDistances.get(user.user_id);
                     if (!current || user.distance < current.distance) {
@@ -214,8 +214,8 @@ export class SupabaseService {
             // Second pass: Filter results to keep users only in their closest location
             return results.map((result, index) => {
                 if (!result.data) return [];
-                
-                return result.data.filter(user => 
+
+                return result.data.filter(user =>
                     userDistances.get(user.user_id)?.index === index
                 );
             });
@@ -248,13 +248,13 @@ export class SupabaseService {
         if (location.boundary) {
             const boundaryDecoder = BoundaryDecoderService.getInstance();
             const coordinates = boundaryDecoder.decodeBoundary(location.boundary);
-            
+
             // Ensure polygon is properly closed by repeating first point at end if needed
-            if (coordinates[0][0] !== coordinates[coordinates.length-1][0] || 
-                coordinates[0][1] !== coordinates[coordinates.length-1][1]) {
+            if (coordinates[0][0] !== coordinates[coordinates.length - 1][0] ||
+                coordinates[0][1] !== coordinates[coordinates.length - 1][1]) {
                 coordinates.push([...coordinates[0]]);
             }
-            
+
             // Format coordinates for PostGIS with space between coordinates and commas between coordinate pairs
             const polygonPoints = coordinates
                 .map(([lat, lng]) => `${lng} ${lat}`)
@@ -267,6 +267,14 @@ export class SupabaseService {
                 boundary_points: polygonPoints
             });
             if (error) throw error;
+            if (!data || data.length === 0) {
+                // Fallback to text search if no boundary available
+                const { data, error } = await this.supabase.rpc('find_users_by_address', {
+                    search_term: searchTerm
+                });
+                if (error) throw error;
+                return data;
+            }
             return data;
         } else {
             // Fallback to text search if no boundary available
@@ -276,5 +284,104 @@ export class SupabaseService {
             if (error) throw error;
             return data;
         }
+    }
+
+    async findUsersByAddresses(request: PlaceSearchRequest): Promise<MultiPlaceSearchResponse> {
+        const geocodeService = GeocodeService.getInstance();
+        const boundaryDecoder = BoundaryDecoderService.getInstance();
+
+        // Process all places in parallel with error handling
+        const placeResults = await Promise.all(
+            request.place.map(async (placeName) => {
+                try {
+                    const location = await geocodeService.getBestBoundaryResult(placeName);
+                    let users: any[] = [];
+
+                    if (location.boundary) {
+                        const coordinates = boundaryDecoder.decodeBoundary(location.boundary);
+                        if (coordinates[0][0] !== coordinates[coordinates.length - 1][0] ||
+                            coordinates[0][1] !== coordinates[coordinates.length - 1][1]) {
+                            coordinates.push([...coordinates[0]]);
+                        }
+
+                        const polygonPoints = coordinates
+                            .map(([lat, lng]) => `${lng} ${lat}`)
+                            .join(', ');
+
+                        const { data, error } = await this.supabase.rpc('find_users_by_boundary', {
+                            boundary_points: polygonPoints
+                        });
+
+                        console.log(data);
+
+                        if (!error && data && data.length > 0) {
+                            users = data;
+                        } else {
+                            // Fallback to text search if boundary search fails
+                            const { data: textData } = await this.supabase.rpc('find_users_by_address', {
+                                search_term: placeName
+                            });
+
+                            console.log("Else: "+ textData);
+                            users = textData || [];
+                        }
+                    } else {
+                        // Fallback to text search if no boundary available
+                        const { data } = await this.supabase.rpc('find_users_by_address', {
+                            search_term: placeName
+                        });
+                        users = data || [];
+                    }
+
+                    return {
+                        place: placeName,
+                        location,
+                        users,
+                        metadata: {
+                            link: request.link,
+                            title: request.title,
+                            pdf_link: request.pdf_link,
+                            metadata: request.metadata,
+                            description: request.description,
+                            crawl_id: request.crawl_id,
+                            summary: request.summary
+                        }
+                    };
+                } catch (error) {
+                    console.error(`Error processing place ${placeName}:`, error);
+                    return {
+                        place: placeName,
+                        location: { latitude: 0, longitude: 0 },
+                        users: [],
+                        error: error.message
+                    };
+                }
+            })
+        );
+
+        // Combine all unique users and format place details
+        const uniqueUsers = new Map();
+        const places: PlaceDetails[] = [];
+
+        placeResults.forEach(result => {
+            // Add users to unique map
+            result.users?.forEach(user => {
+                uniqueUsers.set(user.user_id, user);
+            });
+
+            // Format place details
+            places.push({
+                place: result.place,
+                lat: result.location.latitude,
+                lon: result.location.longitude,
+                ...result.metadata,
+                error: result.error
+            });
+        });
+
+        return {
+            users: Array.from(uniqueUsers.values()),
+            places
+        };
     }
 }
