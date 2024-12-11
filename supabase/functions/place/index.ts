@@ -94,7 +94,7 @@ async function handleRequest(req: Request) {
         }
 
         const searchAddressesData = await req.json();
-        const searchAddressesResult = await supabaseService.findUsersByAddresses(searchAddressesData.search);
+        const searchAddressesResult = await supabaseService.findUsersByAddresses(searchAddressesData);
         return new Response(
           JSON.stringify(searchAddressesResult),
           { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
