@@ -1,0 +1,1427 @@
+{
+  "name": "Automation Workflow for News Analysis",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "=link",
+              "cssSelector": "=.{{ $json.query_title_selector }} a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            },
+            {
+              "key": "title",
+              "cssSelector": "=.{{ $json.query_title_selector }} a",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2a4d6378-f2ba-44f0-90ac-82ff359bb65c",
+      "name": "HTML",
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        460,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "1229447f-ebca-4378-82a8-53eed024469f",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        320,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $('HTML').all().map((item) => item.json);\n\nconst result = items[0].link.map((link, index) => {\n  return {\n    link: link,\n    title: items[0].title[index],\n  };\n});\n\nreturn result;\n"
+      },
+      "id": "f38e48b0-b6fc-4659-9214-3f3e2684c7ac",
+      "name": "Transform to object list",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "pdf_link",
+              "cssSelector": "b:contains('Chi tiết tin') a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e3abd011-cf49-4628-8c31-9e0d97142633",
+      "name": "Tìm công văn khẩn cấp",
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1700,
+        1000
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {}
+      },
+      "id": "74bd2c71-65b0-40b2-adec-57d4b0754bbd",
+      "name": "Crawl trang web của bộ",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1480,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "links",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "link",
+              "keyValue": "={{ $json.link }}"
+            }
+          ]
+        }
+      },
+      "id": "e35ba166-d871-4372-9e93-a2081f48da18",
+      "name": "Supabase2",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        1000
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "vTyHs9Pm5Bg7sbHe",
+          "name": "Supabase account 2"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst isEmpty = items.length === 1 && Object.keys(items[0]?.json).length === 0;\n\nreturn { isEmpty };\n"
+      },
+      "id": "5c461502-3035-4d36-b604-6205ac7bf49d",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2420,
+        1000
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "de49ff70-0073-428b-90b9-d8b06a60169e",
+              "name": "link",
+              "value": "={{ $('Transform to object list').item.json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "87d69cb8-12a6-4f18-981d-e65d459ee220",
+              "name": "=title",
+              "value": "={{ $('Transform to object list').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "0171a421-e2bc-44df-b0a0-82ea8f30fcf1",
+              "name": "pdf_link",
+              "value": "=  {{ $('Tìm công văn khẩn cấp').item.json.pdf_link }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9446aab6-e720-4df6-8366-cd4a8cb5c922",
+      "name": "Tổng hợp thuộc tính",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1960,
+        1160
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cff7a132-c51e-4d58-bd0d-9684e2d93dfe",
+              "leftValue": "={{ $json.isEmpty }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f7fcc357-a7dd-4a41-ae5e-80b152e3ca6e",
+      "name": "Dữ liệu chưa tồn tại?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2600,
+        1000
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api-inference.huggingface.co/models/NlpHUST/ner-vietnamese-electra-base",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "inputs",
+              "value": "={{ $json.response.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e3f7cd48-53f0-4a27-9931-96a261dc3178",
+      "name": "Phân tích entity",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3640,
+        1920
+      ],
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "h8zWZBhpa4lXTvRe",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "targetweb",
+        "returnAll": true
+      },
+      "id": "990b404d-8ea7-4612-bf69-026c8ae50371",
+      "name": "Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -220,
+        380
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "vTyHs9Pm5Bg7sbHe",
+          "name": "Supabase account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "id": "33d7ef7a-dabc-458d-aff0-dc7fa07bab61",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        60,
+        260
+      ],
+      "retryOnFail": true,
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6c64f623-d8a3-4af5-8854-28022554bf86",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1260,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "crawl_history"
+      },
+      "id": "8b2eeda2-f794-483e-ada5-cbb705732911",
+      "name": "Add to history",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        680,
+        360
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "vTyHs9Pm5Bg7sbHe",
+          "name": "Supabase account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://aheakzvxbxadibgjiabs.supabase.co/rest/v1/links",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "crawl_id",
+              "value": "=eq.{{ $('Add to history').first().json.id }}"
+            },
+            {
+              "name": "select",
+              "value": "*"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Range",
+              "value": "0-9"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cbc9270f-dc3a-46dc-bc6f-1670d1eb11e6",
+      "name": "Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1540,
+        360
+      ],
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "retryOnFail": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "8f0DlITe2UR1pMac",
+          "name": "Supabase Service API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://crawl.fly.dev/crawl-pdf/",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $('Tổng hợp thuộc tính').item.json.pdf_link }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "313dddca-5b32-4aea-84a4-832ce4a7df63",
+      "name": "Lấy văn bản từ PDF",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2980,
+        1260
+      ],
+      "executeOnce": false,
+      "retryOnFail": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash-8b-001",
+        "options": {}
+      },
+      "id": "3a9c0f5c-7795-425e-b634-1c657bcf0f7e",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3200,
+        1960
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HAV1tCF1zuNwhuIB",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.title }} {{ $json.description }} ",
+        "options": {}
+      },
+      "id": "adf743b8-44ad-4f51-92cc-39251e7b6605",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        3320,
+        1800
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "99038fe5-4737-4db3-b6d4-7eb4f5d68b6a",
+      "name": "Token Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterTokenSplitter",
+      "typeVersion": 1,
+      "position": [
+        3320,
+        1960
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "let items = $input.all();\n\nreturn {entity: items};"
+      },
+      "id": "20dcf805-d49d-45b8-b08d-6d7b0f782591",
+      "name": "Chuẩn hóa",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3840,
+        1920
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b591a078-d78e-4a4d-8be0-9626abd82d3d",
+              "name": "summary",
+              "value": "={{ $json.response.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "14c45e59-a52a-4f2c-b372-4a8644eccba3",
+      "name": "Format",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3720,
+        1720
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 4,
+        "options": {}
+      },
+      "id": "546fd3b9-6f71-4cf2-b030-eb6c190c0cda",
+      "name": "Gộp dữ liệu",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        4420,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "links",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "title",
+              "fieldValue": "={{ $json.title }}"
+            },
+            {
+              "fieldId": "link",
+              "fieldValue": "={{ $json.link }}"
+            },
+            {
+              "fieldId": "pdf_link",
+              "fieldValue": "={{ $json.pdf_link }}"
+            },
+            {
+              "fieldId": "metadata",
+              "fieldValue": "={{ $json.entity }}"
+            },
+            {
+              "fieldId": "description",
+              "fieldValue": "={{ $json.text }}"
+            },
+            {
+              "fieldId": "crawl_id",
+              "fieldValue": "={{ $('Add to history').first().json.id }}"
+            },
+            {
+              "fieldId": "summary",
+              "fieldValue": "={{ $json.summary }}"
+            }
+          ]
+        }
+      },
+      "id": "a705e016-937c-4447-87c4-167a576b7663",
+      "name": "Lưu dữ liệu đã xử lý",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4760,
+        1240
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "vTyHs9Pm5Bg7sbHe",
+          "name": "Supabase account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "id": "9198054f-421f-4ab5-b928-04f31c10e492",
+      "name": "Chống nghẽn (chờ)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5120,
+        1960
+      ],
+      "webhookId": "36e8c34c-71fe-45c4-a750-b6a53e6e42e6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d833b714-0ee4-41f5-a6b3-e1368014b98f",
+              "name": "summary",
+              "value": "={{ $json.summary }}",
+              "type": "string"
+            },
+            {
+              "id": "a8169e56-03f5-403b-8d39-df75c1b272fb",
+              "name": "description",
+              "value": "={{ $json.description }}",
+              "type": "string"
+            },
+            {
+              "id": "65db5404-68fc-4ac2-9ffd-ceaf7856e347",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "2565b64b-187e-45c0-bbfd-794ffef62a37",
+              "name": "metadata",
+              "value": "={{ $json.metadata}}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "4c2134e3-f374-4b06-9e94-bf31378ce685",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1700,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "entity[0].json.word",
+        "options": {}
+      },
+      "id": "25ff8426-6e10-4afa-b0e9-c72de3ca1910",
+      "name": "Remove Duplicates",
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        4060,
+        1920
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\n// for (const item of $input.item) {\n//   let geo_from_meta = JSON.parse(item.json.metadata);\n\n//   geo_from_meta = geo_from_meta.map(geo => {\n//     return {place: geo.json.word, title:item.json.title, description: item.json.summary};\n//   });\n\n//   geo_from_meta.filter(item => item);\n//   return geo_from_meta;\n// }\n\n\nlet item = $input.item;\n\nlet locations = JSON.parse(item.json.metadata);\n\nlocations = locations.map(location => {\n  return location.json.word\n})\n\nlet unique_locations = Array.from(new Set(locations));\n\nreturn {\n    place:unique_locations,\n    ...item.json\n}\n\nreturn $input.item;"
+      },
+      "id": "be13aff8-f5cb-466e-85b5-2d8aa17ecbff",
+      "name": "Đơn giản hóa dữ liệu",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 3
+            }
+          ]
+        }
+      },
+      "id": "456dbf9a-3c6c-4d57-ab12-8f0a8c929062",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -680,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "operationMode": "documentLoader",
+        "options": {
+          "summarizationMethodAndPrompts": {
+            "values": {
+              "combineMapPrompt": "=Hãy tóm tắt thông tin sau về sự kiện thiên tai và tạo cảnh báo ngắn gọn, rõ ràng để gửi đến người dùng. Đảm bảo rằng thông tin chính xác, khớp với văn bản gốc và dễ hiểu. (Văn bản được trích ra từ PDF, vì thế tên một số tỉnh thành ở Việt Nam bị lỗi, vui lòng sửa lại cho đúng.).\nChuyển đổi khu vực ở Việt Nam thành các tỉnh thành tương ứng với danh sách số tỉnh thành theo khu vực ở Việt Nam sau: \nMiền Bắc được chia thành 3 vùng lãnh thổ nhỏ:\nTây Bắc Bộ – bao gồm 6 tỉnh: Vùng này chủ yếu nằm ở hữu ngạn sông Hồng. Riêng Lào Cai, Yên Bái đôi khi vẫn được xếp vào tiểu vùng Đông Bắc.\n\nLào Cai\nYên Bái\nĐiện Biên\nHoà Bình\nLai Châu\nSơn La\nĐông Bắc bộ – bao gồm 9 tỉnh:\n\nHà Giang\nCao Bằng\nBắc Kạn\nLạng Sơn\nTuyên Quang\nThái Nguyên\nPhú Thọ\nBắc Giang\nQuảng Ninh.\nĐồng bằng sông Hồng – bao gồm 10 tỉnh:\n\nBắc Ninh\nHà Nam\nHà Nội\nHải Dương\nHải Phòng\nHưng Yên\nNam Định\nNinh Bình\nThái Bình\nVĩnh Phúc\nMiền Trung được chia làm 3 tiểu vùng:\nBắc Trung Bộ gồm có 6 tỉnh:\n\nThanh Hoá\nNghệ An\nHà Tĩnh\nQuảng Bình\nQuảng Trị\nThừa Thiên-Huế.\nNam Trung Bộ: gồm 8 tỉnh thành theo thứ tự bắc-nam:\n\nĐà Nẵng\nQuảng Nam\nQuảng Ngãi\nBình Định\nPhú Yên\nKhánh Hoà\nNinh Thuận\nBình Thuận.\nTây Nguyên gồm 5 tỉnh:\n\nKon Tum\nGia Lai\nĐắc Lắc\nĐắc Nông\nLâm Đồng.\n\n\nVăn bản gốc:\n{{ $json.text }}\n\nTóm tắt chính xác:",
+              "prompt": "=Bạn là một chuyên gia dự báo thiên tai. Hãy tóm tắt thông tin sau về sự kiện thiên tai và tạo cảnh báo ngắn gọn, rõ ràng để gửi đến người dùng. Đảm bảo rằng thông tin chính xác và dễ hiểu.\n\nVăn bản gốc:\n{{ $json.text }}\n\nTóm tắt chính xác:"
+            }
+          }
+        }
+      },
+      "id": "ab63df58-f1f3-48bc-828b-f5dbd86fecf8",
+      "name": "Summarization Chain",
+      "type": "@n8n/n8n-nodes-langchain.chainSummarization",
+      "typeVersion": 2,
+      "position": [
+        3320,
+        1540
+      ],
+      "alwaysOutputData": true,
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "bf7e90c4-7058-42ae-b798-adcf09090c1e",
+      "name": "Vòng lặp ",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2040,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nlet users = $('Tạo request ').first().json.users;\n\nlet title = $('Lưu vết').first().json.title;\nlet description =  $('Lưu vết').first().json.summary;\nlet issue_link = 'https://olp-asm.huuloc.id.vn/app/safeyou-internals/admin-67543865fd51167a0308d716/edit?branch=feat%252Fblog';\nlet notification_type = \"Emergency\"\n \nlet notify_object = {\n     title:title,\n    body: `\n                  <h1>${title}</h1>\n                  <br/>\n                  <p>${description}</p>\n                  <br/>\n                  Cập nhật thời gian thực cho tình huống này: <a href=\"${issue_link}\">Tổng hợp thông tin cho tình huống này</a>\n    `,\n    users: users,\n    notification_type: notification_type\n}\n\nreturn notify_object;\n\n"
+      },
+      "id": "6808fced-1de5-4694-adf1-fec365341657",
+      "name": "Tạo nội dung cảnh báo",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3960,
+        560
+      ],
+      "executeOnce": true,
+      "retryOnFail": true,
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://zwdaqmfqjaccijhrkbfl.supabase.co/functions/v1/send-notifications",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "name": "users",
+              "value": "={{ $json.users }}"
+            },
+            {
+              "name": "notification_type",
+              "value": "={{ $json.notification_type }}"
+            },
+            {
+              "name": "body",
+              "value": "={{ $json.body }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "99f57460-ce3f-4892-a3a1-c1661a609a70",
+      "name": "Kích hoạt automation gửi cảnh báo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4520,
+        740
+      ],
+      "executeOnce": true,
+      "retryOnFail": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ULgptNOqsgTRwZ7q",
+          "name": "Supabase Main Project (Authorization Header)"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://zwdaqmfqjaccijhrkbfl.supabase.co/rest/v1/rpc/insert_issue_event_with_places",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "={{ $json.places[0].additional_info.title }}"
+            },
+            {
+              "name": "description",
+              "value": "="
+            },
+            {
+              "name": "=places_input",
+              "value": "={{ $json.places }}"
+            },
+            {
+              "name": "label",
+              "value": "={{ $json.places[0].place_type }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "id": "8ab66b82-ffb6-491c-bdb6-8e1abb786696",
+      "name": "Tạo tình huống khẩn cấp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3580,
+        360
+      ],
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "hwEkAfqv8sKqjAJJ",
+          "name": "Supabase Main Project API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let  items  = $input.first();\nconst {users, places} = items.json;\n\nlet processed_places = [];\n\nprocessed_places  = places?.map((place) => {\n  return {\n    radius: 100*1000,\n    lattitude: place.lat,\n    longitude: place.lon,\n    place_type: 'thiên tai',\n     location: { \"type\": \"Point\", \"coordinates\": [place.lat, place.lon] },\n    additional_info: { place: place.place, title: place.title, description: place.summary} \n  }\n});\n\n\n\nreturn {users:users || [], places:processed_places || []};\n"
+      },
+      "id": "9c127770-989b-4f06-92cf-38ce3fb1ae97",
+      "name": "Tạo request ",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2860,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://zwdaqmfqjaccijhrkbfl.supabase.co/functions/v1/place/findUsersByAddresses",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "place",
+              "value": "={{ $json.place }}"
+            },
+            {
+              "name": "=crawl_id",
+              "value": "={{ $json.crawl_id }}"
+            },
+            {
+              "name": "summary",
+              "value": "={{ $json.summary }}"
+            },
+            {
+              "name": "description",
+              "value": "={{ $json.description }}"
+            },
+            {
+              "name": "pdf_link",
+              "value": "={{ $json.pdf_link }}"
+            },
+            {
+              "name": "title",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "name": "link",
+              "value": "={{ $json.link }}"
+            },
+            {
+              "name": "metadata",
+              "value": "={{ $json.metadata }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0ba2b76f-1fc0-42b7-b693-751869921f5c",
+      "name": "Tìm kiếm người dùng theo địa điểm",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2460,
+        380
+      ],
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "hwEkAfqv8sKqjAJJ",
+          "name": "Supabase Main Project API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3694bdec-46d3-434a-83fd-740d6a71461c",
+              "leftValue": "={{ $json.users }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "0ca25652-f652-43d2-a30c-a0eb98c7b689",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2640,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 0
+      },
+      "id": "51727e0c-2961-400a-a6b5-19f1e1683656",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3100,
+        440
+      ],
+      "webhookId": "896a35dd-5318-441b-aaa8-31543f326ba4"
+    },
+    {
+      "parameters": {
+        "jsCode": "let items = $input.first();\n\nreturn items;"
+      },
+      "id": "bfebdd2c-f3e4-414d-9485-eeff3f1931d5",
+      "name": "Lưu vết",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2260,
+        380
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Add to history",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform to object list": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tìm công văn khẩn cấp": {
+      "main": [
+        [
+          {
+            "node": "Tổng hợp thuộc tính",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crawl trang web của bộ": {
+      "main": [
+        [
+          {
+            "node": "Tìm công văn khẩn cấp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase2": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Dữ liệu chưa tồn tại?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tổng hợp thuộc tính": {
+      "main": [
+        [
+          {
+            "node": "Supabase2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gộp dữ liệu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dữ liệu chưa tồn tại?": {
+      "main": [
+        [
+          {
+            "node": "Lấy văn bản từ PDF",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Chống nghẽn (chờ)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Phân tích entity": {
+      "main": [
+        [
+          {
+            "node": "Chuẩn hóa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Crawl trang web của bộ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add to history": {
+      "main": [
+        [
+          {
+            "node": "Transform to object list",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lấy văn bản từ PDF": {
+      "main": [
+        [
+          {
+            "node": "Gộp dữ liệu",
+            "type": "main",
+            "index": 2
+          },
+          {
+            "node": "Summarization Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Summarization Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Summarization Chain",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Token Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chuẩn hóa": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format": {
+      "main": [
+        [
+          {
+            "node": "Gộp dữ liệu",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Gộp dữ liệu": {
+      "main": [
+        [
+          {
+            "node": "Lưu dữ liệu đã xử lý",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lưu dữ liệu đã xử lý": {
+      "main": [
+        [
+          {
+            "node": "Chống nghẽn (chờ)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chống nghẽn (chờ)": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Gộp dữ liệu",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Đơn giản hóa dữ liệu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Đơn giản hóa dữ liệu": {
+      "main": [
+        [
+          {
+            "node": "Vòng lặp ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarization Chain": {
+      "main": [
+        [
+          {
+            "node": "Phân tích entity",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vòng lặp ": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Lưu vết",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tạo nội dung cảnh báo": {
+      "main": [
+        [
+          {
+            "node": "Kích hoạt automation gửi cảnh báo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Vòng lặp ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kích hoạt automation gửi cảnh báo": {
+      "main": [
+        [
+          {
+            "node": "Vòng lặp ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Vòng lặp ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tạo request ": {
+      "main": [
+        [
+          {
+            "node": "Tạo tình huống khẩn cấp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tạo tình huống khẩn cấp": {
+      "main": [
+        [
+          {
+            "node": "Tạo nội dung cảnh báo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tìm kiếm người dùng theo địa điểm": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Tạo request ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Vòng lặp ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lưu vết": {
+      "main": [
+        [
+          {
+            "node": "Tìm kiếm người dùng theo địa điểm",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "982ca977-08d3-4e6d-982f-e18c6a3d754f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2f3578d372c729f9fb4b94ad19250f134ac99340c6da4d10f3b50fc671ac2c95"
+  },
+  "id": "yiseAh9vWZ4BOufu",
+  "tags": []
+}
